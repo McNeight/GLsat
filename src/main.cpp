@@ -55,50 +55,29 @@ static const char rcsid[] = "";
 
 using namespace std;
 
-TLE			sat;
 vector<TLE>		sats;
-vector<TLE>::iterator	satIter;
 
-/*
-long double A;
-long double B;
-long double E;
-long double I_o;
-long double PER;
-long double RA;
-*/
+void grabTLE(char *input);
 
 int main(int argc, char *argv[])
 {
-  ifstream		ifile;
-
+  vector<TLE>::iterator		satIter;
+  
   cout.setf(ios::fixed);
   cout.setf(ios::showpoint);
   cout.precision(40);
 
-  if (argc > 1)
+  if (argc == 2)
   {
-    // Open, open, open, open...
-    ifile.open(argv[argc-1]);
-    // If the file opens...
-    if (ifile)
-    {
-      // Priming Read
-      ifile >> sat;
-      // Read the rest of the file & insert into vector
-      while (!ifile.eof())
-      {
-	sats.push_back(sat);
-        ifile >> sat;
-      }
-    }
-    ifile.close();
+    grabTLE(argv[1]);
   }
   else
   {
-    cin >> sat;
+    //cin >> sat;
+    cout << "Usage: " << argv[0] << " datafile.tle" << endl;
+    exit(1);
   }
-
+  
   for (satIter = sats.begin(); satIter != sats.end(); satIter++)
   {
     if (satIter->getValid())
@@ -108,6 +87,7 @@ int main(int argc, char *argv[])
   }
 
 #ifdef DEBUG
+  TLE			sat;
   struct tm		sputnik;
   long double		timeJD = 0;
   ECI			eci;
@@ -155,10 +135,9 @@ int main(int argc, char *argv[])
     cout << location << endl;
     sleep(1);
   }
-  
 #else
 
-  GLgraphics(argc, argv, sats);
+  GLgraphics(argc, argv);
   
 #endif
   
@@ -166,9 +145,36 @@ int main(int argc, char *argv[])
 }
 
 
+/*
+ * grabTLE()
+ *
+ * Break file input away from main()
+ *
+ */
+void grabTLE(char *input)
+{
+  ifstream		ifile;
+  TLE			sat;
 
-
-
-
-
-
+  // Open, open, open, open...
+  ifile.open(input);
+  // If the file opens...
+  if (ifile)
+  {
+    // Priming Read
+    ifile >> sat;
+    // Read the rest of the file & insert into vector
+    while (!ifile.eof())
+    {
+      sats.push_back(sat);
+      ifile >> sat;
+    }
+    ifile.close();
+  }
+  else
+  {
+    ifile.close();
+    cout << "Error opening input file!" << endl;
+    exit(1);
+  }
+}
