@@ -28,13 +28,21 @@ else
 endif
 
 GLsat: eci.o lla.o tle.o graphics.o astro.o main.o
-	$(CXX) -O3 -Wall -DNEW_FUNCTIONS -lm -lGL -lGLU -lglut -o GLsat eci.o lla.o tle.o astro.o main.o
+	$(CXX) -O3 -Wall -DNEW_FUNCTIONS -o GLsat eci.o lla.o tle.o astro.o graphics.o main.o -lm -lGL -lGLU -lglut
+
+GLsat.exe: eci.o lla.o tle.o graphics.o astro.o main.o
+	$(CXX) -O3 -Wall -DNEW_FUNCTIONS -o GLsat.exe eci.o lla.o tle.o astro.o graphics.o main.o -lm -lglut32 -lglu32 -lopengl32
 
 text: eci.o lla.o tle.o astro.o main.o
 	$(CXX) -O3 -Wall -DMATH_OUT -lm -o TeXsat eci.o lla.o tle.o astro.o main.o
 
 debug: eci.d.o lla.d.o tle.d.o graphics.d.o astro.d.o main.d.o
-	$(CXX) -g -Wall -DDEBUG -DMATH_OUT -lm -lGL -lGLU -lglut -o debug.exe eci.d.o lla.d.o tle.d.o astro.d.o main.d.o
+	$(CXX) -g -Wall -DDEBUG -DMATH_OUT -o debug eci.d.o lla.d.o tle.d.o astro.d.o main.d.o -lm -lGL -lGLU -lglut
+
+debug.exe: eci.d.o lla.d.o tle.d.o graphics.d.o astro.d.o main.d.o
+	$(CXX) -g -Wall -DDEBUG -DMATH_OUT -o debug.exe eci.d.o lla.d.o tle.d.o astro.d.o main.d.o -lm -lglut32 -lglu32 -lopengl32
+
+# Components
 
 eci.d.o: eci.cpp eci.h
 	$(CXX) -g -Wall -DDEBUG -c eci.cpp -o eci.d.o

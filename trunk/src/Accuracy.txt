@@ -4,20 +4,20 @@ GLsat
 According to Spacetrack Report Number 3, the first of five mathematical
 models for satellites, SGP, "was developed by Hilton & Kuhlman (1966) and
 ... uses a simplification of the work of Kozai (1959) for its gravitaional
-model". The first satellite was launched in 1957! Yet here, over 40 years
+model". The first satellite was launched in 1957! Yet here, over 45 years
 later, we are still using a model developed less than ten years after that
 first launch. Other, more accurate, models have been developed since then,
 but the most popular ones, SGP4/SDP4, are over 20 years old. Even the
 geographical model which these formulas are based on, WGS72, is now
-obsolete, superceded by WGS84 and currently becoming a world standard
-because GPS uses it.
+obsolete, superceded by WGS84 and currently becoming a defacto world
+standard because of it's use in GPS.
 
 The program listings in Spacetrack Report Number 3 are also dated. Written
 in 1980, they were developed in FORTRAN IV for the Honeywell-6000 series
 computer. Running at 1 MIPS with a 36-bit floating point word, these systems
 also required 8.8 kilowatts of power, 34,700 BTU's of air conditioning and
 weighed 7050 pounds. Today, there is more processing power in a VCR than one
-of these beasts, yet it's legacy remains.
+of these beasts, yet it's legacy is carried forward today.
 
 So, the question remains: why am I choosing to re-implement formulas that
 date from the Early Cretaceous age of computing and will, in the end, have
@@ -63,12 +63,14 @@ no greater accuracy than the original? For a few reasons:
    Now, in spite of all of that, the models themselves are only accurate to 
 
 2) While the model may not be the most accurate, it is perhaps the most
-   popular. The model itself is proven and stable, and current data sets
+   popular. The model itself is proven and stable, which makes it easy
+   to cross check results as the program develops. Current data sets
    are available for many satellites since most popular satellite tracking
-   programs also use this model. Since I am a computer scientist, and not an
-   astrophysicist, I will not waste my time attempting to create my own
-   model and then attempt to make it even more accurate than what is
-   available.
+   programs also use this model.
+   
+   Since I am a computer scientist, and not an astrophysicist, I will not
+   waste my time attempting to create my own model and then attempt to
+   make it even more accurate than what is available.
    
 3) It's an interesting excercise in scientific visualization. The fact that
    I've learned a bit of FORTRAN by osmosis is yet another example of the

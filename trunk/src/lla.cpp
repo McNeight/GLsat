@@ -44,19 +44,19 @@ void LLA::convertDMS()
   long double	temp;
 
   // First, for latitude, skim off the degrees
-  tempLat = modfl(lat, &temp);
+  tempLat = modf(lat, &temp);
   latDeg = (int)temp;
   // Next, multiply the remainder by 60 and skim off the minutes
-  tempLat = modfl(fabsl(tempLat * 60.0), &temp);
+  tempLat = modf(fabs(tempLat * 60.0), &temp);
   latMin = (int)temp;
   // Last, multiply the remainder by 60 and put it into latSec
   latSec = 60.0 * tempLat;
 
   // Next, for longitude, skim off the degrees
-  tempLon = modfl(lon, &temp);
+  tempLon = modf(lon, &temp);
   lonDeg = (int)temp;
   // Next, multiply the remainder by 60 and skim off the minutes
-  tempLon = modfl(fabsl(tempLon * 60.0), &temp);
+  tempLon = modf(fabs(tempLon * 60.0), &temp);
   lonMin = (int)temp;
   // Last, multiply the remainder by 60 and put it into latSec
   lonSec = 60.0 * tempLon;
@@ -313,21 +313,21 @@ void LLA::operator = (const ECI &rhs)
 
   name = rhs.name;
   
-  theta_mine = atan2l(rhs.Y, rhs.X);
+  theta_mine = atan2(rhs.Y, rhs.X);
 
-  lon = fmodl(theta_mine - ThetaG_JD(rhs.JD), (2.0 * PI));
+  lon = fmod(theta_mine - ThetaG_JD(rhs.JD), (2.0 * PI));
   
-  r_mine = sqrtl((rhs.X * rhs.X) + (rhs.Y * rhs.Y));
+  r_mine = sqrt((rhs.X * rhs.X) + (rhs.Y * rhs.Y));
   e2 = f * (2.0 - f);
-  lat = atan2l(rhs.Z, r_mine);
-  while (fabsl(lat - phi) > 1.0e-10)
+  lat = atan2(rhs.Z, r_mine);
+  while (fabs(lat - phi) > 1.0e-10)
   {
     phi = lat;
-    c = 1.0 / sqrtl(1 - e2 * powl(sinl(phi), 2.0));
-    lat = atan2l(rhs.Z + e_R * c * e2 * sinl(phi), r_mine);
+    c = 1.0 / sqrt(1 - e2 * pow(sin(phi), 2));
+    lat = atan2(rhs.Z + e_R * c * e2 * sin(phi), r_mine);
   }
   
-  alt = r_mine / cosl(lat) - e_R * c;
+  alt = r_mine / cos(lat) - e_R * c;
 
   if (lon > PI)
   {
