@@ -1,0 +1,55 @@
+<HTML>
+<BODY LINK="#0000ff" VLINK="#800080">
+<B><FONT SIZE=5 COLOR="#008080"><P>Case Study: Interchanging Translation and Rotation</font></B></P>
+<P><B><U><FONT SIZE=4 COLOR="#ff0000">Experiment</FONT>
+</B></U></P>
+In this experiment we compare
+<OL>
+glTranslatef(x1,y1,z1);<br>
+glRotatef(angle,x2,y2,z2);<br>
+glutSolidTeapot(1.0); 
+</OL>
+and
+<OL>
+glRotatef(angle,x2,y2,z2);<br>
+glTranslatef(x1,y1,z1);<br>
+glutSolidTeapot(1.0);
+</OL>
+The difference between the two code segments is that glTranslatef() and glRotatef() 
+appear in different orders.
+<P>
+<A HREF="OrderTrans2.class">Click here</a> to run the example. 
+The program contains both code segments but one
+of them is commented out.
+You can replace it with the other segment 
+by clicking a suitable radio button.
+</P>
+Initially the program uses
+<OL>
+glTranslatef(0,0,4); <br>
+glRotate(60,0,1,0);<br>
+glutSolidTeapot(1.0);
+</OL>
+and the teapot appears somewhere on the z axis.
+Now click the button "Rotate then Translate"
+followed by "Execute", to 
+run the program using 
+<OL>
+glRotate(60,0,1,0);<br>
+glTranslatef(0,0,4); <br>
+glutSolidTeapot(1.0);
+</OL>
+Observe that now the teapot appeares in a different location
+that we hope you have guessed correctly.
+<P>
+Now it is your turn to change the parameters to any values you like, 
+switch between the 
+two code segments, and test your knowledge on the effect of
+multiple transformations.
+If you have any questions please go back to "Effects of Multiple Transformations".
+</P>
+</BODY>
+</HTML>
+
+
+

@@ -1,0 +1,172 @@
+<html><body><pre>
+<font color="#0000ff">#include</font> &lt;GL/glut.h&gt;
+<font color="#0000ff">#include</font> &lt;stdlib.h&gt;
+
+static GLfloat light0_position[] = {0.0, 2.0, 2.0, 0.0};
+GLfloat mat_amb_diff_white[]   = {1.0, 1.0, 1.0, 1.0};
+GLfloat mat_amb_diff_red[]     = {1.0, 0.0, 0.0, 1.0};
+GLfloat mat_amb_diff_green[]   = {0.0, 1.0, 0.0, 1.0};
+GLfloat mat_amb_diff_pink[]   = {1.0, 0.5, 0.5, 1.0};
+GLint id1, id2;
+
+void init()
+{ 
+<font color="#ff00ff">  glClearColor</font>(0.0, 0.0, 0.0, 0.0);
+<font color="#ff00ff">  glEnable</font>(GL_LIGHTING);
+<font color="#ff00ff">  glEnable</font>(GL_LIGHT0);
+<font color="#ff00ff">  glShadeModel</font>(GL_SMOOTH);   
+<font color="#ff00ff">  glEnable</font>(GL_DEPTH_TEST);
+}
+
+void drawaxes()
+{
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_white);
+<font color="#ff00ff">  glLineWidth</font>(2.0);
+<font color="#ff00ff">  glBegin</font>(GL_LINES);
+<font color="#ff00ff">    glVertex3f</font>(-7,0,0);
+<font color="#ff00ff">    glVertex3f</font>(7,0,0);
+<font color="#ff00ff">    glVertex3f</font>(0,-7,0);
+<font color="#ff00ff">    glVertex3f</font>(0,7,0);
+<font color="#ff00ff">    glVertex3f</font>(0, 0, -7);
+<font color="#ff00ff">    glVertex3f</font>(0, 0, 7);
+<font color="#ff00ff">  glEnd</font>();
+}
+
+void drawtable()
+{
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_pink);
+<font color="#ff00ff">  glPushMatrix</font>();
+<font color="#ff00ff">  glTranslatef</font>(0.0, -1.0, 0.0);
+<font color="#ff00ff">  glBegin</font>(GL_QUADS);
+<font color="#ff00ff">    glVertex3f</font>(-4.0, 0.0, 4.0);
+<font color="#ff00ff">    glVertex3f</font>(-4.0, 0.0,-4.0);
+<font color="#ff00ff">    glVertex3f</font>( 4.0, 0.0,-4.0);
+<font color="#ff00ff">    glVertex3f</font>( 4.0, 0.0, 4.0);
+<font color="#ff00ff">  glEnd</font>();
+<font color="#ff00ff">  glPopMatrix</font>();
+}
+
+void drawpot()
+{
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_green);
+<font color="#ff00ff">  glPushMatrix</font>();
+<font color="#ff00ff">    glutSolidTeapot</font>(1.0);
+<font color="#ff00ff">    glTranslatef</font>(0.0, 0.0, -2.0);   
+<font color="#ff00ff">    glutSolidTeapot</font>(1.0);
+<font color="#ff00ff">    glTranslatef</font>(0.0, 0.0, 4.0);
+<font color="#ff00ff">    glutSolidTeapot</font>(1.0);
+<font color="#ff00ff">  glPopMatrix</font>();
+}
+
+void reshape1(int w, int h)
+{
+<font color="#ff00ff">  glViewport</font>(0,0,(GLsizei) w, (GLsizei) h);
+<font color="#ff00ff">  glMatrixMode</font>(GL_PROJECTION);
+<font color="#ff00ff">  glLoadIdentity</font>();
+<font color="#ff00ff">  gluPerspective</font>(80, (GLfloat) w / (GLfloat) h, 1.0, 100.0);
+<font color="#ff00ff">  glMatrixMode</font>(GL_MODELVIEW);
+}
+
+void reshape2(int w, int h)
+{
+<font color="#ff00ff">  glViewport</font>(0,0, (GLsizei) w, (GLsizei) h);
+<font color="#ff00ff">  glMatrixMode</font>(GL_PROJECTION);
+<font color="#ff00ff">  glLoadIdentity</font>();
+<font color="#ff00ff">  glOrtho</font>(<font color="#ff0000"><b>JPOT$7</b></font>, <font color="#ff0000"><b>JPOT$8</b></font>, <font color="#ff0000"><b>JPOT$9</b></font>,<A name="gohere"></a><font color="#ff0000"><b>JPOT$10</b></font>, <font color="#ff0000"><b>JPOT$11</b></font>, <font color="#ff0000"><b>JPOT$12</b></font>);
+<font color="#ff00ff">  glMatrixMode</font>(GL_MODELVIEW);
+}
+
+void display1()
+{	
+<font color="#ff00ff">  glutSetWindow</font>(id1);
+<font color="#ff00ff">  glClear</font>(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+<font color="#ff00ff">  glMatrixMode</font>(GL_PROJECTION);
+<font color="#ff00ff">  glLoadIdentity</font>();
+         
+<font color="#ff00ff">  glFrustum</font>(<font color="#ff0000"><b>JPOT$1</b></font>, <font color="#ff0000"><b>JPOT$2</b></font>, <font color="#ff0000"><b>JPOT$3</b></font>, <font color="#ff0000"><b>JPOT$4</b></font>, <font color="#ff0000"><b>JPOT$5</b></font>, <font color="#ff0000"><b>JPOT$6</b></font>);
+
+<font color="#ff00ff">  glMatrixMode</font>(GL_MODELVIEW);
+<font color="#ff00ff">  glLoadIdentity</font>();
+<font color="#ff00ff">  gluLookAt</font>(2, 4, 10, 0 , 0 , 0, 0, 1, 0);
+<font color="#ff00ff">  glLightfv</font>(GL_LIGHT0, GL_POSITION, light0_position);	
+  
+  drawtable();
+  drawaxes();
+  drawpot();
+
+<font color="#ff00ff">  glTranslatef</font>(2, 0,- 10);
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_red);
+<font color="#ff00ff">  glutSolidSphere</font>(1.0, 40, 40);
+
+<font color="#ff00ff">  glFlush</font>();
+}
+
+void display2()
+{	
+<font color="#ff00ff">  glutSetWindow</font>(id2);
+<font color="#ff00ff">  glClear</font>(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+<font color="#ff00ff">  glMatrixMode</font>(GL_PROJECTION);
+<font color="#ff00ff">  glLoadIdentity</font>();  
+       
+<font color="#ff00ff">  glOrtho</font>(<font color="#ff0000"><b>JPOT$7</b></font>, <font color="#ff0000"><b>JPOT$8</b></font>, <font color="#ff0000"><b>JPOT$9</b></font>, <font color="#ff0000"><b>JPOT$10</b></font>, <font color="#ff0000"><b>JPOT$11</b></font>, <font color="#ff0000"><b>JPOT$12</b></font>);
+
+<font color="#ff00ff">  glMatrixMode</font>(GL_MODELVIEW);
+<font color="#ff00ff">  glLoadIdentity</font>();
+<font color="#ff00ff">  gluLookAt</font>(2, 4, 10, 0 , 0 , 0, 0, 1, 0);
+<font color="#ff00ff">  glLightfv</font>(GL_LIGHT0, GL_POSITION, light0_position);	
+  
+  drawtable();
+  drawaxes();
+  drawpot();
+
+<font color="#ff00ff">  glTranslatef</font>(2, 0,- 10);
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_red);
+<font color="#ff00ff">  glutSolidSphere</font>(1.0, 40, 40);
+
+<font color="#ff00ff">  glFlush</font>();
+}
+
+int main(int argc, char** argv)
+{
+<font color="#ff00ff">  glutInit</font>(&argc, argv);
+<font color="#ff00ff">  glutInitDisplayMode</font>(GLUT_SINGLE |GLUT_RGB|GLUT_DEPTH);
+
+<font color="#ff00ff">  glutInitWindowSize</font>(250, 250);
+<font color="#ff00ff">  glutInitWindowPosition</font>(0,0);  
+  id1 = glutCreateWindow("Perspective Projection - glFrustum()");
+  init();
+<font color="#ff00ff">  glutDisplayFunc</font>(display1);
+<font color="#ff00ff">  glutReshapeFunc</font>(reshape1);
+
+<font color="#ff00ff">  glutInitWindowSize</font>(250, 250);
+<font color="#ff00ff">  glutInitWindowPosition</font>(0,260);  
+  id2 = glutCreateWindow("Orthographic Projection - glOrtho()");
+  init(); 
+<font color="#ff00ff">  glutDisplayFunc</font>(display2);
+<font color="#ff00ff">  glutReshapeFunc</font>(reshape2);
+
+<font color="#ff00ff">  glutMainLoop</font>();
+  return 0;
+}
+	
+/* 
+ *  by Binh Phu Le
+ *  parts of this program might have been adopted from or inspired by 
+ *  sample programs in 
+ *  "OpenGL Programming Guide", 
+ *  Copyright (c) 1993-1997, Silicon Graphics, Inc.
+ *  "Interactive Computer Graphics"  
+ *  Copyright (c) 1997, Addison-Wesley,
+ *  and/or those written by Mahesh Kumar kumar@cs.uwm.edu
+ *  and/or those written by Dr. Sumanta Guha guha@cs.uwm.edu
+ *  and/or those written by Dr. Ichiro Suzuki suzuki@cs.uwm.edu
+ */
+
+
+
+
+
+
+
+
+</pre></body></html>

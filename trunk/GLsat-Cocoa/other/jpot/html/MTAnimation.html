@@ -1,0 +1,11 @@
+<HTML>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5 COLOR="#008080"><P>Animation </P>
+</FONT><U><FONT SIZE=4 COLOR="#ff0000"><P>Single and Double Buffering:</P>
+</B></U></FONT><P>OpenGL provides single and double-buffering. For single buffering a frame is calculated to draw then viewed when completed. For double buffering one frame is displayed while the other is drawn. When the drawing of a frame is complete, the two buffers are swapped, so the one that was being viewed is now used for drawing, and vice versa.</P>
+<P>We initialize single buffering by calling <B>glutInitDisplayMode(GLUT_SINGLE….) </B>routine, and double buffering by a call to <B>glutInitDisplayMode(GLUT_DOUBLE......)</B> in the main function. We swap buffers to create an animation by calling <B>glutSwapBuffers()</B> routine in our <B>display()</B> function. To see how the animation would be different when using single buffering and double buffering, check out the examples. </P>
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>Experiment</P>
+</B></U></FONT><P><A HREF="SingleBuffer.class">Click here</A> to run the example of Single Buffering, and <A HREF="DoubleBuffer.class">click here</A> to run the example of Double Buffering. At each OpenGL window, click the left mouse to the object to start animation, and right mouse to stop animation.</P>
+<B><U><FONT SIZE=4 COLOR="#ff0000"></B></U></FONT></BODY>
+</HTML>

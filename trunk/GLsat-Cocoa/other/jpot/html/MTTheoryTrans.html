@@ -1,0 +1,46 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<META NAME="Template" CONTENT="E:\Software\Microsoft Office\Office\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5 COLOR="#008080"><P>Theory of Transformations</P>
+</FONT><U><FONT SIZE=4 COLOR="#ff0000"><P>Idea:</P>
+</B></U></FONT><P>OpenGL maintains two matrix stacks that it uses for rendering.  These are the model view and projection matrices. <B><I>glMatrixMode(GLenum mode);</B></I> specifies whether the modeling view or projection matrix is to be modified, using the argument GL_MODELVIEW, GL_PROJECTION.  And <B><I>glLoadIdentity() </B></I>command to clear the currently modifiable matrix for future transformation commands.  Typically, you will call this command before specifying projection or viewing transformations but you might also call it before specifying a modeling transformation.</P>
+<P>Effect of Transformations on Matrix Stacks</P>
+<P>Look at the <B><I>reshape()</B></I> function in an OpenGL program where the projection matrix gets modified.</P><DIR>
+<DIR>
+
+<P>Load Identity Matrix       (I)     I</P>
+<P>Load Projection Matrix     (P0)    I*P0 = P0</P></DIR>
+</DIR>
+
+<P>Now change the matrix mode to modeling view by calling <B><I>glMatrixMode(GL_MODELVIEW);</P>
+</B></I><P>Lets look at the <B><I>display()</B></I> function where the modeling view matrix is further modified. </P><DIR>
+<DIR>
+
+<P>Load Identity Matrix         (I)    I </P>
+<P>LookAt                       (M0)   I*M0 = M0</P>
+<P>Translate along the y axis   (M1)   M0*M1</P>
+<P>Rotate about x axis          (M2)   M0*M1*M2</P>
+<P>Translate along z axis       (M3)   M0*M1*M2*M3</P>
+<P>Scale the object             (M4)   M0*M1*M2*M3*M4</P>
+<P>Draw vertex at [a, b, c]   M0*M1*M2*M3*M4*[a,b,c]</P></DIR>
+</DIR>
+
+<P>The matrices now get applied to the object in reverse order because of the rules of matrix multiplication.  Final transformed object is obtained as follows</P><DIR>
+<DIR>
+
+<P>M0 * (M1 * (M2 * (M3 * (M4 * [a b c] ) ) ) )</P></DIR>
+</DIR>
+
+<P>This gives the vertices of the object in 3D space.  Our screen is 2D.  Hence the mapping occurs by multiplying the object coordinates by the projection matrix P0 from above.</P><DIR>
+<DIR>
+
+<P>2D coordinates [a,b] = P*(M0*(M1*(M2*(M3*(M4[a,b,c])))))</P></DIR>
+</DIR>
+
+<P>We will discuss the <B><I>gluLookAt()</B></I> command and the projection command <B><I>gluPerspective() </B></I>in future concepts.</P></BODY>
+</HTML>

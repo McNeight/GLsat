@@ -1,0 +1,54 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<META NAME="Template" CONTENT="E:\Software\Microsoft Office\Office\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5 COLOR="#008080"><P>Viewing and Modeling</P>
+</FONT><U><FONT SIZE=4 COLOR="#ff0000"><P>Idea</P>
+
+A viewing transformation "changes" the position and orientation of the camera
+(viewpoint).
+But it actually <I>does not</I> move the camera. The OpenGL camera is always stationed at the origin pointing
+down the -z direction with its top pointing in the +y direction. So what do we mean by changing the
+camera's position and orientation? Answer: we <I>simulate</I> the change by using modeling transformations.
+
+Consider a simple case. We want to simulate
+the camera being placed at co-ordinates (0,0,5),
+ie, 5 units in the z direction, still pointing down the -z direction. Easy! Move the scene, that is the objects, 5 units in the
+-z direction, which is just a translation, precisely glTranslatef(0.0, 0.0, -5.0). Generally,
+it is not hard to see that the placement of the camera at an arbitrary point (eyex, eyey, eyez)
+and pointing at (centerx, centery, centerz), which then is the "new" origin, may be simulated by a (scene) translation 
+whose components are (centerx - eyex, centery - eyey, centerz - eyez) followed by a (scene) rotation
+that lines up the vector whose components are (centerx - eyex, centery - eyey, centerz - eyez)
+with the -z direction. Further, we may simulate a rotation of the camera about its line of sight,
+if we so choose, by an additional rotation of the scene: apply to the scene the reverse rotation about the line of
+sight to line up the direction of the top of the camera with its  original direction in the +y direction.
+
+This simulation is exactly what is effected by the viewing transformation gluLookAt(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz).
+A note about the (upx, upy, upz) vector that specifies the direction of the top of the camera: the vector that is actually used as the
+direction that the top of the camera is the projection of (upx, upy, upz) on the plane normal to the line of sight, ie., the
+plane that is normal to the vector (centerx - eyex, centery - eyey, centerz - eyez).
+
+ 
+</B></U></FONT><P>Viewing transformation can be done by using modeling transformation commands, that is, <B><I>glTranslate*() </B></I>and <B><I>glRotate*()</B></I>. We can think of
+ the effect of these transformations as changing the camera position or as moving all the objects, relative to a stationary camera. </P>
+<P>Using modeling transformation commands to emulate viewing transformation is similar to moving the viewpoint in a desired way while keeping the objects in the world 
+stationary. Since the camera is initially located at the origin and since objects are often most easily constructed there as well, in general we have to perform some 
+transformations so that the objects can be viewed. </P>
+<P>This duality in the nature of viewing and modeling transformations is why you need to think about the effects of both types of transformations simultaneously.  
+This is also why modeling and viewing transformations are combined into the modelview matrix before the transformations are applied.</P>
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>Example</P>
+</B></U></FONT>
+<P>Here are some example to have the same effect as <B><I>gluLookAt()</B></I> by using <B><I>glTranslate*()</B></I> and <B><I>glRotate*()</B></I>:</P>
+<B><I><P>gluLookAt(0.0, 3.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)</B></I> is similar as using <B><I>glTranslatef(0, 0, -5);  glRotatef(45, 1, 0, 0);</P>
+<P>gluLookAt(0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0) </B></I>is similar as using <B><I>glTranslatef(0, 0, -5);  glRotatef(45, 1, 0, 0);</P>
+<P>gluLookAt(9.0, 0.0 , 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)</B></I> is similar as using <B><I>glTranslatef(-3, 0, -10); glRotatef(45, 0, -1, 0);</P>
+</I>
+
+<U><FONT SIZE=4 COLOR="#ff0000"><P>Experiment</P>
+</B></U></FONT><P>Click here to run the example.</P>
+</BODY>
+</HTML>

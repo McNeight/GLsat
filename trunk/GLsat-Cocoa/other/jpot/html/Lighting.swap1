@@ -1,0 +1,2 @@
+<font color="#ff00ff">   glEnable</font>(GL_LIGHTING);
+<font color="#ff00ff">   glEnable</font>(GL_LIGHT0);

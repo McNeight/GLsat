@@ -1,0 +1,20 @@
+<HTML>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5 COLOR="#008080"><P>Specifying Vertices</P>
+</FONT><U><FONT SIZE=4 COLOR="#ff0000"><P>Idea:</P>
+</B></U></FONT><P>With OpenGL all geometric objects are specified by an ordered set of vertices. </P>
+<B><P>void glVertex{234}{sifd}[v](TYPE coords);</P>
+</B><P>specifies a vertex for use in describing a geometric object. You can supply up to four coordinates (x, y, z, w) for a particular vertex or as few as two (x, y) by selecting the appropriate version of the command.</P>
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>Examples:</P><DIR>
+<DIR>
+
+</B></U></FONT><P>(1) glVertex2s(2,3);</P>
+<P>(2) glVertex3d(0.0, 0.0, 3.14159276567);</P>
+<P>(3) glVertex4f(2.3, 1.0, -2.2, 2.0);</P>
+<P>(4) GLdouble dvect[3] = {5.0, 9.0, 1992.0};</P>
+<P>    glVertex3dv(dvect);</P></DIR>
+</DIR>
+
+<P>The first example represents a vertex with three-dimensional coordinates (2,3,0). Note that if it is not specified the z coordinate is understood to be 0. In example (4) dvect is a pointer to an array of three double-precision floating point numbers.</P></BODY>
+</HTML>

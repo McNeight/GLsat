@@ -1,0 +1,40 @@
+The orbital algorithms are taken from the Third Edition of
+"Astronomical Formulae for Calculators" by Jean Meeus, published by
+Willman-Bell.  The rotational parameters for the other planets and
+satellites are taken from Davies et al. (1996), Celestial Mechanics
+63, 127--148.
+
+Orbital formulae for Pluto are taken from Paul Schlyter's page at
+http://www.m2c3.com/alpocs/tdl1999/schlyter110199/ppcomp.html
+
+Formula for conversions to galactic coordinates from sect 29 of
+Practical Astronomy With Your Calculator by Duffett-Smith (3rd ed,
+1988).
+
+The XParseGeometry routine and the rgb.txt file are from the XFree
+4.0.2 distribution from the Open Group.
+
+The Helmet Normal font is from the OpenOffice.org distribution.
+
+The day map of the earth is by J. Hasting and can be found at
+http://apollo.spaceports.com/~jhasting/images/earthmaps/earthmap2k.jpg
+
+The night map of the earth is taken from
+http://visibleearth.nasa.gov/cgi-bin/viewrecord?5826
+
+The brightness and transparency values for Saturn's rings are from
+Bjorn Jonsson's page at
+http://www.mmedia.is/~bjj/data/saturn/rings.html
+
+Thanks to ... 
+
+Marian Aldenhövel, Will Andrews, James Baughman, Erik Bruhwiler,
+Charles Duffy, Matthew Francey, Marcus Harnisch, Kirk Johnson, Markus
+Koerner, Tomohiro Kubota, Neoklis Kyriazis, Daniel Martin, Gopal
+Narayanan, Jeremie Petit, Martin Pool, Larry Reeder, Richard Rognlie,
+Henri Simoes, Frank Solensky, Per Erik Stendahl, Nigel Stewart, Nils
+Peter Sudmann, John Tillema, Jay Treacy, James Troup, Leif Van Horn,
+Jim Wray, and Detlev Zundel.
+
+Hari Nair
+hari@alumni.caltech.edu

@@ -1,0 +1,6 @@
+#
+# Get the latest orbital elements from celestrak.com:
+# wget -O science.tle http://www.celestrak.com/NORAD/elements/science.txt
+#
+
+20580 "" image=hubble.png transparent={0,0,0} trail={orbit,-10,0,5} color=green

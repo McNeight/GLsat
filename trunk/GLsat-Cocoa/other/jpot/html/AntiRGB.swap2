@@ -1,0 +1,2 @@
+<font color="#ff00ff">   glDisable</font>(GL_LINE_SMOOTH);
+<font color="#ff00ff">   glDisable</font>(GL_POINT_SMOOTH);

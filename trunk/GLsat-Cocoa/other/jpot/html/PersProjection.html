@@ -1,0 +1,368 @@
+<html><body><pre>
+<font color="#0000ff">#include</font> &lt;stdlib.h&gt;
+<font color="#0000ff">#include</font> &lt;stdio.h&gt;
+<font color="#0000ff">#include</font> &lt;math.h&gt;
+<font color="#0000ff">#include</font> &lt;GL/glut.h&gt;
+
+static GLfloat light0_position[] = {0.0, 2.0, 2.0, 0.0};
+GLfloat mat_amb_diff_white[]   = {1.0, 1.0, 1.0, 1.0};
+GLfloat mat_amb_diff_green[]   = {0.0, 1.0, 0.0, 1.0};
+GLfloat mat_amb_diff_cyan[]    = {0.0, 1.0, 1.0, 1.0}; 
+GLfloat light_ambient[]        = {0.3, 0.3, 0.3, 1.0};
+static double viewer[] = {18.0, 8.0, 16.0};
+
+GLfloat matrix[16] = {0.99, 0, -0.15, 0.00, -0.04, 0.96, -0.29, 0, 0.15, 0.29, 0.95, 0.0, 2, 4, 13, 0.83};
+GLfloat  left_far, top_far, right_far, bottom_far; 
+GLfloat tmat[4][4], temp[4][4];
+GLint i, j, id1, id2;
+int inverse_exist = 0;
+
+void transpose(float trans[4][4]);
+
+void inverse(float a[4][4]);
+
+void inverse(float a[4][4])
+{   
+
+  float 
+    t14, t15, t17, t19, t20, t22, t24, t25,
+    t27, t29, t32, t33, t35, t37, t38, t40,
+    t42, t43, t46, t49, t50, t52, t54, t57,
+    t60, t63, t65, t71, t73, t75, t77, t81,
+    t83, t85, t87, t101, t103, t105, t107, 
+    t109, t111, t115, t117, t119, t121, t123, 
+    t125, t129, t131, t133, t135, divisor;
+  
+  inverse_exist = 0;
+  t14 = a[0][0]*a[1][1];
+  t15 = a[2][2]*a[3][3];
+  t17 = a[2][3]*a[3][2];
+  t19 = a[0][0]*a[2][1];
+  t20 = a[1][2]*a[3][3];
+  t22 = a[1][3]*a[3][2];
+  t24 = a[0][0]*a[3][1];
+  t25 = a[1][2]*a[2][3];
+  t27 = a[1][3]*a[2][2];
+  t29 = a[1][0]*a[0][1];
+  t32 = a[1][0]*a[2][1];
+  t33 = a[0][2]*a[3][3];
+  t35 = a[0][3]*a[3][2];
+  t37 = a[1][0]*a[3][1];
+  t38 = a[0][2]*a[2][3];
+  t40 = a[0][3]*a[2][2];
+  t42 = -t14*t15+t14*t17+t19*t20-t19*t22-t24*t25+t24*t27+t29*t15-t29*t17-
+    t32*t33+t32*t35+t37*t38-t37*t40;
+  t43 = a[2][0]*a[0][1];
+  t46 = a[2][0]*a[1][1];
+  t49 = a[2][0]*a[3][1];
+  t50 = a[0][2]*a[1][3];
+  t52 = a[0][3]*a[1][2];
+  t54 = a[3][0]*a[0][1];
+  t57 = a[3][0]*a[1][1];
+  t60 = a[3][0]*a[2][1];
+  t63 = -t43*t20+t43*t22+t46*t33-t46*t35-t49*t50+t49*t52+t54*t25-t54*t27-
+    t57*t38+t57*t40+t60*t50-t60*t52;
+  
+  if((t42 + t63) == 0){
+    inverse_exist=1;
+    return; }
+  
+  t65 = 1/(t42+t63);
+  t71 = a[2][1]*a[0][2];
+  t73 = a[2][1]*a[0][3];
+  t75 = a[3][1]*a[0][2];
+  t77 = a[3][1]*a[0][3];
+  t81 = a[0][1]*a[1][2];
+  t83 = a[0][1]*a[1][3];
+  t85 = a[1][1]*a[0][2];
+  t87 = a[1][1]*a[0][3];
+  t101 = a[1][0]*a[2][2];
+  t103 = a[1][0]*a[2][3];
+  t105 = a[2][0]*a[1][2];
+  t107 = a[2][0]*a[1][3];
+  t109 = a[3][0]*a[1][2];
+  t111 = a[3][0]*a[1][3];
+  t115 = a[0][0]*a[2][2];
+  t117 = a[0][0]*a[2][3];
+  t119 = a[2][0]*a[0][2];
+  t121 = a[2][0]*a[0][3];
+  t123 = a[3][0]*a[0][2];
+  t125 = a[3][0]*a[0][3];
+  t129 = a[0][0]*a[1][2];
+  t131 = a[0][0]*a[1][3];
+  t133 = a[1][0]*a[0][2];
+  t135 = a[1][0]*a[0][3];
+  tmat[0][0] = -(a[1][1]*a[2][2]*a[3][3]-a[1][1]*a[2][3]*a[3][2]
+                 -a[2][1]*a[1][2]*a[3][3]+a[2][1]*a[1][3]*a[3][2]
+                 +a[3][1]*a[1][2]*a[2][3]-a[3][1]*a[1][3]*a[2][2])*t65;
+  tmat[0][1] = (a[0][1]*a[2][2]*a[3][3]-a[0][1]*a[2][3]*a[3][2]-t71*a[3][3]+
+		t73*a[3][2]+t75*a[2][3]-t77*a[2][2])*t65;
+  tmat[0][2] = (-t81*a[3][3]+t83*a[3][2]+t85*a[3][3]-t87*a[3][2]-t75*a[1][3]+
+		t77*a[1][2])*t65;
+  tmat[0][3] = (t81*a[2][3]-t83*a[2][2]-t85*a[2][3]+t87*a[2][2]+t71*a[1][3]-
+		t73*a[1][2])*t65;
+  tmat[1][0] = (t101*a[3][3]-t103*a[3][2]-t105*a[3][3]+t107*a[3][2]+t109*a[2]
+		[3]-t111*a[2][2])*t65;
+  tmat[1][1] = -(t115*a[3][3]-t117*a[3][2]-t119*a[3][3]+t121*a[3][2]+t123*a[2]
+		 [3]-t125*a[2][2])*t65;
+  tmat[1][2] = -(-t129*a[3][3]+t131*a[3][2]+t133*a[3][3]-t135*a[3][2]-t123*a
+		 [1][3]+t125*a[1][2])*t65;
+  tmat[1][3] = -(t129*a[2][3]-t131*a[2][2]-t133*a[2][3]+t135*a[2][2]+t119*a[1]
+		 [3]-t121*a[1][2])*t65;
+  tmat[2][0] = -(t32*a[3][3]-t103*a[3][1]-t46*a[3][3]+t107*a[3][1]+t57*a[2][3]
+		 -t111*a[2][1])*t65;
+  tmat[2][1] = (-t117*a[3][1]+t19*a[3][3]-t43*a[3][3]+t121*a[3][1]+t54*a[2][3]
+		-t125*a[2][1])*t65;
+  tmat[2][2] = -(t14*a[3][3]-t131*a[3][1]-t29*a[3][3]+t135*a[3][1]+t54*a[1][3]
+		 -t125*a[1][1])*t65;
+  tmat[2][3] = (t14*a[2][3]-t131*a[2][1]-t29*a[2][3]+t135*a[2][1]+t43*a[1][3]-
+		t121*a[1][1])*t65;
+  tmat[3][0] = -(-t32*a[3][2]+t101*a[3][1]+t46*a[3][2]-t105*a[3][1]-t57*a[2]
+		 [2]+t109*a[2][1])*t65;
+  tmat[3][1] = (-t19*a[3][2]+t115*a[3][1]+t43*a[3][2]-t119*a[3][1]-t54*a[2][2]
+		+t123*a[2][1])*t65;
+  tmat[3][2] = (t14*a[3][2]-t129*a[3][1]-t29*a[3][2]+t133*a[3][1]+t54*a[1][2]-
+		t123*a[1][1])*t65;
+  tmat[3][3] = (-t14*a[2][2]+t129*a[2][1]+t29*a[2][2]-t133*a[2][1]-t43*a[1][2]
+		+t119*a[1][1])*t65;
+}
+
+
+void transpose(float trans[4][4])
+{
+  int i, j;
+  
+  for(i=0; i&lt;4; i++) {
+    for(j=0; j&lt;4; j++) 
+      temp[j][i] = trans[i][j] ;
+  }
+  for(i=0; i&lt;4; i++)
+    for(j=0; j&lt;4; j++)
+      tmat[i][j] = temp[i][j];
+}  
+
+void init() 
+{
+  /* select clearing color to black */
+<font color="#ff00ff">  glClearColor</font>(0.0, 0.0, 0.0, 0.0);
+<font color="#ff00ff">  glEnable</font>(GL_LIGHTING);
+<font color="#ff00ff">  glEnable</font>(GL_LIGHT0);
+<font color="#ff00ff">  glShadeModel</font>(GL_SMOOTH);   
+<font color="#ff00ff">  glEnable</font>(GL_DEPTH_TEST);
+}
+
+void drawaxes()
+{
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_white);
+<font color="#ff00ff">  glLineWidth</font>(2.0);
+<font color="#ff00ff">  glBegin</font>(GL_LINES);
+<font color="#ff00ff">    glVertex3f</font>(-7,0,0);
+<font color="#ff00ff">    glVertex3f</font>(7,0,0);
+<font color="#ff00ff">    glVertex3f</font>(0,-7,0);
+<font color="#ff00ff">    glVertex3f</font>(0,7,0);
+<font color="#ff00ff">    glVertex3f</font>(0, 0, -7);
+<font color="#ff00ff">    glVertex3f</font>(0, 0, 7);
+<font color="#ff00ff">  glEnd</font>();
+}
+
+void reshape(int w, int h)
+{
+<font color="#ff00ff">   glViewport</font>(0,0,(GLsizei) w, (GLsizei) h);
+   /* set up projection transformation */
+<font color="#ff00ff">   glMatrixMode</font>(GL_PROJECTION);
+<font color="#ff00ff">   glLoadIdentity</font>();
+<font color="#ff00ff">   glFrustum</font>(<A name="gohere"></a><font color="#ff0000"><b><font color="#ff0000"><b>JPOT$1</b></font></b></font>, <font color="#ff0000"><b>JPOT$2</b></font>, <font color="#ff0000"><b>JPOT$3</b></font>, <font color="#ff0000"><b>JPOT$4</b></font>, <font color="#ff0000"><b>JPOT$5</b></font>, <font color="#ff0000"><b>JPOT$6</b></font>);
+<font color="#ff00ff">   glMatrixMode</font>(GL_MODELVIEW);
+}
+
+void display(void)
+{
+<font color="#ff00ff">  glutSetWindow</font>(id1);
+  /* clear all pixels, clear depth bit */
+<font color="#ff00ff">  glClear</font>(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+  /* set up projection transformation */
+<font color="#ff00ff">  glMatrixMode</font>(GL_PROJECTION);
+<font color="#ff00ff">  glLoadIdentity</font>();
+  /* for perspective projection specify a viewing frustum */
+<font color="#ff00ff">  glFrustum</font>(<font color="#ff0000"><b>JPOT$1</b></font>, <font color="#ff0000"><b>JPOT$2</b></font>, <font color="#ff0000"><b>JPOT$3</b></font>, <font color="#ff0000"><b>JPOT$4</b></font>, <font color="#ff0000"><b>JPOT$5</b></font>, <font color="#ff0000"><b>JPOT$6</b></font>);
+
+  /* set up viewing transformation */
+<font color="#ff00ff">  glMatrixMode</font>(GL_MODELVIEW);
+<font color="#ff00ff">  glLoadIdentity</font>();
+  /* specify viewpoint */
+<font color="#ff00ff">  gluLookAt</font>(<font color="#ff0000"><b>JPOT$7</b></font>, <font color="#ff0000"><b>JPOT$8</b></font>, <font color="#ff0000"><b>JPOT$9</b></font>, <font color="#ff0000">JPOT$10</b></font>, <font color="#ff0000"><b>JPOT$11</b></font>, <font color="#ff0000"><b>JPOT$12</b></font>, <font color="#ff0000"><b>JPOT$13</b></font>, <font color="#ff0000"><b>JPOT$14</b></font>, <font color="#ff0000"><b>JPOT$15</b></font>);
+
+<font color="#ff00ff">  glLightfv</font>(GL_LIGHT0, GL_POSITION, light0_position);
+<font color="#ff00ff">  glGetFloatv</font>(GL_MODELVIEW_MATRIX, (GLfloat *) tmat);
+  transpose(tmat);
+  inverse(tmat);
+  transpose(tmat);
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_green);
+<font color="#ff00ff">  glutSolidTeapot</font>(1.0);
+  drawaxes();
+
+<font color="#ff00ff">  glFlush</font>();
+}
+
+void reshape2(int w, int h)
+{
+<font color="#ff00ff">   glViewport</font>(0,0,(GLsizei) w, (GLsizei) h);
+   /* set up projection transformation */
+<font color="#ff00ff">   glMatrixMode</font>(GL_PROJECTION);
+<font color="#ff00ff">   glLoadIdentity</font>();
+<font color="#ff00ff">   gluPerspective</font>(80, (GLfloat) w / (GLfloat) h, 1.0, 100.0);
+<font color="#ff00ff">   glMatrixMode</font>(GL_MODELVIEW);
+
+}
+
+/*display 2*/
+void display2(void)
+{  
+<font color="#ff00ff">  glutSetWindow</font>(id2);
+<font color="#ff00ff">  glClear</font>(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  
+<font color="#ff00ff">  glLoadIdentity</font>();
+  /* specify viewpoint */
+<font color="#ff00ff">  gluLookAt</font>(viewer[0], viewer[1], viewer[2], 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+<font color="#ff00ff">  glLightfv</font>(GL_LIGHT0, GL_AMBIENT, light_ambient);
+<font color="#ff00ff">  glLightfv</font>(GL_LIGHT0, GL_POSITION, light0_position);	
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_green);
+<font color="#ff00ff">  glutSolidTeapot</font>(1.0);
+  drawaxes();   
+  if (inverse_exist == 0) {
+<font color="#ff00ff">    glPushMatrix</font>();
+<font color="#ff00ff">    glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_white);
+    for (i = 0; i &lt; 4; i++)
+      for (j = 0; j &lt; 4; j++)
+      matrix[i*4+j] = tmat[i][j];
+<font color="#ff00ff">    glMultMatrixf</font>(matrix);
+<font color="#ff00ff">    glPolygonMode</font>(GL_FRONT_AND_BACK, GL_LINE);
+<font color="#ff00ff">    glLineWidth</font>(2.0);
+    /* draw the actual frustum */
+    left_far  = ( <font color="#ff0000"><b>JPOT$1</b></font> * <font color="#ff0000"><b>JPOT$6</b></font> ) / <font color="#ff0000"><b>JPOT$5</b></font>;
+    right_far  = ( <font color="#ff0000"><b>JPOT$2</b></font>* <font color="#ff0000"><b>JPOT$6</b></font> ) / <font color="#ff0000"><b>JPOT$5</b></font>;
+    top_far    = ( <font color="#ff0000"><b>JPOT$4</b></font> * <font color="#ff0000"><b>JPOT$6</b></font> ) / <font color="#ff0000"><b>JPOT$5</b></font>;
+    bottom_far = ( <font color="#ff0000"><b>JPOT$3</b></font> * <font color="#ff0000"><b>JPOT$6</b></font> ) / <font color="#ff0000"><b>JPOT$5</b></font>;  
+ 
+    /* Draw the front face of the frustum */
+<font color="#ff00ff">    glBegin</font>(GL_POLYGON);
+<font color="#ff00ff">    glVertex3f</font>(<font color="#ff0000"><b>JPOT$1</b></font>, <font color="#ff0000"><b>JPOT$4</b></font>, -<font color="#ff0000"><b>JPOT$5</b></font>);
+<font color="#ff00ff">    glVertex3f</font>(<font color="#ff0000"><b>JPOT$1</b></font>, <font color="#ff0000"><b>JPOT$3</b></font>, -<font color="#ff0000"><b>JPOT$5</b></font>);
+<font color="#ff00ff">    glVertex3f</font>(<font color="#ff0000"><b>JPOT$2</b></font>, <font color="#ff0000"><b>JPOT$3</b></font>, -<font color="#ff0000"><b>JPOT$5</b></font>);
+<font color="#ff00ff">    glVertex3f</font>(<font color="#ff0000"><b>JPOT$2</b></font>, <font color="#ff0000"><b>JPOT$4</b></font>, -<font color="#ff0000"><b>JPOT$5</b></font>);
+<font color="#ff00ff">    glEnd</font>();
+    
+    /* Draw the left face of the frustum */
+<font color="#ff00ff">    glBegin</font>(GL_POLYGON);
+<font color="#ff00ff">    glVertex3f</font>(left_far, bottom_far,  -<font color="#ff0000"><b>JPOT$6</b></font>);
+<font color="#ff00ff">    glVertex3f</font>(<font color="#ff0000"><b>JPOT$1</b></font>, <font color="#ff0000"><b>JPOT$3</b></font>,  -<font color="#ff0000"><b>JPOT$5</b></font>);
+<font color="#ff00ff">    glVertex3f</font>(<font color="#ff0000"><b>JPOT$1</b></font>, <font color="#ff0000"><b>JPOT$4</b></font>, -<font color="#ff0000"><b>JPOT$5</b></font>);
+<font color="#ff00ff">    glVertex3f</font>(left_far, top_far, -<font color="#ff0000"><b>JPOT$6</b></font>);
+<font color="#ff00ff">    glEnd</font>();
+    
+    /* Draw the right face of the frustum */
+<font color="#ff00ff">    glBegin</font>(GL_POLYGON);
+<font color="#ff00ff">    glVertex3f</font>(right_far, bottom_far, -<font color="#ff0000"><b>JPOT$6</b></font>);
+<font color="#ff00ff">    glVertex3f</font>(<font color="#ff0000"><b>JPOT$2</b></font>, <font color="#ff0000"><b>JPOT$3</b></font>, -<font color="#ff0000"><b>JPOT$5</b></font>);
+<font color="#ff00ff">    glVertex3f</font>(<font color="#ff0000"><b>JPOT$2</b></font>, <font color="#ff0000"><b>JPOT$4</b></font>, -<font color="#ff0000"><b>JPOT$5</b></font>);
+<font color="#ff00ff">    glVertex3f</font>(right_far, top_far, -<font color="#ff0000"><b>JPOT$6</b></font>);
+<font color="#ff00ff">    glEnd</font>();
+    
+    /* Draw the bottom face of the frustum */
+<font color="#ff00ff">    glBegin</font>(GL_POLYGON);
+<font color="#ff00ff">    glVertex3f</font>(<font color="#ff0000"><b>JPOT$1</b></font>, <font color="#ff0000"><b>JPOT$3</b></font>, -<font color="#ff0000"><b>JPOT$5</b></font>);
+<font color="#ff00ff">    glVertex3f</font>(left_far, bottom_far, -<font color="#ff0000"><b>JPOT$6</b></font>);
+<font color="#ff00ff">    glVertex3f</font>(right_far, bottom_far, -<font color="#ff0000"><b>JPOT$6</b></font>);
+<font color="#ff00ff">    glVertex3f</font>(<font color="#ff0000"><b>JPOT$2</b></font>, <font color="#ff0000"><b>JPOT$3</b></font>, -<font color="#ff0000"><b>JPOT$5</b></font>);
+<font color="#ff00ff">    glEnd</font>();
+    
+    /* Draw the top face of the frustum */
+<font color="#ff00ff">    glBegin</font>(GL_POLYGON);
+<font color="#ff00ff">    glVertex3f</font>(<font color="#ff0000"><b>JPOT$1</b></font>, <font color="#ff0000"><b>JPOT$4</b></font>, -<font color="#ff0000"><b>JPOT$5</b></font>);
+<font color="#ff00ff">    glVertex3f</font>(left_far, top_far, -<font color="#ff0000"><b>JPOT$6</b></font>);
+<font color="#ff00ff">    glVertex3f</font>(right_far, top_far, -<font color="#ff0000"><b>JPOT$6</b></font>);
+<font color="#ff00ff">    glVertex3f</font>(<font color="#ff0000"><b>JPOT$2</b></font>, <font color="#ff0000"><b>JPOT$4</b></font>, -<font color="#ff0000"><b>JPOT$5</b></font>);
+<font color="#ff00ff">    glEnd</font>();
+
+    /* Draw the back face of the frustum */
+<font color="#ff00ff">    glBegin</font>(GL_POLYGON);
+<font color="#ff00ff">    glVertex3f</font>(left_far, top_far, -<font color="#ff0000"><b>JPOT$6</b></font>);
+<font color="#ff00ff">    glVertex3f</font>(left_far, bottom_far, -<font color="#ff0000"><b>JPOT$6</b></font>);
+<font color="#ff00ff">    glVertex3f</font>(right_far, bottom_far, -<font color="#ff0000"><b>JPOT$6</b></font>);
+<font color="#ff00ff">    glVertex3f</font>(right_far, top_far, -<font color="#ff0000"><b>JPOT$6</b></font>);
+<font color="#ff00ff">    glEnd</font>();
+    
+    /* Draw the Left Triangle */
+<font color="#ff00ff">    glBegin</font>(GL_TRIANGLES);
+<font color="#ff00ff">    glVertex3f</font>(<font color="#ff0000"><b>JPOT$1</b></font>, <font color="#ff0000"><b>JPOT$3</b></font>, -<font color="#ff0000"><b>JPOT$5</b></font>);
+<font color="#ff00ff">    glVertex3f</font>(0,0,0);
+<font color="#ff00ff">    glVertex3f</font>(<font color="#ff0000"><b>JPOT$1</b></font>, <font color="#ff0000"><b>JPOT$4</b></font>, -<font color="#ff0000"><b>JPOT$5</b></font>);
+<font color="#ff00ff">    glEnd</font>();
+    
+    /* Draw the top Triangle */
+<font color="#ff00ff">    glBegin</font>(GL_TRIANGLES);
+<font color="#ff00ff">    glVertex3f</font>(<font color="#ff0000"><b>JPOT$1</b></font>, <font color="#ff0000"><b>JPOT$4</b></font>, -<font color="#ff0000"><b>JPOT$5</b></font>);
+<font color="#ff00ff">    glVertex3f</font>(0,0,0);
+<font color="#ff00ff">    glVertex3f</font>(<font color="#ff0000"><b>JPOT$2</b></font>, <font color="#ff0000"><b>JPOT$4</b></font>, -<font color="#ff0000"><b>JPOT$5</b></font>);
+<font color="#ff00ff">    glEnd</font>();
+    
+    /* draw the right Triangle */
+<font color="#ff00ff">    glBegin</font>(GL_TRIANGLES);
+<font color="#ff00ff">    glVertex3f</font>(<font color="#ff0000"><b>JPOT$2</b></font>, <font color="#ff0000"><b>JPOT$3</b></font>, -<font color="#ff0000"><b>JPOT$5</b></font>);
+<font color="#ff00ff">    glVertex3f</font>(0,0,0);
+<font color="#ff00ff">    glVertex3f</font>(<font color="#ff0000"><b>JPOT$2</b></font>, <font color="#ff0000"><b>JPOT$4</b></font>, -<font color="#ff0000"><b>JPOT$5</b></font>);
+<font color="#ff00ff">    glEnd</font>();
+    
+    /* draw the bottom triangle */
+<font color="#ff00ff">    glBegin</font>(GL_TRIANGLES);
+<font color="#ff00ff">    glVertex3f</font>(<font color="#ff0000"><b>JPOT$1</b></font>, <font color="#ff0000"><b>JPOT$3</b></font>, -<font color="#ff0000"><b>JPOT$5</b></font>);
+<font color="#ff00ff">    glVertex3f</font>(0,0,0);
+<font color="#ff00ff">    glVertex3f</font>(<font color="#ff0000"><b>JPOT$2</b></font>, <font color="#ff0000"><b>JPOT$3</b></font>, -<font color="#ff0000"><b>JPOT$5</b></font>);
+<font color="#ff00ff">    glEnd</font>();
+<font color="#ff00ff">    glPopMatrix</font>();
+  } 
+<font color="#ff00ff">  glFlush</font>();
+}
+
+int main(int argc, char** argv)
+{
+<font color="#ff00ff">   glutInit</font>(&argc, argv);
+<font color="#ff00ff">   glutInitDisplayMode</font>(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
+
+   /* First Window */
+<font color="#ff00ff">   glutInitWindowSize</font>(300,300); 
+<font color="#ff00ff">   glutInitWindowPosition</font>(0,0);
+   id1 = glutCreateWindow("Perspective Projection - glFrustum()");
+   init();
+<font color="#ff00ff">   glutDisplayFunc</font>(display);
+<font color="#ff00ff">   glutReshapeFunc</font>(reshape);
+
+   /* Second Window */
+<font color="#ff00ff">   glutInitWindowSize</font>(300,300);
+<font color="#ff00ff">   glutInitWindowPosition</font>(0,310);
+   id2 = glutCreateWindow("Perspective Projection II - glFrustum()");
+   init();
+<font color="#ff00ff">   glutDisplayFunc</font>(display2);
+<font color="#ff00ff">   glutReshapeFunc</font>(reshape2);
+
+<font color="#ff00ff">   glutMainLoop</font>();
+   return 0;   
+}
+
+/* 
+ *  by Binh Phu Le and Mahesh Kumar
+ *  parts of this program might have been adopted from or inspired by 
+ *  sample programs in 
+ *  "OpenGL Programming Guide", 
+ *  Copyright (c) 1993-1997, Silicon Graphics, Inc.
+ *  "Interactive Computer Graphics"  
+ *  Copyright (c) 1997, Addison-Wesley,
+ *  and/or those written by Dr. Sumanta Guha guha@cs.uwm.edu
+ *  and/or those written by Dr. Ichiro Suzuki suzuki@cs.uwm.edu
+ */
+
+
+
+
+</pre></body></html>

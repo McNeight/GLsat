@@ -1,0 +1,18 @@
+<HTML>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5 COLOR="#008080"><P>Drawing Polygons</P>
+</FONT><U><FONT SIZE=4 COLOR="#ff0000"><P>Idea:</P>
+</B></U></FONT><P>Polygons are the areas enclosed by single closed loops of line segments, where the line segments are specified by the vertices at their end points. We define the vertices of a polygon by using <B>glVertex2f(x,y)</B> or <B>glVertex3f(x, y, z) </B>as when working with points and lines, the difference being that we have to change the mode in the <B>glBegin(Glenum mode) </B>to be <B>GL_POLYGON </B>mode. In general polygons can be complicated, so OpenGL makes some strong restrictions on what may constitute a primitive polygon. </P>
+<UL>
+<LI>The edges of a polygon may not intersect , i.e. it has to be a simple polygon.
+<LI>OpenGL polygons must be convex (meaning that they cannot have indentations) and consequently planar.
+</UL>
+<P ALIGN="CENTER"><IMG SRC="Polygon1.gif" WIDTH=214 HEIGHT=127></P>
+<P ALIGN="CENTER"><IMG SRC="Polygon2.gif" WIDTH=283 HEIGHT=126></P>
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>Convexity: </P>
+</B></U></FONT><P>A region is convex, if given any two points in the interior, the line segment joining them is also in the interior. The program to your left shows some valid and invalid polygons. Many real-world surfaces consist of non-simple polygons non-convex polygons or polygons with holes. All such polygons can be formed from unions of simple convex polygons. </P>
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>Experiment</P>
+</B></U></FONT><P><A HREF="DrawPoly.class">Click here </A>.
+</P></BODY>
+</HTML>

@@ -1,0 +1,45 @@
+<html><body><pre>
+<font color="#0000ff">#include</font> &lt;stdlib.h&gt;
+<font color="#0000ff">#include</font> &lt;GL/glut.h&gt;
+char * title;
+void display(void)
+{
+/* clear all pixels */
+<font color="#ff00ff">glClear</font>(GL_COLOR_BUFFER_BIT);
+}
+
+void init(void)
+{
+/* set background color   */
+<font color="#ff00ff">   glClearColor</font>(0.0, 0.0, 0.0, 0.0);
+/* initialize viewing values */
+<font color="#ff00ff">   glMatrixMode</font>(GL_PROJECTION);
+<font color="#ff00ff">   glLoadIdentity</font>();
+<font color="#ff00ff">   glOrtho</font>(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
+}
+
+int main(int argc, char* argv[])
+{
+<font color="#ff00ff">   glutInit</font>(&argc, argv);
+<font color="#ff00ff">   glutInitDisplayMode</font>(GLUT_SINGLE|GLUT_RGB);
+<font color="#ff00ff">   glutInitWindowSize</font>(400, 400);
+<font color="#ff00ff">   glutInitWindowPosition</font>(0,0); 
+<font color="#ff00ff">   glutCreateWindow</font>("$$$1");
+   init();
+<font color="#ff00ff">   glutDisplayFunc</font>(display);
+<font color="#ff00ff">   glutMainLoop</font>();
+   return 0;
+}
+
+/* 
+ *  by Binh Phu Le
+ *  parts of this program might have been adopted from or inspired by 
+ *  sample programs in 
+ *  "OpenGL Programming Guide", 
+ *  Copyright (c) 1993-1997, Silicon Graphics, Inc.
+ *  "Interactive Computer Graphics"  
+ *  Copyright (c) 1997, Addison-Wesley,
+ *  and/or those written by Dr. Sumanta Guha guha@cs.uwm.edu
+ *  and/or those written by Dr. Ichiro Suzuki suzuki@cs.uwm.edu
+ */
+</pre></body></html>

@@ -1,0 +1,4 @@
+SOURCE = stp.cpp
+OPTION = -mh -O2
+stp.exe: $(SOURCE)
+   tcc $(OPTION) $(SOURCE)

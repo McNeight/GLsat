@@ -1,0 +1,43 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<META NAME="Template" CONTENT="E:\Software\Microsoft Office\Office\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5 COLOR="#008080"><P>Manipulating Matrix Stack</P>
+</FONT><U><FONT SIZE=4 COLOR="#ff0000"><P>Idea</FONT><FONT COLOR="#ff0000"> </P>
+</B></U></FONT><P>Each time a transformation command is executed OpenGL computes the corresponding 4x4 matrix M and updates the current modelview matrix C by C &lt;-- CM, so that objects rendered subsequently will be transformed by M as well.
+At any moment the current modelview matrix C is actually the top element of a stack of matrices, and <B>glPushMatrix()</B> pushes into the stack a copy of its top element C. Once this is done we can later execute <B>glPopMatrix()</B>  to throw away the stack top element, most likely 
+a current modelview matrix obtained from C by  additional transformations, and return to the situation just before the last glPushMatrix() when C was the current modelview matrix.
+This way we can "isolate" the effect of transformations to within a pair of glPushMatrix() and 
+glPopMatrix().<BR>
+<BR>
+Here is a concrete example. We have already studied that in the following code segment the first glTranslatef(0,0,3) affects both the teapot and the sphere.
+<pre>
+     glTranslatef(0,0,3);
+     glutSolidTeapot(1.0);
+     glTranslatef(3,0,0);
+     glutSolidSphere(1.0,8,8);
+</pre>
+Let us compare this to the following code segment in which the first 
+glTranslatef(0,0,3) is surrounded by a pair of glPushMatrix() and 
+glPopMatrix(). (This code can be best understood using  the "Local Coordinate System Approach" discussed earlier.)
+The effect of glTranslatef(0,0,3) is now limited to within that pair of stack commands,
+and hence the sphere is no longer affected by this translation command.
+<pre>
+     glPushMatrix(); // memorize where the local coordinate system is
+     glTranslatef(0,0,3); 
+     glutSolidTeapot(1.0); 
+     glPopMatrix(); // bring the local coordinate system back
+                    // to where it was when we last pushed
+     glTranslatef(3,0,0);
+     glutSolidSphere(1.0,8,8);
+</pre>
+</P>
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>Experiment</P>
+</B></U></FONT><P><BR>
+<A HREF="PushPop.class">Click here</A> to run an example. Observe how the location of the sphere changes when you switch to execute without glPushMatrix() and glPopMatrix().</P>
+</BODY>
+</HTML>

@@ -1,0 +1,51 @@
+<html><body><pre>
+<font color="#0000ff">#include</font> &lt;stdlib.h&gt;
+<font color="#0000ff">#include</font> &lt;GL/glut.h&gt;
+GLint wide=200, high=200;
+void display(void)
+{
+/* clear all pixels */
+
+<font color="#ff00ff">glClear</font>(GL_COLOR_BUFFER_BIT);
+
+}
+
+void init(void)
+{
+/* select clearing (background) color   */
+<font color="#ff00ff">   glClearColor</font>(0.0, 0.0, 0.0, 0.0);
+   
+/* initialize viewing values */
+<font color="#ff00ff">   glMatrixMode</font>(GL_PROJECTION);
+<font color="#ff00ff">   glLoadIdentity</font>();
+<font color="#ff00ff">   glOrtho</font>(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
+}
+
+/*
+*  Declare initial window size, position, and display mode
+*/
+
+int main(int argc, char* argv[])
+{
+<font color="#ff00ff">   glutInit</font>(&argc, argv);
+<font color="#ff00ff">   glutInitDisplayMode</font>(GLUT_SINGLE|GLUT_RGB);
+<font color="#ff00ff">   glutInitWindowSize</font>(<font color="#ff0000"><B>$$$1, $$$2</font></B>);
+<font color="#ff00ff">   glutInitWindowPosition</font>(0,0); 
+<font color="#ff00ff">   glutCreateWindow</font>("Window Size");
+   init();
+<font color="#ff00ff">   glutDisplayFunc</font>(display);
+<font color="#ff00ff">   glutMainLoop</font>();
+   return 0;
+}
+/* 
+ *  by Mahesh Kumar
+ *  parts of this program might have been adopted from or inspired by 
+ *  sample programs in 
+ *  "OpenGL Programming Guide", 
+ *  Copyright (c) 1993-1997, Silicon Graphics, Inc.
+ *  "Interactive Computer Graphics"  
+ *  Copyright (c) 1997, Addison-Wesley,
+ *  and/or those written by Dr. Sumanta Guha guha@cs.uwm.edu
+ *  and/or those written by Dr. Ichiro Suzuki suzuki@cs.uwm.edu
+ */
+</pre></body></html>

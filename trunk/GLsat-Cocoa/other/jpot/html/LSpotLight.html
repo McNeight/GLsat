@@ -1,0 +1,17 @@
+<HTML>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5 COLOR="#008080"><P>Spotlights and Multiple Lights </P>
+</FONT><U><FONT SIZE=4 COLOR="#ff0000"><P>Spotlights:</P>
+</B></U></FONT><P>A positional light source can act as a spotlight by restricting its shape to that of a cone as in the picture below:</P>
+<P ALIGN="CENTER"><IMG SRC="spotlight.gif" WIDTH=350 HEIGHT=243></P>
+<P>To create a conical spotlight, we must first decide upon its position as well as the angle at
+its apex. Position the spotlight using commands exactly as for a regular positional light source (remember with a positional light, always w = 1). Use the <B>GL_SPOT_CUTOFF</B> parameter to specify a value equal to one half the angle at the apex of the cone. By default the <B>GL_SPOT_ CUTOFF</B> parameter is set to 180.0 degrees so effectively the spotlight feature is disabled. The default direction is (0.0, 0.0, -1.0), that is the negative Z direction. The <B>GL_SPOT_EXPONENT</B> parameter determines how focused the spotlight is, in other words, how rapidly its intensity diminishes from the central ray through the cone to its sides. Attenuation factors are set exactly as for a regular light source.  </P>
+<P>
+The following experiment allows you to set various parameters for a spotlight. Note that there is
+a second (non-spotlight) light source as well.
+</P>
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>Experiment</P>
+</B></U></FONT><P><a href="SpotLight.class">Click here</a>.</P></BODY>
+</HTML>
+

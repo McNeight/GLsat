@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<META NAME="Template" CONTENT="E:\Software\Microsoft Office\Office\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5 COLOR="#008080"><P>Perspective Projection</P>
+</FONT><U><FONT SIZE=4 COLOR="#ff0000"><P>Idea</P>
+</U></FONT><I><P>gluPerspective()</B></I> is a library routine built on top of <B><I>glFrustum()</B></I> that is easier to use. This routine creates a viewing volume of the same shape as <B><I>glFrustum()</B></I> does, but we specify it in a different way: Rather than specifying corners of the near clipping plane, we specify the angle of the field of view in the y direction and the aspect ratio of the width to height (<I>x/y</I>). These are enough to determine an untruncated pyramid along the line of sight. We also specify the distance between the viewpoint and the near and far clipping planes to truncate the pyramid. Here is the form of the routine </P>
+<B><I><P ALIGN="CENTER">void gluPerspective( fovy, aspect, near, far</B> )</P>
+</I><P>where <I>fovy</I> is the angle at the apex along y-z plane and <I>aspect</I> is the <I>width / height</I> of the rectangular top face of the frustum. <I>near</I> and <I>far</I> are as the <B><I>glFrustum()</B></I>, which give the distance from the viewpoint to the near and far clipping plane. Both near and far should be positive. </P>
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>Experiment</P>
+</B></U></FONT><P> <A HREF="PersProjection.class">Click here</A>. </P></BODY>
+</HTML>
