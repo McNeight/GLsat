@@ -1,0 +1,81 @@
+GLsat
+17 March 2002
+
+According to Spacetrack Report Number 3, the first of five mathematical
+models for satellites, SGP, "was developed by Hilton & Kuhlman (1966) and
+... uses a simplification of the work of Kozai (1959) for its gravitaional
+model". The first satellite was launched in 1957! Yet here, over 40 years
+later, we are still using a model developed less than ten years after that
+first launch. Other, more accurate, models have been developed since then,
+but the most popular ones, SGP4/SDP4, are over 20 years old. Even the
+geographical model which these formulas are based on, WGS72, is now
+obsolete, superceded by WGS84 and currently becoming a world standard
+because GPS uses it.
+
+The program listings in Spacetrack Report Number 3 are also dated. Written
+in 1980, they were developed in FORTRAN IV for the Honeywell-6000 series
+computer. Running at 1 MIPS with a 36-bit floating point word, these systems
+also required 8.8 kilowatts of power, 34,700 BTU's of air conditioning and
+weighed 7050 pounds. Today, there is more processing power in a VCR than one
+of these beasts, yet it's legacy remains.
+
+So, the question remains: why am I choosing to re-implement formulas that
+date from the Early Cretaceous age of computing and will, in the end, have
+no greater accuracy than the original? For a few reasons:
+
+1) By using long double floating-point variables, C guarantees 18 decimal
+   digits of precision, which is more than three times the precision of the
+   original code. Note that it does *NOT* mean that these figures are
+   accurate to 18 significant digits. Here is a quick example on decimal
+   precision.
+
+   Given 8 bits, say we allocate 4 bits for the integer number and 4 bits
+   for the fraction, appearing like this:
+
+   0000.0000
+
+   Each bit before the decimal point represents a power of 2 (8, 4, 2 and 1)
+   while each bit after represents a power of 1/2 (1/2, 1/4, 1/8, and 1/16).
+   So, to represent 10.0, the binary representation of it would be
+
+   1010.0000
+
+   And for 5/8 (0.625), the binary representation of it would be
+
+   0000.1010
+
+   But what about something simple such as 1/10 (0.1). There is no way to
+   accurately represent it with only 4 bits for the fraction! The minimum
+   number that this variable can hold is 1/16, which is less than 1/10, but
+   the next highest number is 2/16, or 1/8, which is greater than 1/10. So
+   how does the 1/10 get stored?
+
+   The computer decides which is closer to the original number, and uses
+   that. In this case, 1/16 is 0.0625 which is 0.375 away from 0.1, and 1/8
+   is 0.125, which is 0.025 away from 0.1. Therefore, the 0.1 you specify in
+   your program will get stored as 0.125. Your number is already off by
+   25/1000, without even performing any calculations on it.
+
+   So, with this system, it is possible to maintain an accuracy of 3
+   significant figures, (with 2 before the decimal place and 1 after), from
+   0.1 to 15.9.
+
+   Now, in spite of all of that, the models themselves are only accurate to 
+
+2) While the model may not be the most accurate, it is perhaps the most
+   popular. The model itself is proven and stable, and current data sets
+   are available for many satellites since most popular satellite tracking
+   programs also use this model. Since I am a computer scientist, and not an
+   astrophysicist, I will not waste my time attempting to create my own
+   model and then attempt to make it even more accurate than what is
+   available.
+   
+3) It's an interesting excercise in scientific visualization. The fact that
+   I've learned a bit of FORTRAN by osmosis is yet another example of the
+   endurance of some computer languages. Many scientists today still prefer
+   to write code in FORTRAN because of it's mathematical elegance. So, by
+   learning how to adapt FORTRAN code to modern object-oriented programming
+   style, 
+   
+last) Because I can! Open sources of information have enabled me to take
+these old, simple models and wrap my brain around them. 
