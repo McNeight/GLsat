@@ -1,0 +1,117 @@
+<html><body><pre>
+<font color="#0000ff">#include</font> &lt;GL/glut.h&gt;
+<font color="#0000ff">#include</font> &lt;math.h&gt;
+<font color="#0000ff">#include</font> &lt;stdio.h&gt;
+
+#define PI 3.14159265
+
+static int Step = 0;
+int i;
+
+static GLfloat vdata[8][3] = {
+  {1.0, -1.0, 1.0}, {1.0, 1.0, 1.0}, {1.0, 1.0, -1.0}, {1.0, -1.0, -1.0}, 
+  {-1.0, -1.0, 1.0}, {-1.0, 1.0, 1.0}, {-1.0, 1.0, -1.0}, {-1.0, -1.0, -1.0}
+};
+
+static GLuint tindices[6][4] = {
+  {3,2,1,0}, {7,6,2,3}, {4,5,6,7}, {0,1,5,4}, {4,7,3,0}, {6,5,1,2} 
+};
+
+GLfloat ambient[] = { 0.1, 0.1, 0.1, 1.0 };
+GLfloat diffuse[] = { 1.0, 1.0, 0.0, 1.0 };
+GLfloat specular[] = { 1.0, 1.0, 1.0, 1.0 };
+GLfloat position[] = { 0.0, 1.0, 3.0, 0.0 };
+GLfloat lmodel_ambient[] = { 0.4, 0.4, 0.4, 1.0 };
+GLfloat mat_specular1[] = { 1.0, 0.0, 0.0, 1.0 };
+GLfloat mat_shininess1[] = { 50.0 };
+GLfloat mat_diffuse1[] = {0.9, 0.0, 0.0};
+GLfloat mat_specular2[] = { 0.0, 1.0, 0.0, 1.0 };
+GLfloat mat_shininess2[] = { 50.0 };
+GLfloat mat_diffuse2[] = {0.0, 0.9, 0.0};
+
+void init(void)
+{
+   /* Define properties of the light source */
+<font color="#ff00ff">   glLightfv</font>(GL_LIGHT0, GL_AMBIENT, ambient);
+<font color="#ff00ff">   glLightfv</font>(GL_LIGHT0, GL_DIFFUSE, diffuse);
+<font color="#ff00ff">   glLightfv</font>(GL_LIGHT0, GL_SPECULAR, specular);
+<font color="#ff00ff">   glLightfv</font>(GL_LIGHT0, GL_POSITION, position);
+   /* Define properties of the ambient light */
+<font color="#ff00ff">   glLightModelfv</font>(GL_LIGHT_MODEL_AMBIENT, lmodel_ambient);
+<font color="#ff00ff">   glEnable</font>(GL_LIGHTING);
+<font color="#ff00ff">   glEnable</font>(GL_LIGHT0);
+<font color="#ff00ff">   glClearColor</font>(0.0, 0.0, 0.0, 0.0);
+}
+
+void reshape (int w, int h)
+{
+<font color="#ff00ff">   glViewport </font>(0, 0, (GLsizei) w, (GLsizei) h);
+<font color="#ff00ff">   glMatrixMode </font>(GL_PROJECTION);
+<font color="#ff00ff">   glLoadIdentity</font>();
+<font color="#ff00ff">   gluPerspective</font>(60.0, (GLfloat) w/(GLfloat) h, 1.0, 20.0);
+<font color="#ff00ff">   glMatrixMode</font>(GL_MODELVIEW);
+<font color="#ff00ff">   glLoadIdentity</font>();
+<font color="#ff00ff">   gluLookAt </font>(0.0, 3.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+}
+
+void display(){
+ 
+<font color="#ff00ff">  glEnable</font>(GL_DEPTH_TEST); 
+<font color="#ff00ff">  glClear </font>(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+ 
+ 
+<font color="#ff00ff">  glDisable</font>(GL_DEPTH_TEST);
+<font color="#ff00ff">  glClear </font>(GL_COLOR_BUFFER_BIT);
+ 
+  /* material lighting properties are specified for the box */
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT, GL_SPECULAR, mat_specular1);
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT, GL_SHININESS, mat_shininess1);
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT, GL_DIFFUSE, mat_diffuse1);
+
+  // Five sides of the box, excluding the top:
+<font color="#ff00ff">  glBegin</font>(GL_QUADS);
+  for (i = 0; i &lt; 5; ++i){
+<font color="#ff00ff">    glNormal3fv</font>(vdata[tindices[i][0]]);  
+<font color="#ff00ff">    glVertex3fv</font>(vdata[tindices[i][0]]);
+<font color="#ff00ff">    glNormal3fv</font>(vdata[tindices[i][1]]);  
+<font color="#ff00ff">    glVertex3fv</font>(vdata[tindices[i][1]]);
+<font color="#ff00ff">    glNormal3fv</font>(vdata[tindices[i][2]]);  
+<font color="#ff00ff">    glVertex3fv</font>(vdata[tindices[i][2]]);
+<font color="#ff00ff">    glNormal3fv</font>(vdata[tindices[i][3]]);
+<font color="#ff00ff">    glVertex3fv</font>(vdata[tindices[i][3]]);  
+  }
+<font color="#ff00ff">  glEnd</font>();
+  // The top of the box:
+<font color="#ff00ff">  glBegin</font>(GL_QUADS);
+<font color="#ff00ff">    glNormal3f </font>(0, 0.97,-0.24);
+<font color="#ff00ff">    glVertex3f </font>(1.0, 1.5, 0.95);
+<font color="#ff00ff">    glNormal3f </font>(0, 0.97,-0.24);
+<font color="#ff00ff">    glVertex3f </font>(1.0, 1.0, -1.0);
+<font color="#ff00ff">    glNormal3f </font>(0, 0.97,-0.24);
+<font color="#ff00ff">    glVertex3f </font>(-1.0, 1.0, -1.0);
+<font color="#ff00ff">    glNormal3f </font>(0, 0.97,-0.24);
+<font color="#ff00ff">    glVertex3f </font>(-1.0, 1.5, 0.95);
+<font color="#ff00ff">  glEnd</font>();
+  /* material lighting properties are specified for the sphere */
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT, GL_SPECULAR, mat_specular2);
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT, GL_SHININESS, mat_shininess2);
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT, GL_DIFFUSE, mat_diffuse2);
+
+<font color="#ff00ff">  glutSolidSphere </font>(1.0, 20.0, 16.0);
+<font color="#ff00ff">  glutSwapBuffers</font>();
+}
+
+int main(int argc, char** argv)
+{
+<font color="#ff00ff">   glutInit</font>(&argc, argv);
+<font color="#ff00ff">   glutInitDisplayMode </font>(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH); 
+<font color="#ff00ff">   glutInitWindowSize </font>(400, 400);
+<font color="#ff00ff">   glutInitWindowPosition </font>(100, 100);
+<font color="#ff00ff">   glutCreateWindow </font>(argv[0]);
+   init();
+<font color="#ff00ff">   glutReshapeFunc</font>(reshape);
+<font color="#ff00ff">   glutDisplayFunc</font>(display);
+<font color="#ff00ff">   glutMainLoop</font>();
+   return 0;
+}
+</pre></body></html>

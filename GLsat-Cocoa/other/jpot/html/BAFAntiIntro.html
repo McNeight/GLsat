@@ -1,0 +1,38 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<META NAME="Template" CONTENT="E:\Software\Microsoft Office\Office\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5 COLOR="#008080"><P>AntiAliasing Introduction </P>
+</FONT><U><FONT SIZE=4 COLOR="#ff0000"><P>Idea</P>
+</B></U></FONT><P>In most of our OpenGL pictures that had lines, especially nearly horizontal or nearly vertical, the lines appeared jagged. This jaggedness is because the line is approximated by a series of pixels that must lie on the pixel grid. Removing this jaggedness is called antialiasing. When performing antialiasing, OpenGL calculates a coverage value for each fragment based on the fraction pixel square on the screen that it would cover. In RGBA mode, OpenGL multiplies the fragments coverage value by its alpha value. </P>
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>The glHint() command</P>
+</B></U></FONT><P>Antialiasing costs speed! the glHint() command is used to exercise some control over the trade-off between image quality and speed. glHint(GLenum target, GLenum hint) controls certain aspects of OpenGL behavior. The target parameter indicates which behavior is to be controlled. The hint parameter can be set to: GL_FASTEST - to indicate the most efficient option be chosen GL_NICEST - to indicate the highest quality option GL_DONT_CARE - to indicate no preference. Possible target values and their meanings are provided in the table below.</P>
+<TABLE CELLSPACING=0 BORDER=0 CELLPADDING=7 WIDTH=582>
+<TR><TD WIDTH="56%" VALIGN="TOP">
+<P>Parameter</TD>
+<TD WIDTH="44%" VALIGN="TOP">
+<P>Meaning</TD>
+</TR>
+<TR><TD WIDTH="56%" VALIGN="TOP">
+<B><P>GL_POINT_SMOOTH_HINT GL_LINE_SMOOTH_HINT GL_POLYGON_SMOOTH_HINT </B></TD>
+<TD WIDTH="44%" VALIGN="TOP">
+<P>Specify the desired sampling quality of points, lines or polygons during any antialiasing operations.</TD>
+</TR>
+<TR><TD WIDTH="56%" VALIGN="TOP">
+<B><P>GL_FOG_HINT</B></TD>
+<TD WIDTH="44%" VALIGN="TOP">
+<P>Specifies whether fog calculations are done per pixel (<B>GL_NICES</B>) or per vertex (<B>GL_FASTEST</B>)</TD>
+</TR>
+<TR><TD WIDTH="56%" VALIGN="TOP">
+<B><P>GL_PERSPECTIVE_CORRECTION_HINT</B></TD>
+<TD WIDTH="44%" VALIGN="TOP">
+<P>Specifies the desired quality of color and texture-coordinate interpolation.</TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

@@ -1,0 +1,184 @@
+<html><body><pre>
+<font color="#0000ff">#include</font> &lt;GL/glut.h&gt;
+<font color="#0000ff">#include</font> &lt;math.h&gt;
+
+GLfloat mat[3] = {0.1745, 0.01175, 0.01175};	
+GLfloat fogColor[4] = {0.5, 0.5, 0.5, 1.0};
+GLfloat position[] = { 0.5, 0.5, 3.0, 0.0 };
+
+void output(GLfloat x, GLfloat y, char *text)
+{
+  char *p;
+<font color="#ff00ff">  glPushMatrix</font>();
+<font color="#ff00ff">  glTranslatef</font>(x, y, 0);
+  for(p = text; *p; p++)
+<font color="#ff00ff">    glutStrokeCharacter</font>(GLUT_STROKE_ROMAN, *p);
+<font color="#ff00ff">  glPopMatrix</font>();
+}
+
+static void init(void)
+{
+<font color="#ff00ff">  glEnable</font>(GL_DEPTH_TEST);
+<font color="#ff00ff">  glLightfv</font>(GL_LIGHT0, GL_POSITION, position);
+<font color="#ff00ff">  glEnable</font>(GL_LIGHTING);
+<font color="#ff00ff">  glEnable</font>(GL_LIGHT0);
+<font color="#ff00ff">  glMaterialfv </font>(GL_FRONT, GL_AMBIENT, mat);
+  mat[0] = 0.61424; mat[1] = 0.04136; mat[2] = 0.04136;	
+<font color="#ff00ff">  glMaterialfv </font>(GL_FRONT, GL_DIFFUSE, mat);
+  mat[0] = 0.727811; mat[1] = 0.626959; mat[2] = 0.626959;
+<font color="#ff00ff">  glMaterialfv </font>(GL_FRONT, GL_SPECULAR, mat);
+<font color="#ff00ff">  glMaterialf </font>(GL_FRONT, GL_SHININESS, 0.6*128.0);
+}
+
+static void renderSphere (GLfloat x, GLfloat y, GLfloat z)
+{
+<font color="#ff00ff">  glPushMatrix</font>();
+<font color="#ff00ff">  glTranslatef </font>(x, y, z);
+<font color="#ff00ff">  glutSolidSphere</font>(0.4, 16, 16);
+<font color="#ff00ff">  glPopMatrix</font>();
+}
+
+void drawaxes()
+{
+  /* Next draw the Coordinate Axes */
+<font color="#ff00ff">  glLineWidth</font>(2.0);
+<font color="#ff00ff">  glBegin</font>(GL_LINES);
+<font color="#ff00ff">    glVertex3f</font>(-7,0,0);
+<font color="#ff00ff">    glVertex3f</font>(7,0,0);
+<font color="#ff00ff">  glEnd</font>();
+<font color="#ff00ff">  glBegin</font>(GL_LINES);
+<font color="#ff00ff">    glVertex3f</font>(0,-7,0);
+<font color="#ff00ff">    glVertex3f</font>(0,7,0);
+<font color="#ff00ff">  glEnd</font>();
+<font color="#ff00ff">  glBegin</font>(GL_LINES);   
+<font color="#ff00ff">    glVertex3f</font>(0, 0, -12);
+<font color="#ff00ff">    glVertex3f</font>(0, 0, 7);
+<font color="#ff00ff">  glEnd</font>();
+}
+
+/* display() draws 5 spheres at different z positions.
+ */
+void display(void)
+{
+<font color="#ff00ff">  glClearColor</font>(0.5, 0.5, 0.5, 1.0);  /* fog color */
+<font color="#ff00ff">  glClear</font>(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+<font color="#ff00ff">  glEnable</font>(GL_FOG);
+
+<font color="#ff00ff">  glFogi</font>(GL_FOG_MODE, <A name="gohere"></a><font color="#ff0000"><b><font color="#ff0000"><b>JPOT$1</b></font></b></font>);
+   
+<font color="#ff00ff">  glFogfv</font>(GL_FOG_COLOR, fogColor);
+<font color="#ff00ff">  glFogf</font>(GL_FOG_DENSITY, <font color="#ff0000"><b>JPOT$2</b></font>);
+<font color="#ff00ff">  glHint</font>(GL_FOG_HINT, GL_DONT_CARE);
+<font color="#ff00ff">  glFogf</font>(GL_FOG_START, <font color="#ff0000"><b>JPOT$3</b></font>);
+<font color="#ff00ff">  glFogf</font>(GL_FOG_END, <font color="#ff0000"><b><font color="#ff0000"><b>JPOT$4</b></font></b></font>);
+     
+  drawaxes();
+  renderSphere (-2., -0.5, -1.0);
+  renderSphere (-1., -0.5, -2.0);
+  renderSphere (0., -0.5, -3.0);
+  renderSphere (1., -0.5, -4.0);
+  renderSphere (2., -0.5, -5.0);
+<font color="#ff00ff">  glFlush</font>();
+
+<font color="#ff00ff">  glColor3f</font>(1.0, 1.0, 0.0);
+<font color="#ff00ff">  glPushAttrib</font>(GL_ENABLE_BIT);
+<font color="#ff00ff">  glDisable</font>(GL_DEPTH_TEST);
+<font color="#ff00ff">  glMatrixMode</font>(GL_PROJECTION);
+<font color="#ff00ff">  glPushMatrix</font>();
+<font color="#ff00ff">  glLoadIdentity</font>();
+<font color="#ff00ff">  gluOrtho2D</font>(0, 2500, 0, 2500);
+<font color="#ff00ff">  glMatrixMode</font>(GL_MODELVIEW);
+<font color="#ff00ff">  glPushMatrix</font>();
+<font color="#ff00ff">  glLoadIdentity</font>();
+  output(50, 1400, "-Z");
+  output(1350, 2300, "+Y");
+  output(1350, 300, "-Y");  
+  
+<font color="#ff00ff">  glPopMatrix</font>();
+<font color="#ff00ff">  glMatrixMode</font>(GL_PROJECTION);
+<font color="#ff00ff">  glPopMatrix</font>();
+<font color="#ff00ff">  glPopAttrib</font>();
+<font color="#ff00ff">  glMatrixMode</font>(GL_MODELVIEW);
+
+}
+
+void reshape(int w, int h)
+{
+<font color="#ff00ff">  glViewport</font>(0, 0, (GLsizei) w, (GLsizei) h);
+<font color="#ff00ff">  glMatrixMode</font>(GL_PROJECTION);
+<font color="#ff00ff">  glLoadIdentity</font>();
+  if (w &lt;= h)
+<font color="#ff00ff">     glOrtho </font>(-2.5, 2.5, -2.5*(GLfloat)h/(GLfloat)w,
+        2.5*(GLfloat)h/(GLfloat)w, -10.0, 10.0);
+  else
+<font color="#ff00ff">     glOrtho </font>(-2.5*(GLfloat)w/(GLfloat)h,
+        2.5*(GLfloat)w/(GLfloat)h, -2.5, 2.5, -10.0, 10.0);
+<font color="#ff00ff">  glMatrixMode</font>(GL_MODELVIEW);
+<font color="#ff00ff">  glLoadIdentity </font>();
+  
+}
+
+int main(int argc, char** argv)
+{
+<font color="#ff00ff">  glutInit</font>(&argc, argv);
+<font color="#ff00ff">  glutInitDisplayMode </font>(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
+<font color="#ff00ff">  glutInitWindowSize</font>(350, 350);
+<font color="#ff00ff">  glutInitWindowPosition</font>(0,0);
+<font color="#ff00ff">  glutCreateWindow</font>("Fog - Parameters");
+  init();
+<font color="#ff00ff">  glutReshapeFunc </font>(reshape);
+<font color="#ff00ff">  glutDisplayFunc </font>(display);
+<font color="#ff00ff">  glutMainLoop</font>();
+  return 0;
+}
+
+/*
+ * Copyright (c) 1993-1997, Silicon Graphics, Inc.
+ * ALL RIGHTS RESERVED 
+ * Permission to use, copy, modify, and distribute this software for 
+ * any purpose and without fee is hereby granted, provided that the above
+ * copyright notice appear in all copies and that both the copyright notice
+ * and this permission notice appear in supporting documentation, and that 
+ * the name of Silicon Graphics, Inc. not be used in advertising
+ * or publicity pertaining to distribution of the software without specific,
+ * written prior permission. 
+ *
+ * THE MATERIAL EMBODIED ON THIS SOFTWARE IS PROVIDED TO YOU "AS-IS"
+ * AND WITHOUT WARRANTY OF ANY KIND, EXPRESS, IMPLIED OR OTHERWISE,
+ * INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY OR
+ * FITNESS FOR A PARTICULAR PURPOSE.  IN NO EVENT SHALL SILICON
+ * GRAPHICS, INC.  BE LIABLE TO YOU OR ANYONE ELSE FOR ANY DIRECT,
+ * SPECIAL, INCIDENTAL, INDIRECT OR CONSEQUENTIAL DAMAGES OF ANY
+ * KIND, OR ANY DAMAGES WHATSOEVER, INCLUDING WITHOUT LIMITATION,
+ * LOSS OF PROFIT, LOSS OF USE, SAVINGS OR REVENUE, OR THE CLAIMS OF
+ * THIRD PARTIES, WHETHER OR NOT SILICON GRAPHICS, INC.  HAS BEEN
+ * ADVISED OF THE POSSIBILITY OF SUCH LOSS, HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE
+ * POSSESSION, USE OR PERFORMANCE OF THIS SOFTWARE.
+ * 
+ * US Government Users Restricted Rights 
+ * Use, duplication, or disclosure by the Government is subject to
+ * restrictions set forth in FAR 52.227.19(c)(2) or subparagraph
+ * (c)(1)(ii) of the Rights in Technical Data and Computer Software
+ * clause at DFARS 252.227-7013 and/or in similar or successor
+ * clauses in the FAR or the DOD or NASA FAR Supplement.
+ * Unpublished-- rights reserved under the copyright laws of the
+ * United States.  Contractor/manufacturer is Silicon Graphics,
+ * Inc., 2011 N.  Shoreline Blvd., Mountain View, CA 94039-7311.
+ *
+ * OpenGL(R) is a registered trademark of Silicon Graphics, Inc.
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre></body></html>

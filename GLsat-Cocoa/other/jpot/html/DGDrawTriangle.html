@@ -1,0 +1,20 @@
+<html>
+<body>
+<B><FONT SIZE=5 COLOR="#008080"><P>Drawing Triangles</P></FONT></B>
+<B><U><FONT SIZE=4 COLOR="#ff0000">Ideal</FONT></U></B>
+<P>
+Generally triangles are drawn using GL_TRIANGLES mode in the <B>glBegin()</B> command.  A succession of triangles will be drawn  using sets of vertices v0, v1, v2 then v3, v4, v5 etc.. If number of vertices is not a multiple of 3, the last one or two vertices will be ignored.
+</P>
+<P>
+Other modes used with <B>glBegin()</B> command to draw triangles are GL_TRIANGLE_STRIP and GL_TRIANGLE_FAN. 
+With GL_TRIANGLE_STRIP, if the vertices specified are v0, v1, v2, v3, v4, v5, ..., then  a succession of triangles is drawn with vertices at v0, v1, v2, and then v2, v1, v3, and then v3, v1, v4 and so on (note that trinagles are oriented consistently). With GL_TRIANGLE_FAN on the other hand a succession of triangles is drawn with
+vertices at v0, v1, v2, and then v0, v2, v3, and then v0, v3, v4, and so on.
+
+
+
+<P ALIGN="CENTER"><IMG SRC="gl_triangle.gif" WIDTH=478 HEIGHT=212></P>
+</P>
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>Experiment</P></FONT></U></B>
+<a href="DrawTriangle.class">Click here</a>.
+</body>
+</html>

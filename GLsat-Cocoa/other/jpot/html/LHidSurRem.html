@@ -1,0 +1,21 @@
+<HTML>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5 COLOR="#008080"><P>Hidden Surface Removal</P>
+</FONT><U><FONT SIZE=4 COLOR="#ff0000"><P>Idea: </P>
+</B></U></FONT><P>When we render a scene composed of three-dimensional objects, some might obscure all or parts of others. Changing the view point can also change the obscuring relationship. The elimination from the screen of parts of solid objects that are obscured by others is called hidden-surface removal. </P>
+<B><U><P>The Depth Buffer (or Z Buffer):</P>
+</B></U><P>The depth buffer works by associating a depth or distance, from the view plane (remember the near clipping plane of <B>glFrustum()</B> and <B>glOrtho()</B>) with each pixel on the window. Before each pixel is drawn a comparison is made with the existing depth value (ie., the depth value corresponding to an already
+drawn object). If the value is greater than the currently stored value, the new pixel is not drawn (because it is further away on the line from
+the eye through the current pixel, and, therefore, is obscured). If the converse is true, the new pixel replaces the old onen. </P>
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>Experiment:</P></FONT></U></B>
+<P> A sphere is placed inside a partly open box. Hidden surface removal is
+enabled with the following routines. <B>glutInitDisplayMode(GLUT_DEPTH | ...) </B>initializes the depth buffer. <B>glClear(GL_DEPTH_BUFFER_BIT | ...) </B> clears the depth buffer and <B>glEnable(GL_DEPTH_TEST) </B> enables the depth testing.</P>
+
+You can see how strange the result is if the depth buffer is disabled. The sphere
+overwrites the box even though it is contained in it!
+<P><a href="HidSurRem.class">Click here</a>. </P>
+</BODY>
+</HTML>
+
+

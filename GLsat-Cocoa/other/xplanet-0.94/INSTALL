@@ -1,0 +1,110 @@
+Xplanet now uses its own simple graphics file library to read, resize,
+and write image files.  Currently gif, jpg, png, pnm, and tiff formats
+are supported.  Make sure you have at least one of these libraries
+installed on your computer before compiling Xplanet.  Writing of BMP
+images works on little-endian machines.
+
+Either OpenGL (www.opengl.org) or Mesa (www.mesa3d.org), along with
+GLUT (http://reality.sgi.com/opengl/#glut), should be installed.  If
+you don't have these libraries and don't want to install them, you can
+use the --disable-animation option of the configure script, described
+below.  As of Mesa 3.1, the graphics libraries are named libGL and
+libGLU instead of libMesaGL and libMesaGLU.  If you're using an older
+version of Mesa, edit the Makefile to link to -lMesaGL and -lMesaGLU
+instead of -lGL -lGLU.
+
+On some systems, the configure script might not find the OpenGL or
+GLUT libraries even though they're installed in standard
+locations. This might be because the GL libraries depend on different
+X libraries than are assumed in the configure script.  In those cases,
+try passing --with-glut or --with-gl to the configure script, and the
+script will assume the libraries exist and won't check for them.
+Compilation of Xplanet might fail if the proper X libraries aren't
+included in the Makefile; you'll have to add them by hand.
+
+Xplanet works without a DISPLAY variable set if you want to output to
+a file.  Text annotation will not work in this case unless Xplanet has
+been compiled with the FreeType 2 library.  If the program
+freetype-config is in your PATH, FreeType support will be compiled in
+by default.
+
+Xplanet works fine with X11 with Darwin.  Under Mac OS X with Aqua,
+pass the --with-aqua option to the configure script.  Currently, only
+the -animate option works with Aqua.
+
+All that being said, the usual sequence of "./configure; make" should
+build the program.  Additional options to the configure script are:
+
+  --with-x               use the X window system [yes]
+  --with-mswin           use Microsoft Windows [no]
+  --with-auxdir=DIR      subdirectory under PREFIX containing map and 
+			 marker files [share/xplanet]
+  --with-map-extension=EXTENSION
+                         use EXTENSION as default map extension [jpg]
+  --with-freetype        Use Freetype libraries for TrueType font
+			 support [yes]
+  --with-gif             Enable GIF support [yes]
+  --with-jpeg            Enable JPEG support [yes]
+  --with-png             Enable PNG support [yes]
+  --with-pnm             Enable PNM support [yes]
+  --with-tiff            Enable TIFF support [yes]
+  --with-aqua             For Mac OS X Aqua [no]
+  --with-animation       Enable --animation option (OpenGL/Mesa 
+                         must be installed in this case) [yes]
+  --with-gl              Assume GL libraries exist [no]
+  --with-glut            Assume GLUT libraries exist [no]
+  --with-gl-dir=DIR      Location of OpenGL/Mesa headers and libraries
+  --with-glut-dir=DIR    Location of GLUT headers and libraries
+
+In the event autoconf doesn't work for you, I've also supplied a
+Makefile.  Check to see that the flags all point to the proper
+directories and libraries.  If you compile xplanet on a new platform,
+I'd appreciate hearing about it.
+
+In order to run Xplanet, you'll need at least one map file.  Some good
+sources are: 
+The Xglobe & Xplanet Maps page (www.radcyberzine.com/xglobe)
+Whole-Earth Images (www.vterrain.org/Imagery/whole_earth.html)
+The Ssystem Home Page (www.wam.umd.edu/~kamelkev/Ssystem)
+JPL's Maps of the Solar System (maps.jpl.nasa.gov)
+The Planetary Maps Hub (www.lancs.ac.uk/postgrad/thomasc1/render/maps.htm)
+
+If no image is specified with the -image option, Xplanet looks in the
+directory specified by the -mapdir option (if this option is used),
+and then the current directory.  If no appropriate image file is
+found, Xplanet will search the directory specified at compilation time
+(usually /usr/local/share/xplanet/images or
+/usr/X11R6/share/xplanet/images for the precompiled rpm) for the file
+to use as the day map.  This file should be named body.extension,
+where body can be mercury, venus, earth, moon, mars, jupiter, io,
+europa, ganymede, callisto, saturn, titan, uranus, neptune, or pluto.
+The extension of the file by default is jpg but this can be changed
+using the --with-map-extension option to the configure script.
+
+The configure script will check the directories specified in the
+CPPFLAGS and LDFLAGS environment variables.  This is useful in the
+event you have things in non-standard location (I use /home/hari/local
+for a lot of stuff).  For example, 
+
+    setenv CPPFLAGS "-I/home/hari/local/include"
+    setenv LDFLAGS "-L/home/hari/local/lib"
+    ./configure 
+
+should do the job.
+
+Other OS dependent things:
+On Digital Unix, with the native C++ compiler, compile with the option
+-ieee_with_no_inexact.  
+
+Solaris: with gcc 2.95.2, compile with the flag -fpermissive.  The
+configure script should add this for you.
+
+The OpenGL libraries have different dependencies on different
+systems.  Sometimes you may need to add additional X libraries on the
+final link.
+
+On some systems you may need to add "-lpbm -lpgm -lppm" to the final
+link in order to use the PNM library.
+
+Hari Nair
+hari@alumni.caltech.edu

@@ -1,0 +1,24 @@
+PREDICT is Copyright 1991-2001 by John A. Magliacane, KD2BD.
+
+Algorithms used in this program to calculate the positions of satellites
+in earth orbit as well as the positions of the sun and the moon were
+obtained from the book "Amateur Radio Software", by John Morris,
+GM4ANB, published by the Radio Society of Great Britian in 1985.
+
+Socket-based server code as well as the 'map' client application
+was contributed by Ivan Galysh, KD4HBO.
+
+PIC/TRACK antenna rotator control code was contributed by Vittorio
+Benvenuti, I3VFJ.
+
+The 'gsat' client was contributed by Xavier Crehueras, EB3CZS.
+
+Special thanks go to Linus Torvalds and a world-wide cast of open source
+programmers who have contributed their time and talent in making the
+Linux operating system a truly outstanding product and the fastest
+growing operating system on the planet!
+
+--
+73, de John, KD2BD
+kd2bd@amsat.org
+June 2001

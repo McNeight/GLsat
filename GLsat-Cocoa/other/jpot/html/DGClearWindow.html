@@ -1,0 +1,39 @@
+<HTML>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5 COLOR="#008080"><P>Window Clearing</P>
+</FONT><U><FONT SIZE=4 COLOR="#ff0000"><P>Idea:</P>
+</B></U></FONT><P>We had a brief look at changing the background color in the Background Color lesson. We try to understand the theory here.</P>
+<P>In a computer, the frame holding the picture is usually filled with the last picture drawn, so typically one need's to clear it to some background color before starting to draw a new scene. As an example, these lines of code clear an RGBA mode window to black:</P>
+<B><P>glClearColor(0.0, 0.0, 0.0, 0.0);</P>
+<P>glClear(GL_COLOR_BUFFER_BIT);</P>
+</B><P>The first command sets the clearing color to black, and the next one clears the entire window to the current clearing color. The  parameters to <B>glClear()</B> indicates which buffers are to be cleared. In this case, the program clears only the color buffer. Typically you set the clearing color once, early in your application. At this point, it would not be a bad idea to review some of the examples in the first chapter to see how the above lines of code are positioned with regards to the overall structure of the program. Also other buffers might be encountered. Listed below are all OpenGL buffers :</P>
+<B><U><P>Buffer Name </P></B></U>
+<TABLE CELLSPACING=0 BORDER=0 CELLPADDING=7 WIDTH=318>
+<TR><TD WIDTH="34%" VALIGN="TOP">
+<P>Color</TD>
+<TD WIDTH="66%" VALIGN="TOP">
+<P>GL_COLOR_BUFFER_BIT</TD>
+</TR>
+<TR><TD WIDTH="34%" VALIGN="TOP">
+<P>Depth</TD>
+<TD WIDTH="66%" VALIGN="TOP">
+<P>GL_DEPTH_BUFFER_BIT</TD>
+</TR>
+<TR><TD WIDTH="34%" VALIGN="TOP">
+<P>Accumulation</TD>
+<TD WIDTH="66%" VALIGN="TOP">
+<P>GL_ACCUM_BUFFER_BIT</TD>
+</TR>
+<TR><TD WIDTH="34%" VALIGN="TOP">
+<P>Stencil</TD>
+<TD WIDTH="66%" VALIGN="TOP">
+<P>GL_STENCIL_BUFFER_BIT</TD>
+</TR>
+</TABLE>
+
+<P>Before issuing a command to clear multiple buffers, you have to set the values to which each buffer is to be cleared. Further you can clear multiple buffers by bitwise ORing them in the <B>glClear()</B> command:</P>
+<B><P>glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);</P>
+</B><P>&nbsp;</P>
+<P>&nbsp;</P></BODY>
+</HTML>

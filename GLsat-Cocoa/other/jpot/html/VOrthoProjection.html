@@ -1,0 +1,23 @@
+<HTML>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5 COLOR="#008080"><P>Orthographic Projection </P>
+</FONT><U><FONT SIZE=4 COLOR="#ff0000"><P>Idea</P></U></FONT></B>
+<P>Instead of perspective projection 
+one could use orthographic projection
+whose viewing volume is a rectangular box shown below.
+In orthographic projection the objects in the box are 
+projected toward the near clipping plane without forshortening of perspective projection.
+To specify the viewing box we imagine that is is centered around the z axix and 
+use
+
+ <B><P>glOrtho(left, right, bottom, top, near, far);</P></B>
+where (left,bottom,-near) and (right,top,-near) are the lower-left and upper-right 
+corners of the near clipping plane, and (left,bottom,-far) and (right,top,-far) are the same 
+respective corners of the far clipping plane.
+ Both near and far can be positive or negative. 
+
+</P>
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>Experiment</P>
+</B></U></FONT><P><A HREF="OrthoProjection.class">Click here</A>. </P></BODY>
+</HTML>

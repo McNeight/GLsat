@@ -1,0 +1,13 @@
+<HTML>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5 COLOR="#008080"><P>Drawing Points</P>
+</FONT><U><FONT SIZE=4 COLOR="#ff0000"><P>Ideal</P>
+</B></U></FONT><P>A point is an OpenGL geometric primitive and is represented by a single vertex. The vertex itself is specified by a tuple of floating point numbers. 
+By default, a point is drawn as a single pixel on the screen at the coordinates specified by the vertex. The vertex itself is specified by the <B>glVertex2f(x, y)</B> or <B>glVertex3f(x, y, z) </B>commands. Following a <B>glBegin(GL_POINTS) </B>command we declare the successive vertices. As many points are drawn as there are vertices. Thus <B>glBegin(GL_POINTS) </B>can preface the declaration of a sequence of points, not just a single point. To control the size of a point, we use the <B>glPointSize(GLFfloat size)</B> when a point is drawn as a size x size square of pixels..</P>
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>Experiment</P>
+</B></U></FONT><P><A HREF="DrawPoint.class">Click here</A>.
+</P>
+</BODY>
+</HTML>
+

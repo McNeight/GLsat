@@ -1,0 +1,100 @@
+1) How do I get xplanet working with KDE2?
+2) How do I get rid of that silly smiley face?
+3) I get errors compiling on a slackware system complaining about
+Freetype.  What's wrong?
+4) How do I get cities to display their local times?
+5) Can I display multiple planets?
+
+---------------------------------------------------------------------
+
+1) How do I get xplanet working with KDE2?
+
+If you run xplanet from the command line, it looks like it kills the
+"kdesktop" program for some reason.  The program Esetroot apparently
+does the same thing.  You can use the -notrans option to keep xplanet
+from killing kdesktop, but then you won't see the background since
+kdesktop covers the real root window with its own big window.  To run
+from the command line, you'll have to use the -window option for now.
+
+Here's how to get xplanet working with kdesktop to display on the
+background window:
+
+      - Right-click on the desktop and select "Configure
+        background..."  from the resulting menu.
+
+      - On the "Background" tab, click on the pulldown list next to
+        "Mode:" and select "Background Program".
+
+      - Now click on the "Setup" button and then the "Add" button.
+        Fill in the fields with the appropriate information.  My
+        debian woody system already had an xplanet entry which looks
+        like this:
+
+	      Name             xplanet
+	      Comment          XPlanet by Hari Nair
+	      Command          xplanet --geometry %xx%y --output %f.jpg && mv %f.jpg %f
+	      Preview cmd      xplanet --geometry %xx%y --output %f.jpg && mv %f.jpg %f
+	      Executable       xplanet
+	      Refresh time     10 minutes
+
+      - Additional options to xplanet can be specified before the
+        "&&".  If you want to turn labels or markers on I suggest
+        creating PNG files instead of JPEG, otherwise the characters
+        will appear blurry.
+ 
+      - Now click on "Okay" to save the setup.  This allows KDE to use
+	XPlanet to create a picture every ten minutes.
+
+      - Finally, on the "Wallpaper" tab, select "No Wallpaper".  
+
+2) How do I get rid of that silly smiley face?
+
+Look at the marker file for the earth.  The last line reads
+
+position=sun image=smile.png transparent={255,255,255}
+
+Comment it out by putting a # at the beginning of the line.
+
+
+3) I get errors compiling on a slackware system complaining about
+Freetype.  What's wrong?
+
+Slackware 8.0 comes with both freetype 1 and 2 headers.  Be sure that
+the freetype 2 headers include flag
+(e.g. -I/usr/local/include/freetype2) comes before the X11 headers.
+
+
+4) How do I get cities to display their local times?
+
+You'll have to edit the marker file and set the timezone keyword.  The
+string containing the label needs to have format descriptors that can
+be read by strftime.  The timezone keyword sets the TZ environment
+variable.  See
+http://www.gnu.org/manual/glibc-2.2.3/html_node/libc_427.html for a
+description of strftime and
+http://www.gnu.org/manual/glibc-2.2.3/html_node/libc_431.html for a
+description of the TZ environment variable.
+
+Here are a few examples:
+
+On most Linux systems, this will display the hour, minute, and time
+zone next to "New York":
+
+40.70  -74.00 "New York %H:%M %Z"     timezone=America/New_York
+
+Solaris ships with a smaller timezone database, so this should work on
+either Solaris or Linux:
+
+40.70  -74.00 "New York %H:%M %Z"     timezone=US/Eastern
+
+Windows doesn't use the same timezone database, so you'll have to
+supply the TZ variable yourself as a POSIX string:
+
+40.70  -74.00 "New York %H:%M %Z" timezone=EST+5EDT,M4.1.0/2,M10.5.0/2
+
+
+5) Can I display multiple planets?
+
+Not directly.  I would like to add this at some point.  For now, you can
+run xplanet twice, once saving an image file, and then using that
+image file with the -background option.

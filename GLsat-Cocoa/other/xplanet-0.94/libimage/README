@@ -1,0 +1,41 @@
+This is a bare-bones graphics library.  It is intended for a few
+simple tasks:
+
+1) Load a graphics file and return the image as a width, height, and 
+   unsigned char array of RGB values.  Here's the prototype:
+   int read_image(char *filename, int *width, int *height, 
+		  unsigned char **rgb);
+
+2) Resize an image supplied as a width, height, and unsigned char
+   array of RGB values to a new width and height.  Here's the
+   prototype: 
+   int resize_image(unsigned char **rgb, int in_width, int in_height, 
+                    int out_width, int out_height, int bilinear);
+   If bilinear is 1, resize_image will use bilinear interpolation when
+   scaling the image.  If bilinear is 0, resize_image will use the
+   nearest_neighbor method when scaling the image.  This is much
+   faster and frequently good enough.
+
+3) Save an image supplied as a width, height, and unsigned char
+   array of RGB values to a graphics file.  Here's the prototype:
+   int write_image(char *filename, int width, int height, 
+                   unsigned char *rgb);
+
+4) Crop an image.  Here's the prototype:
+   int crop_image(unsigned char **rgb, int in_width, int in_height,
+                  int x, int y, int width, int height);
+
+5) Delete an image.  This frees the memory allocated by
+   read_image_file and resize_image.  Here's the prototype:
+   int delete_image(unsigned char **rgb);
+
+Currently the file formats supported are GIF, JPEG, PNG, PNM, and
+TIFF.  Writing of BMP images works on little-endian machines.  It
+works well enough for Xplanet, but I really wouldn't use it for
+anything else.
+
+
+
+Hari Nair
+hari@alumni.caltech.edu
+

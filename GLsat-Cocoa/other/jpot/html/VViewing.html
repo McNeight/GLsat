@@ -1,0 +1,25 @@
+<HTML>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5 COLOR="#008080"><P>Viewing in General</P>
+</FONT><U><FONT SIZE=4 COLOR="#ff0000"><P>Idea:</P>
+</B></U></FONT><P>A viewing transformation "changes" the position and orientation of the camera
+(viewpoint).
+But it actually <I>does not</I> move the camera. The OpenGL camera is always at the origin pointing
+down the -z direction with its top pointing in the +y direction. So how do we change the
+camera's position and orientation?
+
+Consider a simple case. We want to <I>simulate</I> 
+the camera being placed at co-ordinates (0,0,5),
+ie, 5 units in the z direction. Easy! Move the scene, that is the objects, 5 units in the
+-z direction, which is just a modeling transformation glTranslatef(0.0, 0.0, -5.0).
+ 
+To be easy to understand, we could imagine as when we are using the camera: the viewing transformation position the camera tripod to point to the object that we want to take picture. Depend on how we move and rotate the camera, we will have the different look at the object, thus it take the same effect when we create the different viewing transformation in OpenGL.</P>
+<P>There are several ways to manufacture a viewing transformation as describing briefly below. We can also choose the default location and orientation of the viewpoint at the origin and looking down the negative z-axis.</P>
+
+<UL>
+<LI>Create viewing transformation by using modeling transformation commands that are <B><I>glTranslate(), glRotate(). </LI>
+</B></I><LI>Create viewing transformation by using the Utility Library routine <B><I>gluLookat() </B></I>to define a line of sight. The <B><I>gluLookAt() </B></I>command encapsulates a series of rotation and translation command. </LI>
+<LI>Create our own utility routines that encapsulates rotations and translations.</LI></UL>
+</BODY>
+</HTML>

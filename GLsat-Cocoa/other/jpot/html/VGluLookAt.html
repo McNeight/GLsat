@@ -1,0 +1,95 @@
+<HTML>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5 COLOR="#008080"><P>Setting the Viewpoint and Perspective Projection</P>
+</FONT><U><FONT SIZE=4 COLOR="#ff0000"><P>Idea</P>
+</B></U></FONT>
+<P>
+To view the objects we placed in the 3D space
+using modeling transformations,
+we have to specify viewing and projection transformations.
+<P>
+Viewing transformation is specified by
+<B><P>gluLookAt(eyex,eyey,eyez,centerx,centery,centerz,upx,upy,upz);</P></B>
+<P>
+where the first three parameters specify the position of the camera, 
+the next three the point at which the camera is aimed, 
+and the last three the "up-vector" that indicate which direction is up.
+<P>
+For projection transformation typically we specify a viewing frustum, which is a 
+truncated pyramid shown below whose top has been cut off by 
+a plane ("near clipping plane") parallel to its base ("far clipping plane").
+The objects in the frustum are projected toward te apex of the pyramid
+where the camera is, so that objects closer to the camera are rendered larger than those 
+that are farther away (perspective projection).
+You can use either of the following commands to specify a frustum.
+
+<P><B>1. glFrustum(left,right,bottom,top,near,far)</B></P>
+We imagine that the apex of the frustum is at the origin (0,0,0)
+and the camera is aimed in the negative z direction.
+ (left, bottom, -near) and (right, top -near) specify the (x,y,z) coordinates of the lower-left and upper-right corners of the near clipping plane. near and far give the distances from the apex to the near and far clipping planes. Both near and far should be positive.
+<P ALIGN="CENTER"><IMG SRC="frustum.gif" WIDTH=478 HEIGHT=212></P>
+<P>
+<B>2. gluPerspective(fovy,aspect,near,far)</B></P>
+fovy is the angle at the apex along y-z plane and aspect is the aspect ratio (width/height) of the rectangular top face of the frustum. near and far are as in the glFrustum(), which give the distance from the viewpoint to the near and far clipping plane. Both near and far should be positive.
+<P ALIGN="CENTER"><IMG SRC="perspective.gif" WIDTH=478 HEIGHT=212></P>
+
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>Experiment</P>
+</B></U></FONT><P> <A HREF="PersProjection.class">Click here</A>. </P>
+
+The top window shows the view from the camera, as determined by the
+glFrustum() and gluLookAt() commands.
+The bottom window shows a third person's view of the scene,
+including the frustum itself.
+(Normally glFrustum() is set within the reshape function, but
+for the purpose of this experiment it is included within the display function.)
+
+<P>
+Now try the following and observe the changes.
+<OL>
+<LI>gluLookAt(4,4,8,0,0,0,0,1,0);
+<LI>gluLookAt(4,4,8,2,2,2,0,1,0);
+<LI>gluLookAt(4,4,8,2,2,2,0,1,-1);
+<LI>gluLookAt(4,4,8,0,0,0,-1,1,0);
+</OL>
+<P>
+And finally try: 
+</P>
+    gluLookAt(0,0,10,0,0,0,0,0,1);
+<P>
+You see nothing, since the up vector is parallel to the viewing direction.
+Typically an up-vector perpendicular to the viewing direction will work fine.
+</P>
+
+To experiment with glFrustum(), first click "Reset" to reset the parameters, and 
+try the following values.
+<OL>
+<LI>glFrustum(-1,1,-1,1,6,20);
+<LI>glFrustum(-1,1,-1,1,6,13);
+</OL>
+<P>
+Observe the changes in the shape of the frustum and the output in the top window.
+Note that only the portion of the teapot that is inside the frustum is rendered in the top
+window.
+</P>
+
+<font size=4 color="#ff0000"><U><B>Optional Experiment</B></U></font>
+<OL>
+<LI>Resize the top window into a flat rectangle. Observe that the teapot looks distorted.
+<LI>Do the same with the bottom window, and observe that the objects appear 
+correctly regardless of the shape of the window.
+</OL>
+This is because the reshape function "reshape2" (executed whenever the window 
+shape changes) for the bottom window adjusts the aspect ratio of 
+the frustum to match that of the resized window
+using
+<OL>  
+gluPerspective(80, (GLfloat) w / (GLfloat) h, 1.0, 100.0);
+</OL>
+where w and h are the width and height of the window supplied by the reshape
+function.
+
+
+</body>
+</html>
+

@@ -1,0 +1,8 @@
+
+1) You need to have all required packages installed as described in the System Requirement in the 
+homepage.
+2) Download JPot package. If you are running Linux, there is the compressed-tar file containing all 
+the pre-compiled OpenGL programs for JPot. You can download it and extract all those file to the ogl 
+sub-directory.  Otherwise you need to compile the OpenGL programs before you can run JPot. We 
+provide a Makefile in the ogl directory. Depend on the where you install Mesa/OGL library and how 
+you configure C compiler in your system, you may need to modify the Makefile to have it worked.

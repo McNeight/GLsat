@@ -1,0 +1,19 @@
+#!/bin/sh
+# Script to configure, compile, and install PREDICT
+#
+whoiam=root
+if [ $whoiam != "root" ]; then
+	echo "Sorry $whoiam.  You need to be 'root' to install PREDICT.  :-("
+else
+	echo -n "One moment please... "
+	oldterm=$TERM
+	export TERM=linux
+	cc -Wall -O2 -s installer.c -lncurses -o installer
+	#./installer
+	if [ -a installer ]; then
+		./installer
+	else
+		echo "Compilation failed.  Are you sure you have a C compiler (gcc) installed?"
+	fi
+	export TERM=$oldterm
+fi

@@ -1,0 +1,12 @@
+WARNING
+=======
+
+The program STP (Simple Tracking Program) has problems with Year 2000 dates.
+You will need to make your own corrections to this program.
+
+Note that the author, Christie Harper, KD4QIO, is no longer providing
+any support for this program.
+
+
+23 June 1999
+per email from KD4QIO
