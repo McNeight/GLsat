@@ -28,8 +28,6 @@
 #include "lla.h"
 #include "tle.h"
 
-#define _CLIBCPP_USE_C99
-
 using namespace std;
 
 //
@@ -392,12 +390,22 @@ TLE::TLE()
 // Snags a two-line element
 void TLE::getInput(istream &is)
 {
+  // 
   getline(is, name);
+  // For removing control characters at the end of the line
+  if (iscntrl(*(name.end() - 1)))
+  {
+    name.erase(name.end() - 1);
+  }
+  // Get the first line of data
   getline(is, firstLine);
+  // Get the second line of data
   getline(is, secondLine);
-
+  // Process the checksum
   checksum();
+  // Filter through the data and extract the numbers
   processData();
+  // Set up constants used by all orbital models
   setupConstants();
 }
 
