@@ -23,13 +23,15 @@
 #include <iostream>
 #include "astro.h"
 #include "constants.h"
+#include "eci.h"
 
 using namespace std;
 
 /*
  *
  */
-struct tm gregorianDate(const long double jd)
+struct tm
+gregorianDate(const long double jd)
 {
   /* Algorithm taken from pages 26-27 of */
   /*  _Astronomical Formulae for Calculators_ by Jean Meeus */
@@ -47,7 +49,7 @@ struct tm gregorianDate(const long double jd)
   long double	Z;
 
   tempJD = jd + 0.5;
-  F = modfl(tempJD, &Z);
+  F = modf(tempJD, &Z);
   if (Z < 2299161.0)
   {
     A = (int)Z;
@@ -92,16 +94,16 @@ struct tm gregorianDate(const long double jd)
   }
   
   // Take fractional day, multiply by 24, and skim off the integer hour
-  F = modfl((F * 24), &tempJD);
+  F = modf((F * 24.0), &tempJD);
   now.tm_hour = (int)tempJD;
   // Take fractional hour, multiply by 60, and skim off the integer minute
-  F = modfl((F * 60), &tempJD);
+  F = modf((F * 60.0), &tempJD);
   now.tm_min = (int)tempJD;
   // Take fractional minute, multiply by 60, and skim off the integer second
-  F = modfl((F * 60), &tempJD);
+  F = modf((F * 60.0), &tempJD);
   now.tm_sec = (int)tempJD;
   // Determine the day of the week: (Julian day + 1.5) MOD 7
-  now.tm_wday = (int)fmodl((jd + 1.5), 7.0);
+  now.tm_wday = (int)fmod((jd + 1.5), (long double)7.0);
 
   // begin day-of-year hack...
   // Calculate the year to be used for current Julian year
@@ -131,7 +133,8 @@ struct tm gregorianDate(const long double jd)
  * after October 15th, 1582
  * 
  */
-long double julianDate(const struct tm *date)
+long double
+julianDate(const struct tm *date)
 {
   /* Algorithm taken from pages 23-25 of */
   /* _Astronomical Formulae for Calculators_ by Jean Meeus */
@@ -174,7 +177,8 @@ long double julianDate(const struct tm *date)
 }
 
 //
-long double julianDateFromNow()
+long double
+julianDateFromNow()
 {
   /* time_t is seconds since UNIX epoch */
   /* tm is a time struct */
@@ -200,12 +204,13 @@ long double julianDateFromNow()
 
 // Quick and Dirty...
 // Sideral Time (?)
-long double ThetaG_JD(long double jd_L)
+long double
+ThetaG_JD(long double jd_L)
 {
   long double UT_L, TU_L, GMST_L, temp8;
 
   // cout << "jd_L = " << jd_L << endl;
-  UT_L = modfl(jd_L + 0.5, &temp8);
+  UT_L = modf(jd_L + 0.5, &temp8);
   // cout << "UT_L = " << UT_L << endl;
   // UT_L = temp8;
   jd_L = jd_L - UT_L;
@@ -213,7 +218,7 @@ long double ThetaG_JD(long double jd_L)
   GMST_L = 24110.54841 + TU_L * (8640184.812866 + TU_L * (0.093104 - TU_L * 6.2e-6));
   GMST_L = GMST_L + secondsDay * omega_E * UT_L;
 
-  modfl(GMST_L / secondsDay, &temp8);
+  modf(GMST_L / secondsDay, &temp8);
   temp8 = GMST_L - temp8 * secondsDay;
   if (temp8 < 0.0)
   {
@@ -222,3 +227,9 @@ long double ThetaG_JD(long double jd_L)
   return (2.0 * PI * temp8 / secondsDay);
 }
 
+//
+ECI
+sunPosition(long double jd)
+{
+  
+}

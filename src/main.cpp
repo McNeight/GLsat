@@ -18,6 +18,10 @@
  * 
  */
 
+#ifndef lint
+static const char rcsid[] = "";
+#endif
+
 #ifdef DEBUG
 #include <cfloat>		// for max and min floating point values
 #include <cstdio>		// for printf()
@@ -42,28 +46,23 @@
 #include "astro.h"
 #include "constants.h"
 #include "eci.h"
-// #include "graphics.h"
+#include "graphics.h"
 #include "lla.h"
 #include "tle.h"
 
 #define HalfSecond (0.5/SecondsPerDay)
-#define C 2.997925e5                    /* Kilometers/Second    */
+#define theC 2.997925e5                    /* Kilometers/Second    */
 
 using namespace std;
 
-void init();
-void display();
-void text();
-void reshapeMain(int w, int h);
-void reshapeText(int w, int h);
+void display(void);
+void text(void);
 void keyboard(unsigned char key, int mouse_x, int mouse_y);
 void mouse(int button, int state, int x, int y);
-void printString(string s);
-
 
 TLE			sat;
 vector<TLE>		sats;
-vector<TLE>::iterator	it;
+vector<TLE>::iterator	satIter;
 ECI			posECI;
 LLA			posLLA;
 
@@ -91,39 +90,6 @@ int main(int argc, char *argv[])
   cout.setf(ios::fixed);
   cout.setf(ios::showpoint);
   cout.precision(40);
-  
-#ifdef DEBUG
-  // Thank you, Professor Flanigan for the code
-  // and Professor Brehob for helping me to understand what it means
-
-  struct tm	sputnik;
-  float		temp1 = M_PI;
-  double	temp2 = M_PI;
-  long double	temp3 = M_PI;
-  long double	timeJD = 0;
-
-  printf("\n\nPertinent values for the floating point data types:\n");
-  printf("    (values for float, double, and long double, respectively.)\n\n");
-  printf("     decimal digit precision:     %8d       %8d        %8d\n",FLT_DIG,DBL_DIG,LDBL_DIG);
-  printf("     minimum exponent of 10:      %8d       %8d        %8d\n",FLT_MIN_10_EXP,DBL_MIN_10_EXP,LDBL_MIN_10_EXP);
-  printf("     maximum exponent of 10:      %8d       %8d        %8d\n",FLT_MAX_10_EXP,DBL_MAX_10_EXP,LDBL_MAX_10_EXP);
-  printf("     minimum positive value:  %1.6e  %1.6e  %1.6Le\n",FLT_MIN,DBL_MIN,LDBL_MIN);
-  printf("     maximum positive value:  %1.6e  %1.6e  %1.6Le\n",FLT_MAX,DBL_MAX,LDBL_MAX);
-  
-  cout << endl << "   " << M_PI << endl;
-  cout << sizeof(temp1) << "  " << temp1 << endl;
-  cout << sizeof(temp2) << "  " << temp2 << endl;
-  cout << sizeof(temp3) << " " << temp3 << endl;
-  
-  temp1 = PI;
-  temp2 = PI;
-  temp3 = PI;
-  
-  cout << endl << "   " << PI << endl;
-  cout << sizeof(temp1) << "  " << temp1 << endl;
-  cout << sizeof(temp2) << "  " << temp2 << endl;
-  cout << sizeof(temp3) << " " << temp3 << endl;
-#endif
 
   if (argc > 1)
   {
@@ -148,15 +114,17 @@ int main(int argc, char *argv[])
     cin >> sat;
   }
 
-  for (it = sats.begin(); it != sats.end(); it++)
+  for (satIter = sats.begin(); satIter != sats.end(); satIter++)
   {
-    if (it->getValid())
+    if (satIter->getValid())
     {
-      cout << "Valid TLE for " << it->getName() << endl;
+      cout << "Valid TLE for " << satIter->getName() << endl;
     }
   }
 
 #ifdef DEBUG
+  struct tm		sputnik;
+  long double		timeJD = 0;
   ECI			eci;
   LLA			location;
   int			i = 0;
@@ -210,17 +178,21 @@ int main(int argc, char *argv[])
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
   glutInitWindowSize(500, 500);
   // Create the main window
-  mainWindow = glutCreateWindow("GLsat version 0.1");
+  mainWindow = glutCreateWindow("GLsat version 0.2");
+  // Initializa OpenGL
   init();
   glutDisplayFunc(display);
   glutReshapeFunc(reshapeMain);
+  // Define keyboard function
   glutKeyboardFunc(keyboard);
   //glutMouseFunc(mouse);
   glutIdleFunc(display);
-  // For the coordinates sub-window
+  // For the coordinates sub-window:
+  // Create the coordinates sub-window
   textWindow = glutCreateSubWindow(mainWindow, 0, 0, 500, 100);
   glutDisplayFunc(text);
   glutReshapeFunc(reshapeText);
+  // Define keyboard function
   glutKeyboardFunc(keyboard);
   glutIdleFunc(text);
   glutMainLoop();
@@ -231,68 +203,6 @@ int main(int argc, char *argv[])
 }
 
 
-/*
- * init()
- *
- * Specifies desired OpenGL features.
- * If things like lighting and textures were in this demo, the
- * appropriate calls would be made here.
- * Must be called after glutCreateWindow().
- *
- */
-void init()
-{
-#ifdef DEBUG
-  cout << glGetString(GL_VENDOR) << " ";
-  cout << glGetString(GL_RENDERER) << endl;
-  cout << "OpenGL " << glGetString(GL_VERSION) << endl;
-#endif
-        
-  glClearDepth(1.0);
-  // Set background to black
-  glClearColor(0, 0, 0, 0);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  //
-  glShadeModel(GL_SMOOTH);
-  glEnable(GL_DEPTH_TEST | GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  /* glDisable(GL_DEPTH_TEST) */
-  // sat.getOrbit(A, B, E, I_o, PER, RA);
-#ifdef DEBUG
-  cout << A << endl;
-  cout << B << endl;
-  cout << E << endl;
-#endif
-}
-
-/*
- * reshape()
- *
- * The GLUT calls this function after the window has created, and
- * every time the window is reshaped.
- *
- * Specifies initial viewing options, including viewing area and model
- * orientation.
- *
- * Viewing transformations will be covered in detail in workshop 2.
- */
-void reshapeMain(int w, int h)
-{
-  glViewport(0, 0, w, h);
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  gluPerspective(60, (GLfloat)w/h, 10, 300000);
-  glMatrixMode(GL_MODELVIEW);
-}
-
-//
-void reshapeText(int w, int h)
-{
-  glViewport(0, 0, w, h);
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  gluOrtho2D(0.0, w, h, 0.0);
-}
 
 /*
  * display()
@@ -300,7 +210,7 @@ void reshapeText(int w, int h)
  * The GLUT calls this function whenever the window must be redrawn.
  *  
  */
-void display()
+void display(void)
 {
   /*
   long double x = 0;
@@ -333,17 +243,14 @@ void display()
   // glRotatef(rotationIncrement, 0, 1.0, 0);
   // glRotatef(rotationIncrement, 0, 0, 1.0);
 
-  // Insert big blue marble
-  glColor3f(0,0,1);
-  // glutSolidSphere(e_R, 24, 18);
-  glutWireSphere(e_R, 24, 18);
+  BlueMarble();
 
   currentTime = time(NULL);
   timeJD = julianDate(gmtime(&currentTime));
   
-  for (it = sats.begin(); it != sats.end(); it++)
+  for (satIter = sats.begin(); satIter != sats.end(); satIter++)
   {
-    posECI = it->position4(timeJD);
+    posECI = satIter->position4(timeJD);
   
 #ifdef DEBUG
     cout << asctime(gmtime(&currentTime));
@@ -411,7 +318,8 @@ void display()
   // sleep(1);
 }
 
-void text()
+
+void text(void)
 {
   glutSetWindow(textWindow);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -459,19 +367,6 @@ void text()
   glutPostRedisplay();
 }
 
-/*
- * Quick function for writing a string to a GL window
- * 
- */
-void printString(string s)
-{
-  string::iterator i;
-  
-  for (i = s.begin(); i != s.end(); i++)
-  {
-    glutBitmapCharacter(GLUT_BITMAP_8_BY_13, *i);
-  }
-}
 
 /*
  * keyboard()
@@ -517,6 +412,7 @@ void keyboard(unsigned char key, int mouse_x, int mouse_y)
       break;
     case 'q':
     case 'Q':
+    case 27:
       exit(0);
       break;
     case 's':
@@ -554,6 +450,7 @@ void keyboard(unsigned char key, int mouse_x, int mouse_y)
   glutPostRedisplay();
 }
 
+
 /*
  *
  */
@@ -571,5 +468,4 @@ void mouse(int button, int state, int x, int y)
   }
   glutPostRedisplay();
 }
-
 

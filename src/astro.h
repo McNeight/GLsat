@@ -21,14 +21,16 @@
 #ifndef ASTRO_H
 #define ASTRO_H
 
-#include <cmath>
+//#include <cmath>
 #include <ctime>
-#include <iostream>
-#include "constants.h"
+//#include <iostream>
+//#include "constants.h"
+#include "eci.h"
 
 struct tm gregorianDate(const long double jd);
 long double julianDate(const struct tm *date);
 long double julianDateFromNow();
 long double ThetaG_JD(long double jd_L);
+ECI sunPosition(long double jd);
 
 #endif

@@ -21,20 +21,14 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
-#include <iostream>
 #include <string>
-#include <GL/glut.h>
-#include "tle.h"
 
 using namespace std;
 
-void init(vector<TLE> &satellites);
-void reshape(int w, int h);
+void init(void);
+void reshapeMain(int w, int h);
 void reshapeText(int w, int h);
-void display();
-void key(unsigned char x, int mouse_x, int mouse_y);
-void mouse(int button, int state, int x, int y);
-void text();
 void printString(string s);
+void BlueMarble(void);
 
 #endif
