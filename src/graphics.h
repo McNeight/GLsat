@@ -22,13 +22,32 @@
 #define GRAPHICS_H
 
 #include <string>
+#include "tle.h"
 
 using namespace std;
 
-void init(void);
+void GLgraphics(int argc, char *argv[]);
+void GraphicsInit(void);
+void GraphicsDisplay(void);
 void reshapeMain(int w, int h);
 void reshapeText(int w, int h);
+void GraphicsText(void);
+void keyboard(unsigned char key, int mouse_x, int mouse_y);
+void special(int key, int mouse_x, int mouse_y);
+void mouse(int button, int state, int x, int y);
+void motion(int x, int y);
+
+// helper functions of my own
 void printString(string s);
 void BlueMarble(void);
+
+
+// helper functions hacked in from gltZPR
+// http://www.nigels.com/glt/gltzpr/
+double vlen(double x,double y,double z);
+void viewPos(double *px, double *py, double *pz, const int x, const int y, const int *viewport);
+void   getMatrix();
+void   invertMatrix(const GLdouble *m, GLdouble *out );
+
 
 #endif
