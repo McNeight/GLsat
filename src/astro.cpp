@@ -27,6 +27,110 @@
 
 using namespace std;
 
+// Appendix III
+// Planets: Periodic Terms
+
+// There are 6 periodic series for heliocentric longitude
+// with a maximum of 64 terms per series
+// and 3 quantities per term
+static long double earth_L_coeff[6][64][3] = {
+{ // L0
+  {175347046.0, 0, 0},                           // 1
+  {3341656.0, 4.6692568, 6283.0758500},          // 2
+  {34894.0, 4.62610, 12566.15170},               // 3
+  {3497.0, 2.7441, 5753.3849}                    // 4
+},
+
+{ // L1
+  {}
+},
+
+{ // L2
+  {52919.0, 0.0, 0.0},                           // 1
+  {8720.0, 1.0721, 6283.0758},                   // 2
+  {309.0, 0.867, 12566.152},                     // 3
+  {27.0, 0.05, 3.52},                            // 4
+  {16.0, 5.19, 26.30},                           // 5
+  {16.0, 3.68, 155.42},                          // 6
+  {10.0, 0.76, 18849.23},                        // 7
+  {9.0, 2.06, 77713.77},                         // 8
+  {7.0, 0.83, 775.52},                           // 9
+  {5.0, 4.66, 1577.34},                          // 10
+  {4.0, 1.03, 7.11},                             // 11
+  {4.0, 3.44, 5573.14},                          // 12
+  {3.0, 5.14, 796.30},                           // 13
+  {3.0, 6.05, 5507.55},                          // 14
+  {3.0, 1.19, 242.73},                           // 15
+  {3.0, 6.12, 529.69},                           // 16
+  {3.0, 0.31, 398.15},                           // 17
+  {3.0, 2.28, 553.57},                           // 18
+  {2.0, 4.38, 5223.69},                          // 19
+  {2.0, 3.75, 0.98}                              // 20
+},
+
+{ // L3
+  {289.0, 5.844, 6283.076},                      // 1
+  {35.0, 0.0, 0.0},                              // 2
+  {17.0, 5.49, 12566.15},                        // 3
+  {3.0, 5.20, 155.42},                           // 4
+  {1.0, 4.72, 3.52},                             // 5
+  {1.0, 5.30, 18849.23},                         // 6
+  {1.0, 5.97, 242.73}                            // 7
+},
+  
+{ // L4
+  {114.0, 3.142, 0.0},                           // 1
+  {8.0, 4.13, 6283.08},                          // 2
+  {1.0, 3.84, 12566.15}                          // 3
+},
+
+{ // L5
+  {1.0, 3.14, 0.0}                               // 1
+}};
+
+//
+static long double earth_B_coeff[2][5][3] = {
+{ // B0
+  {280.0, 3.199, 84334.662},                     // 1
+  {102.0, 5.422, 5507.553},                      // 2
+  {80.0, 3.88, 5223.69},                         // 3
+  {44.0, 3.70, 2352.87},                         // 4
+  {32.0, 4.00, 1577.34}                          // 5
+},
+
+{ // B1
+  {9.0, 3.90, 5507.55},                          // 1
+  {6.0, 1.73, 5223.69}                           // 2
+}};
+
+//
+static long double earth_R_coeff[5][40][3] = {
+{ // R0
+  {}
+},
+
+{ // R1
+},
+
+{ // R2
+  {4359.0, 5.7846, 6283.0758},                   // 1
+  {124.0, 5.579, 12566.152},                     // 2
+  {12.0, 3.14, 0.0},                             // 3
+  {9.0, 3.63, 77713.77},                         // 4
+  {6.0, 1.87, 5573.14},                          // 5
+  {3.0, 5.47, 18849.23}                          // 6
+},
+
+{ // R3
+  {145.0, 4.273, 6283.076},                      // 1
+  {7.0, 3.92, 12566.15}                          // 2
+},
+
+{ // R4
+  {4.0, 2.56, 6283.08}                           // 1
+}};
+
+
 /*
  *
  */
@@ -229,7 +333,139 @@ ThetaG_JD(long double jd_L)
 
 //
 ECI
-sunPosition(long double jd)
+sunPosition(const long double jd)
 {
+  long double B = 0;
+  long double B_coeff[2] = {0};
+  long double beta;
+//  long double e;
+  long double epsilon_0;
+  ECI         retVal;
+  long double L = 0;
+  long double L_coeff[6] = {0};
+//  long double M;
+  long double R;
+  long double R_coeff[5] = {0};
+  long double sun;
+  long double T;
+  long double tau;
+  long double tempA = 0, tempB = 0, tempC = 0;
+//  long double v;
+  long double X;
+  long double Y;
+  long double Z;
+
+  // p. 163 (25.1)
+  T = (jd - 2451545.0) / 36525.0;
+  // p. 218 (32.1)
+  tau = T / 10.0;
   
+  // Chapter 32: Positions of the Planets
+  // First, find the heliocentric coordinates of the Earth
+  // Calculate heliocentric ecliptical longitude L
+  for (int i = 0; i < 6; i++)
+  {
+    int k = 0;
+    switch(i)
+    {
+      case 0:
+	k = 64;
+	break;
+      case 1:
+	k = 34;
+	break;
+      case 2:
+	k = 20;
+	break;
+      case 3:
+	k = 7;
+	break;
+      case 4:
+	k = 3;
+	break;
+      case 5:
+	k = 1;
+    }
+    for (int j = 0; j < k; j++)
+    {
+      tempA = earth_L_coeff[i][j][0];
+      tempB = earth_L_coeff[i][j][1];
+      tempC = earth_L_coeff[i][j][2];
+      L_coeff[i] += tempA * cos(tempB + (tempC * tau));
+    }
+    L += L_coeff[i] * pow(tau, i);
+  }
+  // Finish Him!
+  L /= pow((long double)10.0, 8);
+  
+  // Calculate heliocentric ecliptical latitude B
+  for (int i = 0; i < 2; i++)
+  {
+    int k = 0;
+    switch(i)
+    {
+      case 0:
+	k = 5;
+	break;
+      case 1:
+	k = 2;
+    }
+    for (int j = 0; j < k; j++)
+    {
+      tempA = earth_B_coeff[i][j][0];
+      tempB = earth_B_coeff[i][j][1];
+      tempC = earth_B_coeff[i][j][2];
+      B_coeff[i] += tempA * cos(tempB + (tempC * tau));
+    }
+    B += B_coeff[i] * pow(tau, i);
+  }
+  // Finish Him!
+  B /= pow((long double)10.0, 8);
+
+  // Calculate radius vector R
+  for (int i = 0; i < 2; i++)
+  {
+    int k = 0;
+    switch(i)
+    {
+      case 0:
+	k = 40;
+	break;
+      case 1:
+	k = 10;
+	break;
+      case 2:
+	k = 6;
+	break;
+      case 3:
+	k = 2;
+	break;
+      case 4:
+	k = 1;
+    }
+    for (int j = 0; j < k; j++)
+    {
+      tempA = earth_R_coeff[i][j][0];
+      tempB = earth_R_coeff[i][j][1];
+      tempC = earth_R_coeff[i][j][2];
+      R_coeff[i] += tempA * cos(tempB + (tempC * tau));
+    }
+    R += R_coeff[i] * pow(tau, i);
+  }
+  // Finish Him!
+  R /= pow((long double)10.0, 8);
+  
+  // Find the solar coordinates
+  // p. 147 _Astronomical Algorithms_ (22.2)
+  epsilon_0 = 23.4392911111 - (0.013004166667 * T) - (0.000000163889 * T * T)
+           - (0.000000503611 * T * T * T);
+
+  sun = L + PI;
+  beta = -B;
+  
+  X = R * cos(beta) * cos(sun);
+  Y = R * cos(beta) * sin(sun);
+  Z = R * sin(beta);
+  
+  return retVal;
 }
