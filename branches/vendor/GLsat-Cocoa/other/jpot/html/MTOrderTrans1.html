@@ -1,0 +1,48 @@
+<HTML>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5 COLOR="#008080"><P>Effect of Multiple Transformations </P>
+</FONT><U><FONT SIZE=4 COLOR="#ff0000"><P>Idea:</P> </FONT></U></B>
+<P>
+There are two approaches to "interpret" a sequence of 
+modeling transformations.
+Consider the following code segment, where drawcube() is a function to
+draw a cube at the origin.
+</P>
+<OL>
+glTranslatef(3.0, 0.0, 0.0);<br>
+glRotatef(90, 0.0, 1.0, 0.0);<br>
+glTranslatef(6.0, 0.0, 0.0); <br>
+drawcube();
+</OL>
+<a href="OrderTrans1.class">Click here</a> to see animations illustrating 
+the two interpretations.
+Click within the windows to repeat the animations.
+<OL>
+<LI><font color="#ff0000">The Fixed Coordinate System Approach (the top window):</font>
+<P> A cube is drawn at the origin, and then transformations are 
+applied in the reverse order, all with respect to the fixed,
+global coordinate system.  That is, the cube drawn at the origin of 
+the global coordinate system is first translated by 6.0 in the positive x direction, 
+then rotated by 90 degrees about the y axis of the global coordinate 
+system, and finally translated by 3.0 
+in the positive x direction of of the global coordinate system.
+</P>
+<LI><font color="#ff0000">Local Coordinate System Approach (the bottom window):</font>
+<P>
+Transformations are applied
+to a local coordinate system (shown in cyan)
+in the order they appear in the code, and then a cube is drawn at the origin
+of that coordinate system.
+All transformations take place in terms of
+the "floating" local coordinate system. 
+In our example,
+the local coordinate system is first translated by 3.0 
+in its positive x direction, 
+then rotated by 90 degrees about its y axis, 
+and finally translated by 3.0 in its positive x direction (which now coincides with the negative z direction of the global coordinate system). 
+The drawcube() command then renders a cube at the origin of the local coordinate system.
+</P>
+</OL>
+</BODY>
+</HTML>

@@ -1,0 +1,173 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:577: checking for ar
+configure:613: checking for cp
+configure:649: checking for gzip
+configure:694: checking for a BSD compatible install
+configure:747: checking whether make sets ${MAKE}
+configure:776: checking for nice
+configure:812: checking for perl
+configure:848: checking for rm
+configure:884: checking for strip
+configure:920: checking for tar
+configure:956: checking for wish
+configure:998: checking for gcc
+configure:1111: checking whether the C compiler (gcc  ) works
+configure:1127: gcc -o conftest    conftest.c  1>&5
+configure:1153: checking whether the C compiler (gcc  ) is a cross-compiler
+configure:1158: checking whether we are using GNU C
+configure:1167: gcc -E conftest.c
+configure:1186: checking whether gcc accepts -g
+configure:1222: checking for c++
+configure:1254: checking whether the C++ compiler (c++  ) works
+configure:1270: c++ -o conftest    conftest.C  1>&5
+configure:1296: checking whether the C++ compiler (c++  ) is a cross-compiler
+configure:1301: checking whether we are using GNU C++
+configure:1310: c++ -E conftest.C
+configure:1329: checking whether c++ accepts -g
+configure:1368: checking how to run the C++ preprocessor
+configure:1386: c++ -E  conftest.C >/dev/null 2>conftest.out
+configure:1427: checking host system type
+configure:1464: checking for ranlib
+configure:1543: checking for X
+configure:1862: checking for dnet_ntoa in -ldnet
+configure:1884: c++ -o conftest -g -O2   conftest.C -ldnet   1>&5
+ld: can't locate file for: -ldnet
+configure: failed program was:
+#line 1870 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char dnet_ntoa();
+
+int main() {
+dnet_ntoa()
+; return 0; }
+configure:1906: checking for dnet_ntoa in -ldnet_stub
+configure:1928: c++ -o conftest -g -O2   conftest.C -ldnet_stub   1>&5
+ld: can't locate file for: -ldnet_stub
+configure: failed program was:
+#line 1914 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char dnet_ntoa();
+
+int main() {
+dnet_ntoa()
+; return 0; }
+configure:1957: checking for gethostbyname
+configure:1988: c++ -o conftest -g -O2   conftest.C  1>&5
+configure:2061: checking for connect
+configure:2092: c++ -o conftest -g -O2   conftest.C  1>&5
+configure:2159: checking for remove
+configure:2190: c++ -o conftest -g -O2   conftest.C  1>&5
+configure:2257: checking for shmat
+configure:2288: c++ -o conftest -g -O2   conftest.C  1>&5
+configure:2364: checking for IceConnectionNumber in -lICE
+configure:2386: c++ -o conftest -g -O2   -L/usr/X11R6/lib conftest.C -lICE   1>&5
+configure:2413: checking for XOpenDisplay in -lX11
+configure:2435: c++ -o conftest -g -O2   conftest.C -lX11  -L/usr/X11R6/lib  1>&5
+configure:2490: checking for X11/extensions/scrnsaver.h
+configure:2500: c++ -E  conftest.C >/dev/null 2>conftest.out
+configure:2496:38: X11/extensions/scrnsaver.h: No such file or directory
+configure: failed program was:
+#line 2495 "configure"
+#include "confdefs.h"
+#include <X11/extensions/scrnsaver.h>
+configure:2625: checking for drem
+configure:2656: c++ -o conftest -g -O2   conftest.C  1>&5
+configure:2683: checking for strptime
+configure:2714: c++ -o conftest -g -O2   conftest.C  1>&5
+configure:2741: checking for unsetenv
+configure:2772: c++ -o conftest -g -O2   conftest.C  1>&5
+configure:2756: declaration of C function `char unsetenv()' conflicts with
+/usr/include/stdlib.h:214: previous declaration `void unsetenv(const char*)' 
+   here
+configure: failed program was:
+#line 2746 "configure"
+#include "confdefs.h"
+/* System header to define __stub macros and hopefully few prototypes,
+    which can conflict with char unsetenv(); below.  */
+#include <assert.h>
+/* Override any gcc2 internal prototype to avoid an error.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char unsetenv();
+
+int main() {
+
+/* The GNU C library defines this for functions which it implements
+    to always fail with ENOSYS.  Some functions are actually named
+    something starting with __ and the normal name is an alias.  */
+#if defined (__stub_unsetenv) || defined (__stub___unsetenv)
+choke me
+#else
+unsetenv();
+#endif
+
+; return 0; }
+configure:2838: checking for freetype-config
+configure:2920: checking for gif_lib.h
+configure:2930: c++ -E  -INONE/include -I${prefix}/include  -I/usr/X11R6/include conftest.C >/dev/null 2>conftest.out
+configure:2926:21: gif_lib.h: No such file or directory
+configure: failed program was:
+#line 2925 "configure"
+#include "confdefs.h"
+#include <gif_lib.h>
+configure:3116: checking for jpeglib.h
+configure:3126: c++ -E  -INONE/include -I${prefix}/include  -I/usr/X11R6/include conftest.C >/dev/null 2>conftest.out
+configure:3122:21: jpeglib.h: No such file or directory
+configure: failed program was:
+#line 3121 "configure"
+#include "confdefs.h"
+#include <jpeglib.h>
+configure:3245: checking for png.h
+configure:3255: c++ -E  -INONE/include -I${prefix}/include  -I/usr/X11R6/include conftest.C >/dev/null 2>conftest.out
+configure:3251:17: png.h: No such file or directory
+configure: failed program was:
+#line 3250 "configure"
+#include "confdefs.h"
+#include <png.h>
+configure:3289: checking for pngconf.h
+configure:3299: c++ -E  -INONE/include -I${prefix}/include  -I/usr/X11R6/include conftest.C >/dev/null 2>conftest.out
+configure:3295:21: pngconf.h: No such file or directory
+configure: failed program was:
+#line 3294 "configure"
+#include "confdefs.h"
+#include <pngconf.h>
+configure:3418: checking for pnm.h
+configure:3428: c++ -E  -INONE/include -I${prefix}/include  -I/usr/X11R6/include conftest.C >/dev/null 2>conftest.out
+configure:3424:17: pnm.h: No such file or directory
+configure: failed program was:
+#line 3423 "configure"
+#include "confdefs.h"
+#include <pnm.h>
+configure:3612: checking for tiff.h
+configure:3622: c++ -E  -INONE/include -I${prefix}/include  -I/usr/X11R6/include conftest.C >/dev/null 2>conftest.out
+configure:3618:18: tiff.h: No such file or directory
+configure: failed program was:
+#line 3617 "configure"
+#include "confdefs.h"
+#include <tiff.h>
+configure:3656: checking for tiffio.h
+configure:3666: c++ -E  -INONE/include -I${prefix}/include  -I/usr/X11R6/include conftest.C >/dev/null 2>conftest.out
+configure:3662:20: tiffio.h: No such file or directory
+configure: failed program was:
+#line 3661 "configure"
+#include "confdefs.h"
+#include <tiffio.h>
+configure:3816: checking for GLUT/glut.h
+configure:3826: c++ -E  -INONE/include -I${prefix}/include  -I/usr/X11R6/include conftest.C >/dev/null 2>conftest.out

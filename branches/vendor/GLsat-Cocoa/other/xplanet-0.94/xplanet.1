@@ -1,0 +1,780 @@
+.TH XPLANET 1
+.\" NAME should be all caps, SECTION should be 1-8, maybe w/ subsection
+.\" other parms are allowed: see man(7), man(1)
+.SH NAME
+tkxplanet, xplanet, xplanetbg \- render an image of a planet into an X window
+.SH SYNOPSIS
+.B tkxplanet
+
+.B xplanet
+.I "[options]"
+
+.B xplanetbg
+.I "[options]"
+.SH "DESCRIPTION"
+This manual page documents briefly the
+.BR tkxplanet ,
+.BR xplanet ,
+and
+.B xplanetbg
+commands.
+
+.PP
+.B Xplanet 
+is similar to Xearth, where an image of the earth is rendered into an
+X window.  Azimuthal, Mercator, Mollweide, orthographic, Peters, or
+rectangular projections can be displayed as well as a window with a
+globe the user can rotate interactively.  The other planets and some
+satellites may also be displayed.  The latest version can always be
+found at http://xplanet.sourceforge.net.
+
+.B Xplanetbg
+spawns an Xplanet process every five minutes or other user-specified
+interval to update the image.
+
+.B TkXplanet
+is a Tcl/Tk front end to xplanet.
+
+.SH OPTIONS
+Options need only be specified with enough characters to be
+unambiguous.  Valid options to Xplanet are:
+.TP
+.B \-animate
+Pop up a window using OpenGL or Mesa where the user can rotate the
+globe interactively.  The -markers and -label options will be ignored
+in this mode.  Valid keys in this mode are:
+.nf
+.sp
+Home/End:             Move closer/farther
+Arrow keys:           Rotate body
++/-:                  Increase/decrease rotation speed
+r:                    Reverse rotation
+h:                    Toggle help screen
+q:                    Quit
+.sp
+.fi
+.TP
+.B \-background background_file
+Use background_file as the background image, with the planet to be
+superimposed upon it.  If no projection is explicitly specified,
+orthographic is assumed, but this option may also be used with the
+azimuthal, mollweide, and peters projections.   
+.TP
+.B \-blend
+Use bilinear interpolation to compute the color of each pixel instead
+of nearest-neighbor interpolation.  It slows down the computation, but
+it can look a lot better, particularly if you're using a low
+resolution map.
+.TP
+.B \-body body
+Render an image of the specified planet or satellite.  Valid values
+for body are mercury, venus, earth, moon, mars, jupiter, io, europa,
+ganymede, callisto, saturn, titan, uranus, neptune, pluto, and random.
+.TP
+.B \-center x,y
+Place the center of the globe at (x,y).  You can use this with the
+-radius option to put a small image anywhere on the screen.  If no
+projection is explicitly specified, orthographic is assumed, but this
+option may also be used with the azimuthal and Mollweide projections.
+.TP
+.B \-cloud_gamma  gamma
+Apply a gamma correction to the cloud image before overlaying.  Each
+pixel's brightness is adjusted according to:
+new_value = 255 * [(old_value/255)^(1/gamma)]
+.TP
+.B \-cloud_image cloud_file
+Use cloud_file as the image to be overlaid.  Overlaying clouds slows
+Xplanet down considerably (but it looks really nice).  New global
+composite cloud maps are generated every six hours on
+http://xplanet.sourceforge.net.  If you use this option a lot, you
+might consider making your own day and night image maps with the
+clouds already overlaid to save some time.  You can create a shell
+script like the following:
+.nf
+.sp
+	 wget http://xplanet.sourceforge.net/cloud_800.jpg
+	 xplanet -image day.jpg -cloud_image cloud_800.jpg \
+	 -shade 100 -output day-clouds.jpg -geometry widthxheight
+	 xplanet -image night.jpg -cloud_image cloud_800.jpg \
+	 -cloud_shade 30 -output night-clouds.jpg -geometry widthxheight
+.sp
+.fi
+Where width and height are the dimensions of the image to create.  Now
+you can use day-clouds.jpg and night-clouds.jpg as your day and night
+images until it's time to get a new cloud map.
+.TP
+.B \-cloud_shade percent
+Only shade the cloud map; do not shade the night map.  This is useful
+for creating a new night map with the cloud image overlaid in the
+event you're using different map files for day and night.  For an
+example, see the -cloud_ssec option below.
+.TP
+.B \-cloud_ssec cloud_file
+Just like -cloud_image but where cloud_file is an image downloaded
+from the Space Science and Engineering Center (SSEC) at the University
+of Wisconsin.  The latest image (updated every three hours) can be
+obtained from http://www.ssec.wisc.edu/data/comp/latest_moll.gif. This
+image is a 640x350 pixel Mollweide composite image with ugly pink
+coastlines.  Xplanet will reproject and resize the image as well as
+remove and fill in the coastlines.  As with -cloud_image, this can be
+time consuming each time Xplanet runs, so consider making a new
+composite yourself.  
+.TP
+.B \-cloud_threshold threshold
+Cloud pixel values below threshold will be ignored.  The value for
+threshold should be between 0 and 255.  A value of 90 is the default.
+.TP
+.B \-color colorname
+Set the color for the label/markers to colorname.  The default is
+"red".  Any color in the rgb.txt file may be used (usually
+/usr/X11R6/lib/X11/rgb.txt).  Colors may also be specified by RGB hex
+values; for example -color 0xff and -color blue mean the same thing,
+as do -color 0xff0000 and -color red.
+.TP
+.B \-date string
+Use the date specified instead of the current local time.  The format
+of the string should be "24 Jun 1999 21:02:17" ("%d %b %Y %H:%M:%S" as
+read by strptime(3)).  The time is assumed to be local time.  If
+strptime is not available on your system the -date option will be
+ignored.
+.TP
+.B \-dayside
+Render the image as seen from directly above the subsolar point.  If no
+projection is explicitly specified, orthographic is assumed, but this
+option may also be used with any projection except rectangular. 
+.TP
+.B \-demfile demfile
+Use demfile as the digital elevation map.  This file should be an 8
+bit image, with 0 being the lowest elevation (corresponding to radius
+1) and 255 being the highest elevation (corresponding to radius = 1 +
+demscale, defined below).  The -blend option will be ignored if
+-demfile is used.  This option implies -projection orthographic. 
+.TP
+.B \-demscale demscale
+Assign the highest elevation in the digital elevation map named with
+the -demfile option to be at a distance of 1 + demscale from the
+planet center.  The default is 0.05.  This option will be ignored if
+-demfile is not used. 
+.TP
+.B \-earthside
+Render the image as seen from the earth. This option only works with
+other planets, specified with -body.  If no projection is explicitly
+specified, orthographic is assumed, but this option may also be used
+with any projection except rectangular.
+.TP
+.B \-font fontname
+Set the font for the label/markers to fontname.  The default font is
+"variable" for X11 or "helr____.ttf" when using the FreeType library.
+Either X11 or TrueType fonts may be specified if support for each is
+compiled in.  The command "xlsfonts" will list all of the fonts that
+are available on X11.  If a TrueType font is specified, this option
+implies -truetype.
+.TP
+.B \-fontdir directory
+Specify the directory to find the TrueType font to use.  This option
+may be given more than once. 
+.TP
+.B \-fontsize size
+Specify the pointsize.  The default is 12.  This option only works
+with TrueType fonts. 
+.TP 
+.B \-fullscreen
+Set the width and height of the window or output file to the size of
+the root window.  On X11, this will only work if there is a DISPLAY
+variable set.  This option implies -window but also can be used with
+-output.
+.TP
+.B \-fuzz fuzz
+Let the day and night hemispheres blend into one another for pixels
+within fuzz degrees of the terminator.  The default value is 6.
+.TP
+.B \-geometry string
+Specify the window geometry using the standard X window geometry
+syntax, [<width>{xX}<height>][{+-}<xoffset>{+-}<yoffset>]
+(e.g. 256x256-10+10 puts a window 256x256 pixels in size 10 pixels
+away from the right side and 10 pixels below the top of the root
+window).  This option implies -window, but can also be used with
+-animate or -output.
+.TP
+.B \-gmtlabel
+Same as the -label option, but show GMT instead of local time.
+.TP
+.B \-greatarcfile filename
+Use the coordinates in filename to plot arcs of great circles.  Each
+line should have the following syntax:
+.nf
+lat1 lon1 lat2 lon2
+.fi
+where all values are in degrees.  In addition, the keywords "color"
+and "spacing" are supported as in the example below:
+.nf
+33.9 -118.4 52.3 4.8 color=SpringGreen spacing=0.5 # LAX-AMS
+.fi
+Valid values for "color" are the same as for the -color option.  The
+value for spacing defines the distance between dots on the great arc.
+The default is 0.1 degree.  Delimiters (whitespace, tabs, foward
+slashes, or commas) are not permitted in any of these keyword/value
+pairs.  Anything after the # character is ignored.
+.TP
+.B \-grid
+Draw a longitude/latitude grid.  The spacing of major grid lines and
+dots between major grid lines can be controlled with the -grid1 and
+-grid2 options (see below).
+.TP
+.B \-grid1 grid1
+Specify the spacing of grid lines. Grid lines are drawn with a
+90/grid1 degree spacing. The default value for grid1 is 6,
+corresponding to 15 degrees between major grid lines.  This option
+implies -grid.
+.TP
+.B \-grid2 grid2
+Specify the spacing of dots along grid lines.  Grid dots are drawn
+with a 90/(grid1 x grid2) degree spacing.  The default value for grid2
+is 15; combined with the default grid1 value of 6, this corresponds to
+placing grid dots on a one degree spacing.  This option implies
+-grid.
+.TP
+.B \-help                
+Display a list of options.
+.TP
+.B \-image image_file
+Use image_file as the day map image.  For the earth and moon, it is
+assumed that the image goes from [-180,+90] at the top left to
+[180,-90] at the bottom right.  For the other planets, the corners are
+assumed to be [180, +90] and [180, -90] at top left and bottom right
+respectively, where the longitude increases to the west for Mercury
+and Mars and the longitude increases to the east for Venus.  This is
+confusing but most images you will find adhere to this convention, so
+you probably don't need to worry about it anyway.  If this option is
+not specified, the day map will default to body.jpg (e.g. earth.jpg).
+.TP
+.B \-label
+Display a label in the upper right corner which indicates the current
+time and subsolar point, and the position where the observer is
+directly overhead.  For orthographic projections the illuminated
+fraction is also displayed.
+.TP
+.B \-labelformat string
+Specify the format for the date/time label.  This format string is
+passed to strftime(3).  The default is "%a %d %b %Y %H:%M %Z".  Non-US
+users may want to use "%c", which shows the date and time in the
+locale's appropriate date and time representation.
+.TP
+.B \-labelname
+Display the body's name in the label.  This option implies -label.
+.TP
+.B \-labelrot
+Display the angle (in degrees) between the body's north pole and the
+top of the image in the label.  This option implies -label.
+.TP
+.B \-labelpos string
+Specify the location of the label using the standard X window geometry
+syntax.  The default position is "-15+15", or 15 pixels to the left
+and below the top right corner of the display.  This option implies
+-label. 
+.TP
+.B \-latitude latitude
+Render the globe as seen from above the specified latitude (in
+degrees).  The default value is 0.  If no projection is explicitly
+specified, orthographic is assumed, but this option may also be used
+with any projection except rectangular.
+.TP
+.B \-localtime time 
+This option is equivalent to using the -longitude option with the
+meridian at which the local time is the time specified.  The time can
+range from 0 to 24.
+.TP
+.B \-longitude longitude 
+Place the observer above the specified longitude (in degrees).
+Longitude is positive going east, negative going west (for earth and
+moon), so for example Los Angeles is at -118 or 242.  The default
+value is 0.
+.TP
+.B \-mapdir directory
+When looking for an image, Xplanet will first look in the directory
+specified by -mapdir, then the current directory, then the "images"
+subdirectory of the current directory, and finally in the default
+directory specified at compilation time.  This option may be specified
+more than once in order to search multiple directories.
+.TP
+.B \-mapbounds lat1,lon1,lat2,lon2
+Assume that each map file read in has its northwest corner at
+lat1,lon1 and its southeast corner at lat2,lon2.  This is useful if
+you have a high-res map but just want to show a small area.
+.TP
+.B \-markerbounds filename
+Write coordinates of the bounding box for each marker to filename.
+This might be useful if you're using xplanet to make imagemaps for web
+pages.  Each line looks like:
+
+204,312 277,324 Los Angeles
+
+where the coordinates are for the upper left and lower right corners
+of the box.  
+.TP
+.B \-markerfile markerfile
+Specify a file containing user defined marker data to display on the
+map.  The format of each line is generally latitude, longitude,
+string, as in the example below:
+
+33.943 -118.408 "Los Angeles" # USA 
+
+Anything after a # is ignored.  
+
+In addition, Xplanet supports the "align", "color", "font",
+"fontsize", "image", "position", "radius", and "transparent" keywords.
+If used, keywords must follow the text string.
+
+The "align" keyword is used to place the marker string in relation to
+the marker itself.  Valid "align" values are "right", "left", "above",
+"below", or "center".  If the "align" keyword is not specified,
+Xplanet will attempt to place the marker string so as not to overlap
+other markers.
+
+Valid values for "color", "font", and "fontsize" are the same as for
+the -color, -font, and -fontsize options, respectively.  If TrueType
+fonts are specified with an X11 display, be sure to specify -truetype
+on the command line.  At present, you can't mix X11 and TrueType
+fonts.
+
+Valid values for "image" are either "none" or the name of an image
+file.  If the "image" keyword is not specified, Xplanet will draw a
+circular marker.  Xplanet looks for image files in the same places it
+looks for map files.
+
+Valid values for "position" are "pixel", "sun", or "moon".  If the
+"position" keyword is not specified, Xplanet assumes the two
+coordinates given in the marker file are latitude and then longitude.
+
+The "radius" keyword is used to place the marker at the specified
+distance from the planet's center, in units of the planetary radius.
+A radius value of 1 places the marker at the planet's surface.
+
+The "symbolsize" keyword controls the size in pixels of the circular
+marker.  The default is 6.
+
+The "timezone" keyword is used to specify a value for the TZ
+environment variable when the marker is drawn.  If this keyword is
+specified, the marker string is passed through strftime(3) before
+being displayed.  See the earth marker file for more details.
+
+The "transparent" keyword is only meaningful in conjunction with
+"image".  The format must be "transparent={R,G,B}" where the RGB
+values range from 0 to 255.  Any pixels with this color value will be
+considered to be transparent.
+
+Delimiters (whitespace, tabs, forward slashes, or commas) are not
+permitted in any of these keyword/value pairs (except for with
+"transparent", as shown above).  The text string may be enclosed in
+either quotes ("") or braces ({}).
+
+Some sample marker file entries are given below:
+
+.nf
+33.943 -118.408 "Los Angeles" align=below color=blue font=10x20 # USA 
+33.943 -118.408 {Los Angeles} align=below color=blue font=10x20 # USA 
+.fi
+Each of these will draw a circular marker at latitude 33.943, longitude
+-118.408, with a text label "Los Angeles" below it, colored blue and
+using font 10x20.
+
+.nf
+20 10 "This is xplanet" image=none position=pixel 
+.fi
+This draws the string "This is xplanet" at pixel coordinates y=20,
+x=10, with no marker.  (0,0) is the upper left corner of the screen.
+If y or x is negative, it is taken to be the number of pixels from the
+bottom or right side of the screen, respectively.
+
+.nf
+position=sun image=smile.png transparent={255,255,255}
+.fi
+This draws the image "smile.png" at the subsolar point.  Any pixels
+with the RGB values {255,255,255} will be considered transparent.
+Using "position=moon" will draw the image at the sublunar point.
+
+.nf
+-1.12479 251.774 radius=1.09261 {HST} 
+.fi
+This draws a circular marker for the Hubble Space Telescope above
+latitude -1.12479, longitude 251.774 degrees, at a distance of 1.09261
+earth radii from the center of the earth and labels it "HST".
+
+.nf
+40.70  -74.00 "New York %H:%M %Z" timezone=America/New_York
+.fi
+This draws a marker with "New York" followed by the time in HH:MM ZZZ
+where ZZZ is the string for the time zone (either EST or EDT).
+
+This option implies -markers.  The -markerfile option may be used more
+than once if you want to use more than one marker file.
+.TP
+.B \-markers
+Enable markers, as in xearth.
+.TP
+.B \-moonside                   
+Render the image as seen from the moon.  If no projection is
+explicitly specified, orthographic is assumed, but this option may
+also be used with any projection except rectangular.
+.TP
+.B \-night_image night_file
+Use night_file as the night map image.  If this option is not
+specified, a default night map will be used for the earth.  If this
+file is not found, or for the other planets, the night map will be a
+copy of the day map, modified as described in the -shade parameter.
+.TP
+.B \-nightside                   
+Render the image as seen from directly above the anti-subsolar point.
+If no projection is explicitly specified, orthographic is assumed, but
+this option may also be used with any projection except rectangular.
+.TP
+.B \-north north_type
+This option rotates the image so that "north" corresponds to the
+given coordinate system: "body", "orbit" or "galactic"
+(perpendicular to the plane between the sun and the center of our galaxy).
+The default value is "body" unless the \-terminator option is
+specified where the default becomes "orbit".  The -rotate
+option will further adjust the resulting image.  If no projection is
+explicitly specified, orthographic is assumed, but this option may also
+be used with any projection except rectangular.
+.TP
+.B \-notransparency
+Do not update the background pixmap for transparent Eterms and aterms.
+.TP
+.B \-output filename
+Output to a file instead of rendering to a window.  The file format is
+taken from the extension. Currently .gif, .jpg, .ppm, .png, and .tiff
+images can be created.  The image size defaults to 512 by 512 pixels
+but this may be changed by the -geometry flag.
+.TP
+.B \-print_coords
+Print the observer lat, lon in degrees and then exit.  This might be
+useful for satellite tracking, or for getting the position of the sun
+or moon.
+.TP
+.B \-projection projection_type
+The projection type may be one of ancient, azimuthal, hemisphere,
+mercator, mollweide, peters, orthographic, or rectangular.
+.TP
+.B \-quality
+This option is only used when creating JPEG images.  The quality can
+range from 0 to 100.  The default value is 80.
+.TP
+.B \-radius radius 
+Render the globe with a radius of radius percent of the screen height.
+The default value is 50% of the screen height.  If no projection is
+explicitly specified, orthographic is assumed, but this option may
+also be used with the azimuthal and Mollweide projections.  If used
+with the Mollweide projection, the radius value is the value of the
+semimajor (horizontal) axis as a percent of the screen width.  When
+drawing Saturn in an orthographic projection, the radius value applies
+to the radius of the outer ring.
+.TP
+.B \-random
+Place the observer at a random location.  If no projection is
+explicitly specified, orthographic is assumed, but this option may
+also be used with any projection except rectangular.
+.TP
+.B \-range range
+Render the globe as seen from a distance of range from the planet's
+center, in units of the planetary radius.  The default value is 1000.
+Note that if you use very close ranges the field of view of the screen
+can be a lot greater than 180 degrees!  If you want an "up close" image
+use the -radius option.  This option implies -projection orthographic. 
+.TP
+.B \-root
+Render to the root window.  This is the default mode.
+.TP
+.B \-rotate angle 
+Rotate the globe by angle degrees counterclockwise so that north (as
+defined by the -north option) isn't at the top.  The default value is
+0.  My friends in the Southern Hemisphere can use -rotate 180 to make
+the earth look like it should!  If no projection is explicitly
+specified, orthographic is assumed, but this option may also be used
+with any projection except rectangular.  For non-orthographic
+projections, the globe is rotated and then projected, if that helps
+you visualize what to expect.
+.TP
+.B \-satfile satfile
+Specify a file containing a list of satellites to display.  A file
+containing NORAD two line element (TLE) sets named satfile.tle must
+exist along with satfile.  A good source of TLEs is www.celestrak.com.
+A sample TLE entry for the International Space Station looks like
+this:
+
+.nf
+ISS (ZARYA)             
+1 25544U 98067A   01286.44085648  .00059265  00000-0  81723-3 0  5959
+2 25544  51.6394 213.7002 0007838 194.2620 314.2054 15.56596996165535
+.fi
+
+Each line in satfile must begin with a satellite ID number (e.g. 25544
+for the ISS).  Each ID must exist in the associated TLE file.
+
+Valid additional keywords are "align", "altcirc", "color", "font",
+"fontsize", "image", "position", "spacing", "trail", and
+"transparent".  The usage for most of these is identical to the usage
+for the -greatarcfile and -markerfile options.  In addition, a string
+to be plotted with the marker may be enclosed in either double quotes
+(""), or braces ({}).  If a string is not supplied, the marker will
+take the name of the satellite supplied in the TLE file.
+
+The "altcirc" keyword draws altitude circles on the surface of the
+earth.  The format is "altcirc=angle", where a circle is drawn
+bounding the area where the satellite is greater than angle degrees
+above the horizon.  For example, altcirc=0 draws a circle bounding the
+region where the satellite is above the horizon, while altcirc=45
+draws a circle bounding the region where the satellite is more than 45
+degrees above the horizon.  This may be specified more than once.
+
+The "trail" keyword is used to specify an orbit trail.  The format
+must be "trail={ground|orbit,start_time,end_time,length,interval}",
+where start and end times and interval are each in minutes.
+Specifying "orbit" is only meaningful for the orthographic projection.
+
+A few sample entries are given below:
+
+.nf
+25544
+.fi
+This draws a marker with the string "ISS (ZARYA)" for the
+International Space Station. 
+
+.nf
+25544 "The Space Station"
+.fi
+This draws a marker with the string "The Space Station" for the
+International Space Station. 
+
+.nf
+25544 "" image=iss.png transparent={0,0,0} altcirc=0 
+.fi
+This draws iss.png at the current position of the International Space
+Station.  No text string is drawn.  A curve containing the area where
+the International Space Station is above the horizon is drawn.
+
+.nf
+25544 "" image=iss.png transparent={0,0,0} altcirc=0 altcirc=45 trail={orbit,-5,10,2}
+.fi
+As the previous example, but also draw the orbit trail from five
+minutes before to ten minutes past the current time, calculated every
+two minutes.  A second altitude circle bounding the region where the
+International Space Station is more than 45 degrees above the horizon
+is also drawn.
+
+The -satfile option may be given more than once in order to use
+multiple satellite files.
+.TP
+.B \-sattrackid id
+Set the observer latitude and longitude to be those of the specified
+satellite.  The -satfile option must also be used for -sattrackid to
+work.  For example, -sattrackid 25544 will place the observer above
+the latitude and longitude of the International Space Station.
+.TP
+.B \-shade shade
+If the night image file is not found, set the brightness of the night
+map to shade percent of the day map.  If shade is 100, the day and
+night maps will be identical.  The default value is 30.
+.TP
+.B \-spacing spacing 
+Set the spacing between points on great arc files to spacing degrees.
+This value defaults to 0.1 degree.  It cannot be smaller than 0.001
+degree.
+.TP
+.B \-specular_file filename
+Use filename as a specular reflectance file.  Normally it's just a
+greyscale image where the oceans are set to 255 and the land masses
+are set to 0.  This is used to display the reflection of the sun off
+of the oceans.  This option only has an effect with the orthographic
+projection.
+.TP
+.B \-starfreq frequency
+Fraction of background pixels that will be colored white.  The default
+value is 0.001. If no projection is explicitly specified, orthographic
+is assumed, but this option may also be used with the azimuthal,
+mollweide, and peters projections.
+.TP
+.B \-sunrel del_lon,del_lat 
+Place the observer directly above (subsolar longitude + del_lon,
+subsolar latitude + del_lat).  If no projection is explicitly
+specified, orthographic is assumed, but this option may also be used
+with any projection except rectangular.
+.TP
+.B \-swap
+Swap the red and blue planes in the image.  This option only works 
+with the -output option and is useful on big-endian machines.
+.TP
+.B \-terminator terminator
+Place the observer above the specified terminator.  Valid values are
+morning or evening.  For non-rectangular projections, the image will
+be rotated so the terminator is approximately vertical.  This can be
+combined with the -rotate option to orient the terminator any way you
+want. 
+.TP
+.B \-transpng filename
+Same as the -output option, except set the background to be
+transparent when writing a PNG file.  This option doesn't work
+properly with X11 fonts, so use truetype fonts with an X display.
+.TP
+.B \-truetype
+Use TrueType fonts.  This option is only useful with X11, where X11
+fonts are used by default.  You will need to use this if you are using
+an X11 display and want to use TrueType fonts in the marker file.  At
+present, you can't mix X11 and TrueType fonts.
+.TP
+.B \-version
+Display version information.
+.TP
+.B \-vroot
+Render the image to the virtual root window.  Some window managers use
+one big window that sits over the real root window as their background
+window.  Xscreensaver uses a virtual root window to cover the screen
+as well.
+.TP
+.B \-window
+Render the image to its own X window.  The size defaults to 512 by 512
+pixels but this may be set by the -geometry flag.
+.TP
+.B \-xscreensaver
+Same as the -vroot option above.
+.PP
+If no options are specified, the program defaults to -root
+-projection rectangular.  
+
+Xplanet searches for files in the following order:
+
+TrueType fonts: 
+First look in fontdir (if the -fontdir option is used), then in the
+current directory, then in a subdirectory "fonts" of the current
+directory, and finally in $PREFIX/fonts.  The default font is
+helr____.ttf.  Note that TrueType fonts are only used if an X11
+display is not available, a TrueType font is specified with the -font
+option, or the -truetype option is specified.
+
+great arc files:
+First look in the current directory, then in a subdirectory "arcs"
+of the current directory, and finally in $PREFIX/arcs.
+
+image files:
+First look in mapdir (if the -mapdir option is used), then in the
+current directory, then in a subdirectory "images" of the current
+directory, and finally in $PREFIX/images.  The default name is
+body.jpg (e.g. earth.jpg, neptune.jpg).  The extension of the file by
+default is jpg but this can also be set at compilation time.
+
+marker files:
+First look in the current directory, then in a subdirectory "markers"
+of the current directory, and finally in $PREFIX/markers.  The default
+marker file name is body (e.g. earth, neptune).
+
+satellite files:
+First look in the current directory, then in a subdirectory
+"satellites" of the current directory, and finally in
+$PREFIX/satellites.
+
+The value of $PREFIX is set at compilation time in auxfiles.h.  On a
+Unix system it is usually /usr/local/share/xplanet, and on Windows it
+is usually C:\\WINDOWS\\Desktop.  See the INSTALL file for more details
+on the configuration options.
+
+Xplanetbg runs Xplanet every five minutes or other specified interval
+(taken from the -wait option, where the time between updates is
+specified in seconds).  I did it this way instead of adding -wait as
+an option to Xplanet since letting Xplanet run all of the time would
+take up a lot of memory.  Otherwise Xplanetbg has the same options as
+Xplanet without the -animate option, but with the additional options
+below: 
+.TP
+.B \-hibernate seconds
+After the screen has been idle for the specified number of seconds,
+Xplanetbg will sleep.  
+.TP
+.B \-idlewait seconds
+Don't run Xplanet unless the screen has been idle for the specified
+number of seconds.
+.TP
+.B \-nice priority
+Adjust the priority at which Xplanet runs.  On most systems a priority
+of 0 is normal and a value of 19 is the lowest priority.
+.TP
+.B \-num_times num_times
+Number of times Xplanetbg will execute Xplanet.  Without this option
+Xplanetbg will run Xplanet indefinitely.  
+.TP
+.B \-orbit orbit_spec
+Successive positions of an orbit according to orbit_spec are used as
+viewing positions.  orbit_spec has the form <duration>:<inclination>
+where duration is the length of one orbit in hours and inclination is
+the initial direction from the position specified via the 
+.I latitude 
+and
+.I longitude 
+options.  Inclinations of 90 or 270 degrees will result in
+a movement towards the north or south pole respectively. 
+.TP
+.B -output filename
+Base name of the output file(s) to create.  If this option is used
+with -num_times, the specified number of files will be created, each
+with a unique filename.  As an example, if the options "-num_times 100
+-output earth.jpg" are given the files earth000.jpg through
+earth099.jpg will be created.  If -output is used without -num_times,
+the output file will be overwritten each time xplanet executes.
+Currently .gif, .jpg, .ppm, .png, and .tiff images can be created.
+.TP
+.B \-post_command command
+Run the specified command after each execution of Xplanet.
+.TP
+.B \-prev_command command
+Run the specified command before each execution of Xplanet.
+.TP
+.B \-start_cloud start_image
+.B \-stop_cloud stop_image 
+Use start_image and stop_image as the starting and ending cloud
+images.  Each intervening time step will create a cloud image file
+that is linearly interpolated between these two images in time.  This
+doesn't look very good unless the cloud images are fairly close in
+time, like a few hours. This option must be used with -num_times.
+.TP
+.B \-start_index index
+When used with -num_times and -output, the first output file will have
+the specified index instead of 0.
+.TP
+.B \-timewarp factor
+As in xearth, scale the apparent rate at which time progresses by
+factor.  The default is 1.
+.TP
+.B \-wait
+Time between updates in seconds.
+
+.SH "SEE ALSO"
+The latest version may be found at
+
+.IR http://xplanet.sourceforge.net
+.SH FILES
+.nf
+.sp
+/usr/local/bin/xplanet
+/usr/local/bin/xplanetbg
+/usr/local/bin/tkxplanet
+/usr/local/bin/tzcoord.pl
+/usr/local/man/man1/xplanet.1
+/usr/local/man/man1/xplanetbg.1
+/usr/local/man/man1/tkxplanet.1
+/usr/local/man/man1/tzcoord.pl.1
+/usr/local/share/xplanet/rgb.txt
+/usr/local/share/xplanet/fonts/helr____.ttf
+/usr/local/share/xplanet/images/body.jpg
+/usr/local/share/xplanet/markers/body
+where body is the name of the appropriate body, specified in the -body
+option. 
+.sp
+.fi
+The default prefix /usr/local/share/xplanet is set in auxfiles.h and
+may be changed if desired.
+.SH AUTHOR
+xplanet was written by
+.B "Hari Nair <hari@alumni.caltech.edu>"
+
+This manual page was written by Detlev Zundel
+<Detlev.Zundel@stud.uni-karlsruhe.de> and Hari Nair
+for the Debian GNU/Linux system (but may be used by others).

@@ -1,0 +1,67 @@
+The major features of PREDICT Version 2.1.x include:
+
+* Fully year 2000 compliant.
+
+* Designed under the Linux operating system to permit operation on a
+  wide and expanding variety of hardware platforms supported by the
+  Linux OS.  Supported platforms range from palmtops to supercomputers
+  (including 32-bit PCs (80386s or better) and Macintosh PowerPCs).
+
+* Open source licensing allows anyone to contribute new features to
+  the program while forever keeping the software, and any derivative
+  works, non-proprietary and freely available.
+
+* A *FAST* orbital prediction mode that predicts in advance passes of
+  satellites, providing dates, times, coordinates, slant range distances,
+  and sunlight and optical visibility information.  Predictions are
+  displayed in tabular form and may be saved to a log file for later
+  reference, printing, or parsing by other programs.
+
+* An optical visual orbital prediction mode that displays satellite
+  passes that may be optically visible to the groundstation.
+
+* A solar illumination prediction mode that calculates how much time
+  a satellite will spend in sunlight per day.
+
+* A real-time tracking mode that provides dynamic information such as
+  sub-satellite point, groundstation azimuth and elevation headings,
+  Doppler shift, path loss, slant range, orbital altitude, orbital velocity,
+  footprint diameter, orbital phase, the time and date of the next AOS
+  (or LOS of the current pass), orbit number, and sunlight and visibility
+  information for a single satellite, while providing live azimuth and
+  elevation headings for both the sun and moon.
+
+* A multi-tracking mode that provides sub-satellite point, azimuth and
+  elevation headings, sunlight and visibility, and slant range distance
+  information for all 24 satellites in the program's current database
+  on a real-time basis.  Azimuth and elevation headings for the sun and
+  moon are also provided, as a well as a listing of the AOS dates and
+  times for the next three satellites expected to come into range of
+  the groundstation.
+
+* Provides static information such as semimajor axis of ellipse,
+  apogee and perigee altitudes, and anomalistic and nodal periods
+  of satellite orbits.
+
+* Command line options permit alternate groundstation locations to be
+  specified or alternate orbital databases to be read and processed by
+  the program, effectively allowing an UNLIMITED number of satellites
+  to be tracked and managed.  Additional options allow any orbital
+  database file to be automatically updated using NASA Two-Line element
+  data obtained via the Internet or via pacsat satellite without having
+  to enter the program and manually select menu options to update the
+  database.
+
+* A voice mode allows live azimuth and elevation headings of a satellite
+  to be articulated to an observer to assist in locating a satellite by
+  optical means.
+
+* PREDICT can act as a socket-based server and be used to supply
+  real-time tracking data, such as azimuth and elevation headings,
+  footprint diameters, sub-satellite point latitude and longitude
+  headings, normalized Doppler shift data, and next predicted AOS/LOS
+  times to external programs such as rotator control software, graphical
+  map tracking software, or radio frequency control programs residing
+  either on the host machine, or on any networked client using the UDP
+  communications protocol.
+

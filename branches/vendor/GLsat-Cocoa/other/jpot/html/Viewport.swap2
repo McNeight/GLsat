@@ -1,0 +1,4 @@
+<font color="#ff00ff">  glColor3f </font>(1.0, 0.0, 0.0);
+  draw_cube(0, 0, width/2.0, height);
+<font color="#ff00ff">  glColor3f </font>(0.0, 1.0, 0.0);
+  draw_cube(width/2.0, 0, width/2.0, height);

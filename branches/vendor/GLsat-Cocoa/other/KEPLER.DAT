@@ -1,0 +1,253 @@
+Satellite: oscar-9
+Catalog number: 12888
+Epoch time:      86228.47104084
+   Sat Aug 16 11:18:17.928 1986 UTC
+Element set:     925
+Inclination:       97.6542 deg
+RA of node:       232.0996 deg
+Eccentricity:    0.0001838
+Arg of perigee:   177.9083 deg
+Mean anomaly:     182.2190 deg
+Mean motion:   15.28606963 rev/day
+Decay rate:      1.005e-05 rev/day^2
+Epoch rev:           27017
+Semi major axis:  6855.077 km
+Anom period:     94.203418 min
+Apogee:            478.220 km
+Perigee:           475.700 km
+Ref perigee:      3149.50334712
+   Sat Aug 16 12:04:49.191 1986 UTC
+Beacon:           145.8250 MHz
+
+Satellite: oscar-10
+Catalog number: 14129
+Epoch time:      86227.98835107
+   Fri Aug 15 23:43:13.532 1986 UTC
+Element set:     257
+Inclination:       26.7434 deg
+RA of node:        64.6760 deg
+Eccentricity:    0.6027703
+Arg of perigee:   135.9438 deg
+Mean anomaly:     292.2412 deg
+Mean motion:    2.05873278 rev/day
+Decay rate:       -7.9e-07 rev/day^2
+Epoch rev:            2387
+Semi major axis: 26104.013 km
+Anom period:    699.459402 min
+Apogee:          35462.686 km
+Perigee:          3993.238 km
+Ref perigee:      3149.07977571
+   Sat Aug 16 01:54:52.621 1986 UTC
+Translate freq:   581.0047 MHz
+Invert:                  1
+Beacon:           145.8090 MHz
+
+Satellite: oscar-11
+Catalog number: 14781
+Epoch time:      86220.74192413
+   Fri Aug  8 17:48:22.244 1986 UTC
+Element set:     160
+Inclination:       98.1433 deg
+RA of node:       286.9537 deg
+Eccentricity:    0.0013911
+Arg of perigee:     4.5100 deg
+Mean anomaly:     355.6197 deg
+Mean motion:   14.62062860 rev/day
+Decay rate:          9e-08 rev/day^2
+Epoch rev:           13004
+Semi major axis:  7061.733 km
+Anom period:     98.490977 min
+Apogee:            693.541 km
+Perigee:           673.894 km
+Ref perigee:      3141.74275634
+   Fri Aug  8 17:49:34.148 1986 UTC
+Beacon:           145.8260 MHz
+
+Satellite: oscar-12
+Catalog number: 16909
+Epoch time:      86230.26525652
+   Mon Aug 18 06:21:58.163 1986 UTC
+Element set:     6
+Inclination:       50.0097 deg
+RA of node:       236.4938 deg
+Eccentricity:    0.0011125
+Arg of perigee:   233.7423 deg
+Mean anomaly:     353.0984 deg
+Mean motion:   12.44393420 rev/day
+Decay rate:       -3.9e-07 rev/day^2
+Epoch rev:              67
+Semi major axis:  7866.845 km
+Anom period:    115.719030 min
+Apogee:           1505.614 km
+Perigee:          1488.110 km
+Ref perigee:      3151.26679712
+   Mon Aug 18 06:24:11.271 1986 UTC
+Translate freq:   581.8000 MHz
+Invert:                  1
+Beacon:           435.7970 MHz
+
+Satellite: rs-5
+Catalog number: 12999
+Epoch time:      86225.01540621
+   Wed Aug 13 00:22:11.96  1986 UTC
+Element set:     343
+Inclination:       82.9519 deg
+RA of node:        75.7571 deg
+Eccentricity:    0.0008707
+Arg of perigee:   296.7273 deg
+Mean anomaly:      63.2885 deg
+Mean motion:   12.05053782 rev/day
+Decay rate:          4e-08 rev/day^2
+Epoch rev:           20471
+Semi major axis:  8033.838 km
+Anom period:    119.496741 min
+Apogee:           1679.491 km
+Perigee:          1665.501 km
+Ref perigee:      3146.00081753
+   Wed Aug 13 00:01:10.634 1986 UTC
+
+Satellite: rs-7
+Catalog number: 13001
+Epoch time:      86229.59335574
+   Sun Aug 17 14:14:25.935 1986 UTC
+Element set:     269
+Inclination:       82.9551 deg
+RA of node:        66.6545 deg
+Eccentricity:    0.0021273
+Arg of perigee:   194.6463 deg
+Mean anomaly:     165.3964 deg
+Mean motion:   12.08698332 rev/day
+Decay rate:          4e-08 rev/day^2
+Epoch rev:           20588
+Semi major axis:  8017.670 km
+Anom period:    119.136427 min
+Apogee:           1657.928 km
+Perigee:          1623.816 km
+Ref perigee:      3150.55534506
+   Sun Aug 17 13:19:41.813 1986 UTC
+
+Satellite: rs-8
+Catalog number: 12998
+Epoch time:      86229.98402592
+   Sun Aug 17 23:36:59.839 1986 UTC
+Element set:     400
+Inclination:       82.9564 deg
+RA of node:        76.7002 deg
+Eccentricity:    0.0018171
+Arg of perigee:   334.4240 deg
+Mean anomaly:      25.5985 deg
+Mean motion:   12.02958572 rev/day
+Decay rate:          4e-08 rev/day^2
+Epoch rev:           20495
+Semi major axis:  8043.170 km
+Anom period:    119.704870 min
+Apogee:           1683.566 km
+Perigee:          1654.335 km
+Ref perigee:      3150.97811491
+   Sun Aug 17 23:28:29.128 1986 UTC
+
+Satellite: noaa-6
+Catalog number: 11416
+Epoch time:      86220.56638159
+   Fri Aug  8 13:35:35.369 1986 UTC
+Element set:     569
+Inclination:       98.5004 deg
+RA of node:       234.3514 deg
+Eccentricity:    0.0010877
+Arg of perigee:   286.0960 deg
+Mean anomaly:      73.9022 deg
+Mean motion:   14.24942148 rev/day
+Decay rate:       1.09e-06 rev/day^2
+Epoch rev:           37122
+Semi major axis:  7183.966 km
+Anom period:    101.056734 min
+Apogee:            832.945 km
+Perigee:           817.317 km
+Ref perigee:      3141.55197512
+   Fri Aug  8 13:14:50.650 1986 UTC
+
+Satellite: noaa-9
+Catalog number: 15427
+Epoch time:      86227.43373447
+   Fri Aug 15 10:24:34.658 1986 UTC
+Element set:     110
+Inclination:       99.0035 deg
+RA of node:       186.2537 deg
+Eccentricity:    0.0016735
+Arg of perigee:   350.3751 deg
+Mean anomaly:       9.7097 deg
+Mean motion:   14.11443770 rev/day
+Decay rate:       1.62e-06 rev/day^2
+Epoch rev:            8601
+Semi major axis:  7229.756 km
+Anom period:    102.023193 min
+Apogee:            864.293 km
+Perigee:           840.095 km
+Ref perigee:      3148.43182356
+   Fri Aug 15 10:21:49.555 1986 UTC
+Beacon:           137.5000 MHz
+
+Satellite: salyut-7
+Catalog number: 13138
+Epoch time:      86223.83306343
+   Mon Aug 11 19:59:36.680 1986 UTC
+Element set:     280
+Inclination:       51.6258 deg
+RA of node:       307.5001 deg
+Eccentricity:    0.0002804
+Arg of perigee:   153.0970 deg
+Mean anomaly:     206.9948 deg
+Mean motion:   15.79362309 rev/day
+Decay rate:      5.559e-05 rev/day^2
+Epoch rev:           24855
+Semi major axis:  6710.900 km
+Anom period:     91.176039 min
+Apogee:            337.328 km
+Perigee:           333.564 km
+Ref perigee:      3144.85997394
+   Mon Aug 11 20:38:21.748 1986 UTC
+
+Satellite: mir
+Catalog number: 16609
+Epoch time:      86223.83502892
+   Mon Aug 11 20:02:26.498 1986 UTC
+Element set:     258
+Inclination:       51.6218 deg
+RA of node:       308.9829 deg
+Eccentricity:    0.0027242
+Arg of perigee:    80.9868 deg
+Mean anomaly:     279.3891 deg
+Mean motion:   15.74748576 rev/day
+Decay rate:      7.928e-05 rev/day^2
+Epoch rev:            2729
+Semi major axis:  6724.000 km
+Anom period:     91.443169 min
+Apogee:            376.992 km
+Perigee:           340.357 km
+Ref perigee:      3144.84924828
+   Mon Aug 11 20:22:55.51  1986 UTC
+Beacon:           143.6250 MHz
+
+Satellite: ajisai
+Catalog number: 16908
+Epoch time:      86226.76114828
+   Thu Aug 14 18:16:03.211 1986 UTC
+Element set:     3
+Inclination:       50.0055 deg
+RA of node:       247.2701 deg
+Eccentricity:    0.0010919
+Arg of perigee:   228.3492 deg
+Mean anomaly:     131.6405 deg
+Mean motion:   12.44365451 rev/day
+Decay rate:       -3.9e-07 rev/day^2
+Epoch rev:              24
+Semi major axis:  7866.963 km
+Anom period:    115.721631 min
+Apogee:           1504.416 km
+Perigee:          1487.236 km
+Ref perigee:      3147.73176237
+   Thu Aug 14 17:33:44.269 1986 UTC
+Translate freq:   581.8000 MHz
+Invert:                  1
+Beacon:           435.7970 MHz
+

@@ -1,0 +1,76 @@
+<html><body><pre>
+#include&lt;GL/glut.h&gt;
+
+GLint width, height;
+  
+void draw_cube(int x, int y, int w, int h)
+{
+<font color="#ff00ff">  glMatrixMode </font>(GL_MODELVIEW);	/*  back to modelview matrix	*/
+<font color="#ff00ff">  glLoadIdentity </font>();	/*  clear the matrix	*/
+<font color="#ff00ff">  glViewport</font>((GLint) x,(GLint) y, (GLint) w, (GLint) h);
+<font color="#ff00ff">  glTranslatef </font>(0.0, 0.0, -5.0);	/*  viewing transformation	*/
+<font color="#ff00ff">  glutWireCube</font>(1.0);	/*  draw the cube	*/
+<font color="#ff00ff">  glFlush</font>();    
+}
+
+void display (void)
+{
+<font color="#ff00ff">  glClear</font>(GL_COLOR_BUFFER_BIT);
+ 
+<font color="#ff00ff">  glColor3f </font>(1.0, 0.0, 0.0);
+  draw_cube(0,0, width, height);
+ 
+ 
+<font color="#ff00ff">  glColor3f </font>(1.0, 0.0, 0.0);
+  draw_cube(0, 0, width/2.0, height);
+<font color="#ff00ff">  glColor3f </font>(0.0, 1.0, 0.0);
+  draw_cube(width/2.0, 0, width/2.0, height);
+ 
+}
+	  
+void init (void) {
+<font color="#ff00ff">    glShadeModel </font>(GL_FLAT);
+}
+
+void reshape(int w, int h)
+{
+<font color="#ff00ff">  glMatrixMode </font>(GL_PROJECTION);	/*  prepare for and then  */ 
+<font color="#ff00ff">  glLoadIdentity </font>();	/*  define the projection  */
+<font color="#ff00ff">  gluPerspective</font>(60.0, (GLfloat) w / (GLfloat) h, 1.5, 20.0);
+<font color="#ff00ff">  glMatrixMode</font>(GL_MODELVIEW);
+<font color="#ff00ff">  glLoadIdentity</font>();
+  width = w;
+  height = h;
+}
+
+void idlefunc(void)
+{
+}
+int main(int argc, char** argv)
+{
+<font color="#ff00ff">    glutInitDisplayMode </font>(GLUT_SINGLE | GLUT_RGB);
+<font color="#ff00ff">    glutInitWindowPosition </font>(0, 0);
+<font color="#ff00ff">    glutInitWindowSize</font>(350, 350);
+<font color="#ff00ff">    glutCreateWindow </font>("Viewport Transformation");
+    init ();
+<font color="#ff00ff">    glutDisplayFunc</font>(display);
+<font color="#ff00ff">    glutReshapeFunc</font>(reshape);
+<font color="#ff00ff">    glutIdleFunc</font>(idlefunc);
+<font color="#ff00ff">    glutMainLoop</font>();
+    return 0;    
+}
+
+
+/* 
+ *  by Binh Phu Le
+ *  parts of this program might have been adopted from or inspired by 
+ *  sample programs in 
+ *  "OpenGL Programming Guide", 
+ *  Copyright (c) 1993-1997, Silicon Graphics, Inc.
+ *  "Interactive Computer Graphics"  
+ *  Copyright (c) 1997, Addison-Wesley,
+ *  and/or those written by Mahesh Kumar kumar@cs.uwm.edu
+ *  and/or those written by Dr. Sumanta Guha guha@cs.uwm.edu
+ *  and/or those written by Dr. Ichiro Suzuki suzuki@cs.uwm.edu
+ */
+</pre></body></html>

@@ -1,0 +1,21 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<META NAME="Template" CONTENT="E:\Software\Microsoft Office\Office\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5 COLOR="#008080"><P>Specular Lighting</P>
+</FONT><U><FONT SIZE=4 COLOR="#ff0000"><P>Idea</P>
+</B></U></FONT><P>Specular light comes from a particular direction, and it tends to bounce off the surface in a very preferred direction. A well-collimated laser beam bouncing off a high-quality mirror produces almost 100 percent specular reflection. </P>
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>Experiment</P>
+</B></U></FONT><P>Try setting the individual red, green and blue components to 1.0, one at a time and see the effects. Typically specular settings are red = green = blue = 1.0 or 0.5 Use: </P><DIR>
+<DIR>
+
+<B><P>GLfloat light_specular[] = {R, G, B, A};</B></P>
+<B><P>glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);</B></P></DIR>
+</DIR>
+
+<P>to set the specular component of light0. </P></BODY>
+</HTML>

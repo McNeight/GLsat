@@ -1,0 +1,109 @@
+<html><body><pre>
+<font color="#0000ff">#include</font> &lt;GL/glut.h&gt;
+
+void output(GLfloat x, GLfloat y, char *text)
+{
+  char *p;
+<font color="#ff00ff">  glPushMatrix</font>();
+<font color="#ff00ff">  glTranslatef</font>(x, y, 0);
+  for(p = text; *p; p++)
+<font color="#ff00ff">    glutStrokeCharacter</font>(GLUT_STROKE_ROMAN, *p);
+<font color="#ff00ff">  glPopMatrix</font>();
+}
+
+void init(void) 
+{
+<font color="#ff00ff">   glClearColor</font>(0.0, 0.0, 0.0, 0.0);
+<font color="#ff00ff">   glShadeModel</font>(GL_SMOOTH);  
+}
+
+
+void reshape(int w, int h)
+{
+<font color="#ff00ff">   glViewport</font>(0, 0, (GLsizei) w, (GLsizei) h);
+<font color="#ff00ff">   glMatrixMode</font>(GL_PROJECTION);
+<font color="#ff00ff">   glLoadIdentity</font>();
+<font color="#ff00ff">   gluPerspective</font>(45.0, (GLfloat) w / (GLfloat) h, 2.0, 20.0);
+<font color="#ff00ff">   glMatrixMode</font>(GL_MODELVIEW);
+<font color="#ff00ff">   glLoadIdentity</font>();
+<font color="#ff00ff">   gluLookAt</font>(3.0, 4.0, 12.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0);
+}
+
+
+void display(void)
+{
+<font color="#ff00ff">  glClear</font>(GL_COLOR_BUFFER_BIT);
+<font color="#ff00ff">  glColor3f</font>(1.0, 0.0, 0.0);
+<font color="#ff00ff">  glLineWidth</font>(4.0);
+<font color="#ff00ff">  glBegin</font>(GL_LINES);
+<font color="#ff00ff">    glVertex3f</font>(-5.0, 0.0, 0.0);
+<font color="#ff00ff">    glVertex3f</font>(4.5, 0.0, 0.0);
+<font color="#ff00ff">  glEnd</font>();
+
+<font color="#ff00ff">  glColor3f</font>(0.0, 1.0, 0.0);
+<font color="#ff00ff">  glBegin</font>(GL_LINES);
+<font color="#ff00ff">    glVertex3f</font>(0.0, 4.5, 0.0);
+<font color="#ff00ff">    glVertex3f</font>(0.0, -5.0,0.0);
+<font color="#ff00ff">  glEnd</font>();
+
+<font color="#ff00ff">  glColor3f</font>(1.0, 1.0, 0.0);
+<font color="#ff00ff">  glBegin</font>(GL_LINES);
+<font color="#ff00ff">    glVertex3f</font>(0.0, 0.0, -7.0);
+<font color="#ff00ff">    glVertex3f</font>(0.0, 0.0, 5.0);
+<font color="#ff00ff">  glEnd</font>();
+    
+<font color="#ff00ff">  glLineWidth</font>(1.0);
+<font color="#ff00ff">  glColor3f</font>(1.0, 0.0, 0.0);
+<font color="#ff00ff">  glPushAttrib</font>(GL_ENABLE_BIT);
+<font color="#ff00ff">  glDisable</font>(GL_DEPTH_TEST);
+<font color="#ff00ff">  glMatrixMode</font>(GL_PROJECTION);
+<font color="#ff00ff">  glPushMatrix</font>();
+<font color="#ff00ff">  glLoadIdentity</font>();
+<font color="#ff00ff">  gluOrtho2D</font>(0, 2500, 0, 2500);
+<font color="#ff00ff">  glMatrixMode</font>(GL_MODELVIEW);
+<font color="#ff00ff">  glPushMatrix</font>();
+<font color="#ff00ff">  glLoadIdentity</font>();
+  output(50, 1400, "-X");
+  output(2000, 1250, "+X");
+<font color="#ff00ff">  glColor3f</font>(0.0, 1.0, 0.0);
+  output(1350, 2300, "+Y");
+  output(1350, 300, "-Y");  
+<font color="#ff00ff">  glColor3f</font>(1.0, 1.0, 0.0);
+  output(1500, 1450, "-Z");
+  output(400, 750, "+Z");
+<font color="#ff00ff">  glPopMatrix</font>();
+<font color="#ff00ff">  glMatrixMode</font>(GL_PROJECTION);
+<font color="#ff00ff">  glPopMatrix</font>();
+<font color="#ff00ff">  glPopAttrib</font>();
+<font color="#ff00ff">  glMatrixMode</font>(GL_MODELVIEW);
+	
+<font color="#ff00ff">  glFlush</font>();    
+}
+
+
+int main(int argc, char** argv)
+{
+<font color="#ff00ff">   glutInit</font>(&argc, argv);
+<font color="#ff00ff">   glutInitDisplayMode</font>(GLUT_SINGLE | GLUT_RGB);
+<font color="#ff00ff">   glutInitWindowSize</font>(400, 400); 
+<font color="#ff00ff">   glutInitWindowPosition</font>(0, 0);
+<font color="#ff00ff">   glutCreateWindow</font>("Coordinate System");
+   init();
+<font color="#ff00ff">   glutDisplayFunc</font>(display); 
+<font color="#ff00ff">   glutReshapeFunc</font>(reshape); 
+<font color="#ff00ff">   glutMainLoop</font>();
+   return 0;
+}
+
+
+/* 
+ *  By Mahesh Kumar parts of this program might have been adopted 
+ *  from or inspired by sample programs in 
+ *  "OpenGL Programming Guide", 
+ *  Copyright (c) 1993-1997, Silicon Graphics, Inc.
+ *  "Interactive Computer Graphics"  
+ *  Copyright (c) 1997, Addison-Wesley,
+ *  and/or those written by Dr. Sumanta Guha guha@cs.uwm.edu
+ *  and/or those written by Dr. Ichiro Suzuki suzuki@cs.uwm.edu
+ */
+</pre></body></html>

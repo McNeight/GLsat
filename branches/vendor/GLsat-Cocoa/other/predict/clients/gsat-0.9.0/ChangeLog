@@ -1,0 +1,18 @@
+0.9: Added toolbar. Added conection dialog. Added preferences. Added radio
+     doppler control via plugins. Added station visibility display.
+     Added command execution at AOS and at LOS.
+
+0.8: Added orbit number display. Added status bar. Added command line option to
+     display a grid 30x30 deg.
+
+0.7.5: Bugfix release. Fixed overlapping of labels and font size problems.
+       Network functions rewritten and implemented network error handling.
+       Added orbit number display. Added status bar.
+
+0.7: QTH and callsign drawing. AOS/LOS event indication. Added command line
+     options for UTC time or localtime display. Added command line option to
+     specify the predict server host.
+
+0.6: Orbit drawing. Network connection optimization.
+
+0.5: Initial public release

@@ -1,0 +1,154 @@
+dnl Process this file with autoconf to produce a configure script.
+
+dnl libs are checked in LIBS
+dnl headers are checked in CPPFLAGS
+
+dnl Disable cache file
+define([AC_CACHE_LOAD], )
+define([AC_CACHE_SAVE], )
+
+dnl Are we in the right directory?  Check for the existence of xplanet.cc.
+AC_INIT(xplanet.cc)
+
+AC_CONFIG_AUX_DIR(./autoconf)
+
+AC_PATH_PROG(AR, ar, ar)
+AC_PATH_PROG(CP, cp, cp)
+AC_PATH_PROG(GZIP, gzip, gzip)
+AC_PROG_INSTALL
+AC_PROG_MAKE_SET
+AC_PATH_PROG(NICE, nice, nice)
+AC_PATH_PROG(PERL, perl, perl)
+AC_PATH_PROG(RM, rm, rm)
+AC_PATH_PROG(STRIP, strip, strip)
+AC_PATH_PROG(TAR, tar, tar)
+AC_PATH_PROG(WISH, wish, wish)
+
+AC_SUBST(NICE)
+
+version="0.94"
+AC_SUBST(version)
+
+dnl Checks for compilers.
+AC_PROG_CC
+AC_PROG_CXX
+AC_LANG_CPLUSPLUS
+AC_REQUIRE_CPP
+
+if test "x$GXX" = "xyes"; then
+    OTHER_CPPFLAGS="-Wall -O3"
+fi
+
+ARFLAGS="rsuv"
+separator="/"
+TARGETS="xplanet xplanetbg"
+
+AC_CANONICAL_HOST
+case "$host" in
+     sparc-sun-*) 
+       if test "x$GXX" = "xyes"; then
+         GCC_VERSION=`$CC --version`
+         if test "x$GCC_VERSION" = "x2.95.2"; then
+           OTHER_CPPFLAGS="$OTHER_CPPFLAGS -fpermissive"
+         fi
+       else
+dnl Assume Sun Workshop compiler
+         AR="$(CXX) -xar"
+         ARFLAGS="-o"
+       fi
+     ;;
+     *-apple-darwin*)
+       ARFLAGS="ruv"
+       AC_PATH_PROG(RANLIB, ranlib, ranlib)
+       RANLIB="$RANLIB \$@"
+       AC_SUBST(RANLIB)
+     ;;
+     mips-sgi-irix*)
+dnl this is for the MIPSpro compilers
+       if test "x$GXX" != "xyes"; then
+         AR="$(CXX) -ar"
+         ARFLAGS="-WR,-s,-u,-v -o"
+       fi
+     ;;
+     *-cygwin*)
+       AC_DEFINE(HAVE_CYGWIN)
+       have_cygwin='yes'
+
+       DISPLAYMSWIN="DisplayMSWin.cc"
+       DISPLAYMSWINHEADER="DisplayMSWin.h"
+       separator="\\\\"
+       TARGETS="xplanet"
+
+       AC_SUBST(DISPLAYMSWIN)
+       AC_SUBST(DISPLAYMSWINHEADER)
+     ;;
+     i686-pc-linux-gnu)
+     ;;
+esac
+
+if test \! -z "$prefix" ; then 
+  OTHER_CPPFLAGS="$OTHER_CPPFLAGS -I$prefix/include"
+fi
+if test \! -z "$includedir" ; then 
+  OTHER_CPPFLAGS="$OTHER_CPPFLAGS -I$includedir"
+fi
+
+AC_SUBST(AR)
+AC_SUBST(ARFLAGS)
+AC_SUBST(OTHER_CPPFLAGS)
+AC_SUBST(separator)
+AC_SUBST(TARGETS)
+
+AC_FIND_X11
+
+AC_ARG_ENABLE(screensaver,   [  --disable-screensaver   compile without X screensaver extension],enable_xss=no,enable_xss=yes)
+dnl Check for XScreenSaver
+if test "$enable_xss" = "yes" ; then
+    have_xss=no
+    AC_CHECK_HEADER(X11/extensions/scrnsaver.h, [have_xss=yes])
+    if test "$have_xss" = "yes"; then
+        AC_CHECK_LIB(Xext, XScreenSaverRegister,[XSS_LIBS="-lXext"],[have_xss=no],[-lX11 -lm])
+	if test "$have_xss" = "no"; then
+	  AC_CHECK_LIB(Xss, XScreenSaverRegister,[have_xss=yes; XSS_LIBS="-lXss -lXext"],[have_xss=no],[$X_LIBS -lX11 -lXext -lm])
+	fi
+	if test "$have_xss" = "yes"; then
+	   AC_DEFINE(HAVE_XSS)
+	   AC_SUBST(XSS_LIBS)
+	fi
+    fi
+fi
+
+dnl Check for drem and strptime functions
+dnl AC_CHECK_LIB(m,drem,AC_DEFINE(HAVE_DREM))
+AC_CHECK_FUNCS(drem)
+AC_CHECK_FUNCS(strptime)
+AC_CHECK_FUNCS(unsetenv)
+
+AC_ARG_WITH(auxdir, [  --with-auxdir=DIR       subdirectory under PREFIX containing map and marker 
+                          files [share/xplanet]], auxdir="$withval", auxdir="share/xplanet")
+AC_SUBST(auxdir)
+
+AC_ARG_WITH(map-extension, [  --with-map-extension=EXTENSION
+                          use EXTENSION as default map extension [jpg]], mapext="$withval", mapext="jpg")
+AC_SUBST(mapext)
+
+AC_FIND_FREETYPE
+
+AC_FIND_GRAPHICS_LIBS
+
+AC_USE_MACAQUA
+
+# Macros to check for OpenGL/Mesa are adapted from xscreensaver-3.14
+AC_FIND_GL
+
+AC_CONFIG_HEADER(checkfuncs.h libimage/checkfuncs.h)
+AC_OUTPUT(Makefile auxfiles.h xplanetbg.h tkxplanet tzcoord.pl
+libannotate/Makefile
+libdisplay/Makefile 
+libimage/Makefile 
+libprojection/Makefile 
+libsgp4sdp4/Makefile)
+
+echo "
+Configuration complete!  Type \"make\" to build Xplanet $version.
+"

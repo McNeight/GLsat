@@ -1,0 +1,86 @@
+<html><body><pre>
+<font color="#0000ff">#include</font> &lt;stdio.h&gt;
+<font color="#0000ff">#include</font> &lt;GL/glut.h&gt;
+
+GLfloat light_diffuse[] = {1.0, 1.0, 1.0, 1.0};
+GLfloat light_specular[] = {1.0, 1.0, 1.0, 1.0};
+GLfloat light_position[] = {1.0, 1.0, 1.0, 0.0};
+GLfloat mat_shininess[] = {50};
+GLfloat mat_amb_diff_red[] = {1.0, 0.0, 0.0, 0.5};
+GLfloat mat_amb_diff_green[] = {0.0, 1.0, 0.0, 1.0};
+GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0};
+
+void init(void)
+{  
+<font color="#ff00ff">   glEnable </font>(GL_BLEND);
+<font color="#ff00ff">   glShadeModel </font>(GL_SMOOTH);
+<font color="#ff00ff">   glClearColor </font>(1.0, 1.0, 1.0, 0.0);
+<font color="#ff00ff">   glEnable</font>(GL_LIGHTING);
+<font color="#ff00ff">   glLightfv</font>(GL_LIGHT0, GL_POSITION, light_position);
+<font color="#ff00ff">   glEnable</font>(GL_LIGHT0);
+<font color="#ff00ff">   glEnable</font>(GL_DEPTH_TEST);
+}
+
+void display(void)
+{
+
+<font color="#ff00ff">   glClear</font>(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+   
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_SHININESS, mat_shininess);  
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_green);
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_SPECULAR, mat_specular);
+<font color="#ff00ff">   glutSolidTeapot</font>(0.5);
+
+   mat_amb_diff_red[3] = <A name="gohere"></a><font color="#ff0000"><b><font color="#ff0000"><b>JPOT$1</b></font></b></font>;
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_red);
+<font color="#ff00ff">   glBlendFunc</font>(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);   
+<font color="#ff00ff">   glPushMatrix</font>();
+<font color="#ff00ff">   glTranslatef</font>(0.0, 0.0, 0.5);
+<font color="#ff00ff">   glBegin</font>(GL_TRIANGLES);
+<font color="#ff00ff">     glVertex3f</font>(-1.0, -1.0, 0.0);
+<font color="#ff00ff">     glVertex3f</font>(-1.0, 1.0, 0.0);
+<font color="#ff00ff">     glVertex3f</font>(0.1, 0.0, 0.0);
+<font color="#ff00ff">     glVertex3f</font>(1.0, 1.0, 0.0);
+<font color="#ff00ff">     glVertex3f</font>(1.0, -1.0, 0.0);
+<font color="#ff00ff">     glVertex3f</font>(-0.1, 0.0, 0.0);
+<font color="#ff00ff">   glEnd</font>();
+<font color="#ff00ff">   glPopMatrix</font>();
+<font color="#ff00ff">   glFlush</font>();
+}
+
+void reshape(int w, int h)
+{
+<font color="#ff00ff">  glViewport</font>(0,0, (GLsizei) w, (GLsizei) h);
+<font color="#ff00ff">  glMatrixMode</font>(GL_PROJECTION);
+<font color="#ff00ff">  gluPerspective</font>(30.0, (GLfloat) w /(GLfloat) h, 1.0, 20.0);
+<font color="#ff00ff">  glMatrixMode</font>(GL_MODELVIEW);
+<font color="#ff00ff">  glLoadIdentity</font>();
+<font color="#ff00ff">  gluLookAt</font>(0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+}
+
+int main(int argc, char** argv)
+{
+<font color="#ff00ff">   glutInit</font>(&argc, argv);
+<font color="#ff00ff">   glutInitDisplayMode </font>(GLUT_SINGLE | GLUT_RGB|GLUT_DEPTH);
+<font color="#ff00ff">   glutInitWindowSize </font>(350, 350);
+<font color="#ff00ff">   glutInitWindowPosition</font>(0, 0);
+<font color="#ff00ff">   glutCreateWindow </font>("Blending Example");
+   init();
+<font color="#ff00ff">   glutDisplayFunc </font>(display);
+<font color="#ff00ff">   glutReshapeFunc </font>(reshape);
+<font color="#ff00ff">   glutMainLoop</font>();
+   return 0;
+}
+	
+/* 
+ *  By Binh Phu Le
+ *  parts of this program might have been adopted from or inspired by 
+ *  sample programs in 
+ *  "OpenGL Programming Guide", 
+ *  Copyright (c) 1993-1997, Silicon Graphics, Inc.
+ *  "Interactive Computer Graphics"  
+ *  Copyright (c) 1997, Addison-Wesley,
+ *  and/or those written by Dr. Sumanta Guha guha@cs.uwm.edu
+ *  and/or those written by Dr. Ichiro Suzuki suzuki@cs.uwm.edu
+ */
+</pre></body></html>

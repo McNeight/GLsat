@@ -1,0 +1,100 @@
+<HTML>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5 COLOR="#008080"><PRE>Effect of Normal on Lighting (need to redo)
+</FONT><FONT COLOR="#008080">
+</B></FONT>The top left rendering window should show you a yellow box, with the window titled 'The Magicbox - IllConceived Normals' The bottom left rendering window should show you the same yellow box with the window titled 'The Magicbox - Normals Corrected'
+
+Clicking the two boxes starts the animation. Look at the top box carefully. Do you think the lighting on the box flaps is correct?  Compare it to the bottom box.
+
+The reason for this difference is that for the box on the top the normals have been incorrectly specified before rendering them. The bottom box has the normals corrected for.
+
+The actual pieces of code which renders the flaps for the two boxes is provided below.
+
+The Magicbox - Illconceived Normals
+===============================
+Press the 'w' key to view the triangles which make up the top.
+glBegin(GL_TRIANGLES);
+   /* normals specified incorrectly . i.e. 
+    * they are all set for the  positive y 
+    * direction even though the top flips open.  
+    */
+     glNormal3f(0.0, 1.0, 0.0);
+     
+     /* draw the top rear triangle */
+     glVertex3f( 0.0,   Y,   Z);   
+     glVertex3f(1.0, 1.0,-1.0);
+     glVertex3f( -1.0, 1.0,-1.0);
+     
+     /* draw the top front triangle*/
+     glVertex3f(0, Y, Z1);         
+     glVertex3f(-1.0, 1.0, 1.0);
+     glVertex3f(1.0, 1.0, 1.0); 
+     
+     /* draw the top left triangle*/
+     glVertex3f(X, Y, 0.0);          
+     glVertex3f(-1.0, 1.0, -1.0);
+     glVertex3f(-1.0, 1.0, 1.0);
+     
+     /* draw the top right triangle */
+     glVertex3f(X1, Y, 0.0);       
+     glVertex3f(1.0, 1.0, 1.0);
+     glVertex3f(1.0, 1.0, -1.0);
+
+glEnd();
+
+In the closed condition the normal to the top face and hence the four rectangles is in deed the positive Y axis.  
+When the top four triangles (the flap of the box) start to open the normals are also changing.  Our code above does not account for this and hence the incorrect lighting.
+
+The Magicbox - Normals Corrected:
+=================================
+Now lets take a look at the corrected code :
+
+angle = ((float)step/120) * PI;
+   Y = 1 + sin(angle);
+   Z = -1 + cos(angle);
+   Z1= 1 - cos(angle);
+   X = -1 + cos(angle);
+   X1 = 1 - cos(angle);
+   NY = cos(angle);
+   NZ = -sin(angle);
+   NX= -sin(angle);
+   glBegin(GL_TRIANGLES);
+
+     /* draw the top rear triangle */
+     glNormal3f(0, NY, NZ);
+     glVertex3f( 0.0,   Y,   Z);   
+     glVertex3f(1.0, 1.0,-1.0);
+     glVertex3f( -1.0, 1.0,-1.0);
+     
+     /* draw the top front triangle */
+     glNormal3f(0.0,NY, -NZ);
+     glVertex3f(0, Y, Z1);         
+     glVertex3f(-1.0, 1.0, 1.0);
+     glVertex3f(1.0, 1.0, 1.0); 
+
+     /* draw the top left triangle */     
+     glNormal3f(NX, NY, 0.0);
+     glVertex3f(X, Y, 0.0);          
+     glVertex3f(-1.0, 1.0, -1.0);
+     glVertex3f(-1.0, 1.0, 1.0);
+     
+     /* draw the top right triangle */
+     glNormal3f(-NX, NY, 0.0);
+     glVertex3f(X1, Y, 0.0);       
+     glVertex3f(1.0, 1.0, 1.0);
+     glVertex3f(1.0, 1.0, -1.0);
+
+glEnd();
+
+In this case notice how we specify the normals correctly.  Take for example drawing the top front flap. In the normal condition this flap goes from a position of flat to vertical.  In the flat position the normal vector is the +ve Y axis. so far so good.  In the vertical position the normal vector is the +ve Z axis. So through its rotation the normal vector goes from being (0,1,0) to (0, 0, 1).  To accommodate this change we define two parameters: NY and NZ which constantly change with the angle roation. More specifically they are calculated as follow:
+
+NY = cos(angle)
+NZ = -sin(angle)
+
+when the flap is closed and flat angle is zero giving NY = 1 and NZ = 0
+Therefore the Normal vector defined as (0, NY,-NZ) leads to a vector value of
+(0, 1,0)
+When the flap is open all the way i.e it is vertical, the angle is now 90. In this case NY = 0, and NZ = -1
+The normal as specified by (0, NY, -NZ) now becomes (0, 0, 1) i.e. the positive Z axis, which is what we want.  The intermediate normal vectors are similarly calculated and lighting is achieved properly. Work through the normal vector calculations for the other flaps in the box and convince yourself on how the whole mechanics is put together!</PRE></BODY>
+</HTML>

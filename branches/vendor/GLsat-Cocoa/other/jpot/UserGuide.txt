@@ -1,0 +1,123 @@
+Starting the tutorial
+=====================
+To start the tutorial we do as follow:
+- If the working environment is Microsoft Windows, start a DOS command window.
+- Change the working directory to the installed directory of JPot.
+- At the prompt, call to execute the  tutorial: java JPot <enter>
+
+Navigating the tutorial
+=======================
+- The main window of JPot is divided to two parts: Content of the tutorial on the left side, and an HTML viewer on the right side to view the lecture notes.
+- Double click on specific chapter node in the tree outline to expand the content of that chapter. Double click on that node again will turn back to previous status that hides all the lesson nodes of the chapter. 
+- To view a specific lesson after expanding the chapter, click on the node represents the lesson. The lecture note of selected lesson will be viewed on the HTML viewer on the right side of the main window.
+- There will be an hyperlink pointing to the corresponding example of the lesson. Click on it will activate the example with two windows: the Java interactive interface and the OpenGL object-rendering screen.
+- Depend on example, there will be different number of sliders, and may have a group of radio buttons on the interactive interface. We use sliders to change specific parameters of the OpenGL program, and select one among radio buttons to set different order of code executing in the program. 
+- There are three consecutive buttons on the bottom of every interactive interface window. Click on the Execute on the right will update the rendering screen and the viewing source corresponding to values of sliders and radio buttons. Click on the Reset button in the middle will set everything to their default values as the starting point. Click on Exit button on the right side will terminate both OpenGL program and the interactive interface window itself.
+
+Contribute new lessons for the tutorial
+========================================
+Create input file for the generator
+===================================
+Generally, all declarations are started by the string "/*$$$" and ended by "$$$*/". Depend on what kind of interaction we are willing to have in the lesson, we will apply the appropriate syntax to it. There are two major kinds of interactions available in JPot: sliders and code-swapping radio buttons. There are three different types of slider, but we use the same syntax to declare it, and we can declare different types of sliders in the same declaration. Declaration of each slider is quoted between "[" and "]", and separated by a comma. The generator will determine the type of sliders during the process automatically to create the appropriate one for the lesson. Code swapping and slider declarations can be mixed together as a useful feature of the tutorial. Detail of how to obtain this is described below.
+
+Specify parameters for sliders
+==============================
+The format of a declaration for numeric sliders is:
+/*$$$[label, data type, default value, min value, max value, alignment],[...]$$$*/
+Where:
+
+[...]	contains the declaration of each parameter. note that different type of sliders can 
+be declared in the same section that ranged by /*$$$ and $$$*/, including slider of integer, 
+slider of floating point number, and slider of string constant.
+ Label	a string to specify the label of the slider, which will appear on the interactive 
+window.
+Data type	a character to specify the type of numeric value applied to the slider. we 
+use character "f" to specify floating values, and character "i" to specify integer values.
+Default value	value that will be applied to the slider when the program first runs, and 
+when user reset all the values.
+min value	minimum value that user can set with the slider.
+max value	maximum value that user can set with the slider.
+Alignment	a character to specify whether the slider will be drawn consecutive with the 
+previous slider, or start at the new line. if it is "c" then the slider will be drawn 
+consecutively, if it is "n" then it will be started at the new line.
+
+The format of a declaration for constant-value sliders is:
+/*$$$[label, data type, default string, [string constant, constant value],alignment],[...]$$$*/
+
+Where:
+
+[...]	contains the declaration of each parameter. note that different type of sliders can be declared in the same section that ranged by /*$$$ and $$$*/, including slider of integer, slider of floating point number, and slider of string constant.
+Label	a string to specify the label of the slider, which will appear on the interactive window.
+data type	Character "s" to specify that this type of slider.
+default string	The string constant that will be applied to the slider when the program first runs, and when user reset all the values.
+string constant	The string defined in header files that represents the constant value.
+constant value	Constant value that represented by the string constant.
+Alignment	A character to specify whether the slider will be drawn consecutive with the previous slider, or start at the new line. if it is "c" then the slider will be drawn consecutively, if it is "n" then it will be started at the new line.
+
+Below is an example of how to declare parameters of the glTranslatef function to match with three consecutive sliders in the interaction window. It also shows all the three parameters of the glTranslatef function are changed to be JPOT$1, JPOT$2, and JPOT$3 as required for the generation process.
+/*$$$ [X, f, 0.0, -5.0, 5.0, c], [Y, f, 0.0, -5.0, 5.0, c], [Z, f, 0.0, -5.0, 5.0, c]$$$*/
+glTranslatef(JPOT$1, JPOT$2, JPOT$3);
+
+Below is an example of how to declare parameters for the glBegin function to get different constant values from the slider during the running time. Differ from numeric sliders that user can select different numeric value, with this kind of slider they will  see and select constant string instead.
+/*$$$
+[Line Mode, s, GL_LINES, GL_LINES 1 GL_LINE_LOOP 2 GL_LINE_STRIP 3, c]
+$$$*/
+glBegin(JPOT$1);
+In this example we can see GL_LINES, GL_LINE_LOOP and GL_LINE_STRIP are three constant values that user will see and select from the slider, and 1, 2, 3 are real values that those constant represented for. Similar to the previous example, the only one parameter of glBegin function is set as JPOT$1.
+
+Specify parameter for code swapping
+===================================
+The format of a declaration for code swapping process has two parts: One for the portion of codes that will be active by default, and the other one is the portion that will be inactive at the first time running. During the running time, user can set the active part by selecting the appropriate radio button on the interactive window. Syntax to declare those portions is below:
+/*$$$swap-flip label$$$*/
+the active portion of code by default
+/*$$$swap-end$$$*/
+
+/*$$$swap-flop label$$$*/
+the inactive portion of code by default
+/*$$$swap-end$$$*/
+
+where label is the label of the corresponding radio button on the interactive window.
+
+Combination of sliders and code swapping
+========================================
+Code swapping and sliders can be merged together to handle the case that interaction with sliders is required in both parts of the swapping codes. For doing that, we declare parameters for sliders only at one part of the code, and we repeat the variable names of sliders' parameters (JPOT$1, JPOT$2, etc…)  in the other part.
+The comprehensive example below shows how to combine the declaration of sliders and code swapping together to enhance the usefulness of the declaration languages and the generator. In the example, two radio buttons will be created on the screen with the title "Translate then Rotate" and "Rotate then Translate" respectively. Seven sliders will be created in three rows: One with X1, Y1 and Z1 value for the translation's parameters, the other one for setting angle for the rotation, and the last row for the three parameters X2, Y2 and Z2 of the rotation function.
+
+/*$$$swap-flip Translate then Rotate$$$*/
+  /*$$$
+    [X1, f, 0.0, -5.0, 5.0, c],
+    [Y1, f, 0.0, -5.0, 5.0, c],
+    [Z1, f, 0.0, -5.0, 5.0, c],
+    $$$*/
+  glTranslatef(JPOT$1, JPOT$2, JPOT$3);
+  /*$$$
+    [Angle, f, 0.0, -90.0, 90.0, n],
+    [X2, f, 0.0, -5.0, 5.0, n],
+    [Y2, f, 0.0, -5.0, 5.0, c],
+    [Z2, f, 0.0, -5.0, 5.0, c]
+    $$$*/
+  glRotatef(JPOT$4, JPOT$5, JPOT$6, JPOT$7);
+  /*$$$swap-end$$$*/
+  /*$$$swap-flop Rotate then Translate$$$*/
+  glRotatef(JPOT$4, JPOT$5, JPOT$6, JPOT$7);
+  glTranslatef(JPOT$1, JPOT$2, JPOT$3);
+  /*$$$swap-end$$$*/
+
+Generate new lesson
+====================
+We use FileParser program to generate files for new lessons. The program receives the original OpenGL file with embedded descriptions for the interaction, and a string specifies the output name as the input. For each time running with an input file, it generates three files as output: a Java program for the interaction interface, the viewing source code under HTML format, and the OpenGL C program. Those three files are placed into appropriated directories by the generator: the Java program is in the current directory, the HTML document in the html directory, and the OpenGL C program in the ogl directory.
+User needs to compile the new files to have them worked. To compile the Java program, use the command
+javac <java program with extension> <enter>
+To compile the OpenGL C program, there maybe several ways depend on what kind of C compiler they have in the system, with the same name as the base name of the input file.
+A lecture note of the new created lesson needs to be created under HTML format, with an hyperlink to the corresponding Java class of the lesson that has just been created. For example, if the name of the new lesson is "NewLesson", the hyperlink will be as follows: <a href="NewLesson.class">Click here to run the example</a>.
+
+
+Add new lesson to the tutorial
+==============================
+New lesson needs to be declared in the Configure file before it is active in JPot. To define either a new chapter or lesson for JPot, we add a line with the following format to the Configure file:
+<Chapter name>	<Lesson Name>	<Lecture file name>
+where:
+<Chapter Name>	is name of the chapter. If we add new lesson to an existing chapter, then Chapter Name must be in the same section of that chapter's declaration.
+<Lesson Name>	is name of the lesson.
+<Lecture File Name>	is name of the lecture note in HTML format. The file is stored in html sub directory.
+Note that position of this string in the Configure file affects to the order of its appearance in the tutorial.

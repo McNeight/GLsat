@@ -1,0 +1,51 @@
+.TH TZCOORD.PL 1
+.\" NAME should be all caps, SECTION should be 1-8, maybe w/ subsection
+.\" other parms are allowed: see man(7), man(1)
+.SH NAME
+tzcoord.pl \- script that prints coordinates of a named timezone
+.SH SYNOPSIS
+.B tzcoord.pl
+.I timezone
+[
+.I zone data file
+]
+.SH "DESCRIPTION"
+.\"This manual page documents briefly the 
+.\".BR tzcoord.pl
+.\"script.
+.\"This manual page was written for the Debian GNU/Linux distribution
+.\"because the original program does not have a manual page.
+.\".PP
+.B tzcoord.pl
+prints coordinates of a named timezone in the same
+format that xplanet (see 
+.BR xplanet(1)
+manual page) uses in the
+arguments of its "-longitude" and "-latitude" options.
+
+The first argument is a substring matching the name field of the
+file. Matching of the named timezone is done case insensitively.
+
+The optional second argument is the path to the zone.tab file. If
+omitted, the script searches the file /usr/share/zoneinfo/zone.tab.
+
+The output will be formatted according to the current locale
+settings.
+
+.SH EXAMPLES
+.nf
+$ tzcoord.pl Europe/Berlin
+-lon 13.37 -lat 52.50
+$ LC_ALL=de_DE; export LC_ALL
+$ tzcoord.pl Europe/Berlin
+-lon 13,37 -lat 52,50
+$ xplanet `tzcoord.pl Europe/Berlin`
+
+.SH SEE ALSO
+xplanet(1)
+
+.SH AUTHOR
+.B tzcoord.pl 
+was written by Marcus Harnisch <marcus.harnisch@gmx.net>. This manual
+page was written by Gopal Narayanan <gopal@debian.org>, for the Debian
+GNU/Linux system (but may be used by others).

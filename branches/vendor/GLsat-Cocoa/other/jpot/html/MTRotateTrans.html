@@ -1,0 +1,39 @@
+<HTML>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5 COLOR="#008080"><P>Case Study: Translation followed by Rotation</P></B>
+<B><U><FONT SIZE=4 COLOR="#ff0000">Experiment
+</B></U></FONT>
+<P>
+In this experiment we examine the following code segment:
+</P>
+<OL>
+glTranslatef(x1,y1,z1);<br>
+glRotatef(angle,x2,y2,z2);<br>
+glutSolidTeapot(1.0); <br>
+</OL>
+<A HREF="RotTrans.class">Click here</a> to run the example. 
+Initially the code looks like 
+<OL>
+glTranslatef(0,0,0); <br>
+glutSolidTeapot(1.0);<br>
+glTranslatef(3,0,0);<br>
+glutSolidSphere(1.0,8,8);<br>
+</OL>
+so the teapot appears at the origin and the spout is facing 
+the positive x direction.
+Now try this:</P>
+<P>- Change x1, y1, z1 of the glTranslatef() to 2, 0, 4, respectively.
+Did the teapot appear at the location you expected?
+</P>
+<P>- Now change angle, x2, y2, z2 of the glRotatef() to 60, 0, 0, 1, respectively,
+or any values you choose. 
+Again, 
+did the teapot appear at the location and in the orientation you expected?
+If not, you may want to go back to "Effects of Multiple Transformations".
+</P>
+</BODY>
+</HTML>
+
+
+

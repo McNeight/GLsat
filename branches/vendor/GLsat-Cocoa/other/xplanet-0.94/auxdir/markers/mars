@@ -1,0 +1,115 @@
+# Contributed by Nils Peter Sudmann <nilss@cs.uit.no>
+
+#Mountains (all 18)
+  2.8  113.3	"Tharsis Montes"	color=Gray
+-41.0   43.5	"Nereidum Montes"	color=Gray
+-58.3   44.2	"Charitum Montes"	color=Gray
+ 40.9  197.4	"Phlegra Montes"	color=Gray
+  2.7  271.2	"Libya Montes"		color=Gray
+ 25.1  188.7	"Tartarus Montes"	color=Gray
+-45.5  317.5	"Hellespontus Montes"	color=Gray
+ 18.4  133.1	"Olympus Mons"		color=Gray
+ 39.9  170.5	"Erebus Montes"		color=Gray
+ -9.4  120.5	"Arsia Mons"		color=Gray
+ 11.3  104.5	"Ascraeus Mons"		color=Gray
+ 25.0  213.0	"Elysium Mons"		color=Gray
+  0.3  112.8	"Pavonis Mons"		color=Gray
+ -8.0   80.7	"Geryon Montes"		color=Gray
+  6.8   78.2	"Echus Montes"		color=Gray
+-69.8  346.9	"Sisyphi Montes"	color=Gray
+  3.9  188.9	"Hibes Montes"		color=Gray
+-55.2   41.4	"Oceanidum Mons"	color=Gray
+
+#Vallis (10 largest)
+-11.6  70.7	"Valles Marineris"	color=azure
+ 22.8  68.2	"Kasei Valles"		color=azure
+  9.7  23.4	"Ares Vallis"		color=azure
+ 15.4  56.7	"Maja Valles"		color=azure
+ 11.5  38.5	"Simud Vallis"		color=azure
+-41.6 258.3 	"Reull Vallis"		color=azure
+  8.6  32.2	"Tiu Vallis"		color=azure
+ 41.7 344.5	"Mamers Vallis"		color=azure
+ -7.4 151.6	"Mangala Valles"	color=azure
+-21.0 182.7	"Ma'Adim Vallis"	color=azure
+
+#terra (land mass, all 12)
+ 25.0 330.0 	"ARABIA TERRA"		color=DarkOrange # align=above
+-45.0   0.0	"NOACHIS TERRA"		color=DarkOrange # align=above
+-58.2  94.8	"AONIA TERRA"		color=DarkOrange # align=above
+  4.2  46.3 	"XANTHE TERRA"		color=DarkOrange # align=above
+-14.3 278.5	"TYRRHENA TERRA"	color=DarkOrange # align=above
+-52.9 262.2	"PROMETHEI TERRA"	color=DarkOrange # align=above
+-34.0 215.0	"CIMMERIAN TERRA"	color=DarkOrange # align=above
+-37.0 160.0	"SIRENUM TERRA"		color=DarkOrange # align=above
+ 41.3  70.5	"TEMPE TERRA"		color=DarkOrange # align=above
+-16.2, 21.3	"MARGARITIFER TERRA"	color=DarkOrange # align=above
+# 25.0 330.0 	"Arabia Terra"		color=DarkOrange
+#-45.0   0.0	"Noachis Terra"		color=DarkOrange
+#-58.2  94.8	"Aonia Terra"		color=DarkOrange
+#  4.2  46.3 	"Xanthe Terra"		color=DarkOrange
+#-14.3 278.5	"Tyrrhena Terra"	color=DarkOrange
+#-52.9 262.2	"Promethei Terra"	color=DarkOrange
+#-34.0 215.0	"Cimmeria Terra"	color=DarkOrange
+#-37.0 160.0	"Sirenum Terra"		color=DarkOrange
+# 41.3  70.5	"Tempe Terra"		color=DarkOrange
+#-16.2, 21.3	"Margaritifer Terra"	color=DarkOrange
+# -7.2 356.0	"Meridiani Terra"	color=DarkOrange
+#-10.4 330.6	"Sabaea Terra"		color=DarkOrange
+
+#craters (10 largest)
+ -2.5 343.4	"Schiaparelli"
+-14.0 304.4	"Huygens"
+ 23.8 327.9	"Cassini"
+ 13.7 324.1	"Tikhonravov"
+ 21.7 299.0	"Antoniadi"
+ -1.8 303.6	"Schroeter"
+-14.9 230.1	"Herschel"
+-30.0 141.4	"Koval'sky"
+-50.0 168.6	"Copernicus"
+-40.8 157.9	"Newton"
+
+#plateau or high plain (11 largest -1 dropped)
+-13.9 138.0	"Daedalia Planum"	color=DarkGreen # align=above
+-18.3 251.6	"Hesperia Planum"	color=DarkGreen # align=above
+  9.6  66.6 	"Lunae Planum"		color=DarkGreen # align=above
+-20.9  94.6	"Solis Planum"		color=DarkGreen # align=above
+-62.0 212.6	"Chronium Planum"	color=DarkGreen # align=above
+  9.5 289.6	"Syrtis Major Planum"	color=DarkGreen # align=above
+-80.3 155.1	"Australe Planum"	color=DarkGreen # align=above
+-65.9 297.4	"Malea Planum"		color=DarkGreen # align=above
+ -9.6  62.2	"Ophir Planum"		color=DarkGreen # align=above
+-85.0 180.0	"Boreum Planum"		color=DarkGreen # align=above
+
+
+#planitia, low plain (all 11 -1 dropped)
+ 14.3 241.1	"Elysium Planitia"	color=LightGreen # align=below
+ 47.6 277.3	"Utopia Planitia"	color=LightGreen # align=below
+ 46.4 152.1	"Arcadia Planitia"	color=LightGreen # align=below
+ 16.0 158.4	"Amazonis Planitia"	color=LightGreen # align=below
+ 54.6  30.0	"Acidalia Planitia"	color=LightGreen # align=below
+-44.3 293.8	"Hellas Planitia"	color=LightGreen # align=below
+ 27.0  36.0	"Chryse Planitia"	color=LightGreen # align=below
+ 14.1 271.0	"Isidis Planitia"	color=LightGreen # align=below
+-49.4  42.8	"Argyre Planitia"	color=LightGreen # align=below
+ 81.5 180.0	"Olympia Planitia"	color=LightGreen # align=below
+
+#dunes (all 2)
+ 77.5  46.0	"Hyperboreae Undae"	color=LightGoldenrodYellow
+ 81.0  83.1	"Abalos Undae"		color=LightGoldenrodYellow
+
+
+#Landing Sites 
+ 22.27     47.97       "Viking 1 Lander"
+ 47.67     225.74      "Viking 2 Lander"
+ 19.33     33.55       "Mars Pathfinder"
+
+ 90.00    0.00 "North Pole"     color=LightBlue # North Pole
+-90.00    0.00 "South Pole"     color=LightBlue # South Pole
+
+
+
+
+
+
+
+

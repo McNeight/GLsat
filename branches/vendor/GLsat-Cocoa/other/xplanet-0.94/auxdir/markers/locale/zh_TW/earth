@@ -1,0 +1,84 @@
+# -*- coding: chinese-big5; -*-
+# This is a list of the 50 largest cities in the world, as tabulated
+# at http://www.infoplease.com/ipa/A0762524.html.
+#
+# Longitudes and latitudes are from
+# http://www.getty.edu/research/tools/vocabulary/tgn/index.html
+
+ 90.00    0.00 "北極"           color=LightBlue # North Pole
+-90.00    0.00 "南極"           color=LightBlue # South Pole
+ 33.35   44.42 "巴格達"                         # 伊拉克 Iraq
+ 12.97   77.58 "班加羅爾"                       # 印度 India
+ 13.73  100.50 "曼谷"                           # 泰國 Thailand
+ 39.92  116.43 "北京"                           # 中國 China
+  4.63  -74.08 "波哥大"                         # 哥倫比亞 Colombia
+ 42.35  -71.05 "波士頓"                         # 美國 USA
+-34.67  -58.50 "布宜諾斯艾利斯"                 # 阿根廷 Argentina
+ 30.05   31.25 "開羅"                           # 埃及 Egypt
+ 22.50   88.33 "加爾各答"                       # 印度 India
+ 13.08   80.30 "Chennai"                        # 印度 India
+ 41.85  -87.65 "芝加哥"                         # 美國 USA
+ 32.78  -96.80 "達拉斯"                         # 美國 USA
+ 28.67   77.22 "德里"                           # 印度 India
+ 42.32  -83.03 "底特律"                         # 美國 USA
+ 23.72   90.37 "達卡"                           # 孟加拉 Bangladesh
+ 51.45    6.95 "埃森"                           # 德國 Germany
+ 22.28  114.15 "香港"                           # 中國 China
+ 17.37   78.43 "海得拉巴"                       # 印度 India
+ 41.03   28.95 "伊斯坦堡"                       # 土耳其 Turkey
+ -6.13  106.75 "雅加達"                         # 印度尼西亞 Indonesia
+-26.17   28.03 "約翰尼斯堡"                     # 南非 South Africa
+ 24.85   67.03 "喀拉蚩"                         # 巴基斯坦 Pakistan
+ -4.30   15.30 "金夏沙"                         # 剛果 Congo
+  6.45    3.47 "拉哥斯"                         # 奈及利亞 Nigeria
+ 31.57   74.37 "拉合爾"                         # 巴基斯坦 Pakistan
+-12.05  -77.05 "利馬"                           # 秘魯 Peru
+ 51.50   -0.17 "倫敦"                           # 英國 United Kingdom
+ 34.05 -118.23 "洛杉磯"                         # 美國 USA
+ 40.42   -3.72 "馬德里"                         # 西班牙 Spain
+ 14.62  120.97 "馬尼拉"                         # 菲律賓 Philippines
+ 19.40  -99.15 "墨西哥城"                       # 墨西哥 Mexico
+ 55.75   37.70 "莫斯科"                         # 俄羅斯 Russia
+ 18.93   72.85 "Mumbai"                         # 印度 India
+ 35.13  136.88 "名古屋"                         # 日本 Japan
+ 40.70  -74.00 "紐約市"                         # 美國 USA
+ 34.67  135.50 "大阪"                           # 日本 Japan
+ 48.87    2.33 "巴黎"                           # 法國 France
+ 39.95  -75.15 "費城"                           # 美國 USA 
+-22.88  -43.28 "里約熱內盧"                     # 巴西 Brazil
+ 37.77 -122.42 "舊金山"                         # 美國 USA
+-33.45  -70.67 "聖地牙哥"                       # 智利 Chile
+-23.55  -46.65 "聖保羅"                         # 巴西 Brazil
+ 37.53  127.00 "漢城"                           # 韓國 South Korea
+ 31.10  121.37 "上海"                           # 中國 China
+ 59.88   30.25 "聖彼得堡"                       # 俄羅斯 Russia
+ 25.02  121.37 "台北"                           # Taiwan
+ 35.67   51.43 "德黑蘭安"                       # 伊朗 Iran
+ 39.13  117.20 "天津"                           # 中國 China
+ 35.75  139.50 "東京"                           # 日本 Japan
+ 38.88  -77.03 "華盛頓"                         # 美國 USA
+
+# Some other big cities
+# 23.05   72.67 "亞美達巴得"                     # 印度 India
+# 31.20   29.90 "亞歷山卓"                       # 埃及 Egypt
+# 39.92   32.83 "安卡拉"                         # 土耳其 Turkey
+# 52.53   13.42 "柏林"                           # 德國 Germany
+# 10.50  -66.92 "加拉卡斯"                       # 委內瑞拉 Venezuela
+# 30.62  104.10 "成都"                           # 中國 China
+# 30.65  103.68 "重慶"                           # 中國 China
+# 23.13  113.33 "廣州"                           # 中國 China
+# 45.75  126.68 "哈爾濱"                         # 中國 China
+# 10.75  106.67 "胡志明市"                       # 越南 Vietnam
+#-37.75  144.97 "墨爾本"                         # 澳洲 Australia
+# 35.08  129.03 "釜山"                           # 韓國 South Korea
+# 39.00  125.78 "平壤"                           # 北朝鮮 North Korea
+# 41.83  123.43 "瀋陽"                           # 中國 China
+#  1.28  103.85 "新加坡"                         # 新加坡 Singapore
+#-33.92  151.17 "雪梨"                           # 澳洲 Australia
+# 30.58  114.32 "武漢"                           # 中國 China
+# 34.27  108.90 "西安"                           # 中國 China
+# 35.47  139.63 "橫濱"                           # 日本 Japan
+
+# This puts a smiley face at the subsolar point.  Comment it out if it
+# makes you sick.
+position=sun image=smile.png transparent={255,255,255}
