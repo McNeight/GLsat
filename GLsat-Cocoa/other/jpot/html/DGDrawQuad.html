@@ -1,0 +1,15 @@
+<html>
+<body>
+<B><FONT SIZE=5 COLOR="#008080"><P>Drawing Quads</P></FONT></B>
+<B><U><FONT SIZE=4 COLOR="#ff0000">Ideal</FONT></U></B>
+<P>
+Quad is a geometric primitive in OpenGL that is specified by sets of 4 vertices. If GL_QUADS mode is used in the <B>glBegin()</B> command, a succession of quadrilaterals is drawn  using vertices v0, v1, v2, v3 then v4, v5, v6, v7 and so on. If number of vertices is not a multiple of 4, the last one to three vertices will be ignored.
+</P>
+<P>
+If GL_QUAD_STRIP is used in the <B>glBegin()</B> command, a succession of quadrilaterials is drawn using vertices v0, v1, v3, v2, and then v2, v3, v5, v6, and so on. The final vertex is ignored if the number of vertices is odd.
+<P ALIGN="CENTER"><IMG SRC="gl_quad.gif" WIDTH=478 HEIGHT=212></P>
+</P>
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>Experiment</P></FONT></U></B>
+<a href="DrawQuad.class">Click here</a>.
+</body>
+</html>

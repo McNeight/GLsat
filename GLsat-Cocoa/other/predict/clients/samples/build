@@ -1,0 +1,1 @@
+cc -Wall -O3 -s demo.c -o demo

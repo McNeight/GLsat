@@ -1,0 +1,11 @@
+<HTML>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5 COLOR="#008080"><P>Antialiasing Polygons </P>
+</FONT><U><FONT SIZE=4 COLOR="#ff0000"><P>Idea</P>
+</B></U></FONT><P>Antialiasing the edges of filled polygons is similar to antialiasing points, and lines. When different polygons have over-lapping edges, we need to blend the color values appropriately. To antialias polygons in RGBA mode: o Use the alpha value to represent coverage values of polygon edges o Enable polygon antialiasing by passing <B>GL_POLYGON_SMOOTH </B>to <B>glEnable().</B> This causes pixels on the edges of the polygons to be assigned fractional alpha values based on their coverage as though they were lines being antialiased. When performing antialiasing, OpenGL calculates a coverage value for each fragment based on the fraction pixel square on the screen that it would cover. In RGBA mode, OpenGL multiplies the fragments coverage value by its alpha value. o Supply a value for <B>GL_POLYGON_SMOOTH_HINT</B> if desired. o Next we need to blend overlapping images properly. To do this, first turn off the depth buffer by calling <B>glDepthMask()</B> with <B>GL_FALSE</B> as the argument. This way we have control over how overlapping pixels are drawn. o Set the blending factors to <B>GL_SRC_ALPHA_ SATURATE</B> for the source and <B>GL_ONE</B> for the destination. With this blending, the final color is the sum of the destination color and the scaled source color. o finally sort all the polygons in the scene so that they are ordered from front to back before drawing them. </P>
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>Experiment</P>
+</B></U></FONT><P><A HREF="AntiPoly.class">Click here</A>. </P>
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>Note</P>
+</B></U></FONT><P>For this technique to work correctly make sure to include <B>GLUT_ALPHA</B> as an option for the <B>glutInitDisplayMode() </P></B></BODY>
+</HTML>

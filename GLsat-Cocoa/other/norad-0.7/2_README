@@ -1,0 +1,179 @@
+Introduction:
+=============
+
+This package contains C source-code of several functions that together
+can be used to determine the Cartesian x, y and z position and velocity
+of a satellite from its two-line orbital element sets (TLE's).
+
+The C source code was derived mainly by porting to C and editing the 
+FORTRAN routines in NORAD's Spacetrack report #3 and Dr. TS Kelso's
+Pascal routines, themselves also derived from the Norad FORTRAN source.
+Because of this linage, my C source-code is subject to the copyrights
+of both its parents, so please read the COPYING file for details.
+
+Contents:
+=========
+
+This package should contain the following files:
+
+1. This README file.
+
+2. The COPYING file with copyright details.
+
+3. norad.c: The file containing the ported C source-code of NORAD's
+            SGP, SGP4, SDP4, SGP8 and SDP8 routines and the Deep
+            routine which is used by both SDP* routines for deep
+            space perturbation effects. Some other functions are 
+            also included, used by all routines for computations.
+
+4. main.c: A skeleton main() function to demonstrate the use of the
+           functions in norad.c by calculating and printing the 
+           position and velocity of sample satellites, using the
+           two TLE sets provided by NORAD for SGP* and SDP* type
+           ephemerides. The results agree to the 5th or 6th digit
+           with NORAD's test results.
+           
+           A few other functions are also included in main.c, one
+           for automatically determining the ephemeris type to be
+           used (SGP* or SDP*) and others for setting and testing
+           flow control flags used in most other functions.
+
+5. norad.h: Header file for main.c and norad.c . I have moved many
+            common numerical constants in this file as #defines.
+
+6. norad.f: Source of NORAD's FORTRAN routines derived from the
+            pdf format Spacetrack report. This can be used as a
+            reference to check the C source although a lot of
+            changes have been made to the (non-existent) 
+            structure of the FORTRAN code.
+
+7. Makefile: A simple makefile for building 'norad', a simple
+             binary to test the C source-code.
+
+
+Building and testing:
+=====================
+
+Simply run make in the norad directory to build the test binary. Run
+make clean to remove object files and the 'norad' binary. Type 
+./norad to run the test program. It should print a set of satellite
+position and velocity data for all five ephemeris types using NORAD's
+test TLE sets, with near-earth or deep-space type ephemerides routines
+selected automatically.
+
+Change-log:
+==========
+
+1. In version 0.2_beta the sat_vector_t structure which contained the
+x, y, z position and xdot, ydot, zdot velocity of the satellite as
+calculated by the SGP*/SDP* routines has been replaced by the vector_t
+structure which has an x, y, z position or velocity component and a mag 
+scalar magnitude component. Satellite position and velocity is now
+returned in vector_t pos and vector_t vel variables. 
+
+This is to make all the SGP/SDP routines compatible with Dr Kelso's
+Pascal code which uses similar vector types for a number of variables.
+
+2. The main() function now uses the select_ephemeris() function to set
+the DEEP_SPACE_EPHEM_FLAG and print an indication on the ephemeris type
+used in the calculations accordingly.
+
+3. Fixed a bug in SGP8 that caused progressive accumulation of error in
+the results due to a variable not declared static.
+
+4. In version 0.3_beta fixed a bug in Deep() which caused it to loop
+indefinitely when certain tle sets were used.
+
+5. In version 0.4_beta fixed two bugs that caused the Deep() function
+to give incorrect results with 12-hour orbit satellites.
+ 
+6. In version 0.5 fixed some bugs which could cause small errors in the
+results from the Deep() function. Also dropped the DOT_TERMS_FLAG and
+used the complement of EPOCH_RESTART_FLAG instead.
+
+7. In version 0.6 fixed a bug in SGP8 where a subtractive term was also
+added back, probably due to an editing error. This was both in norad.f and
+norad.c files.
+
+
+Known bugs: 
+===========
+
+It appears that the original NORAD routines have been modified to
+correct some discrepancies in the calculated satellite position data,
+at least for some TLE sets of deep-space orbits. I have incorporated
+a fix for one bug at the end of the Lyddane modification in the 
+'dpper' section of the Deep routine, as suggested by Rob Matson.
+
+There are also suggested fixes for the discrepancy in satellite
+position data at 0 epoch time, between SDP4 and SGP routines. I have
+not made any changes to the NORAD routines, as the fixes appear to be
+for newer, modified SGP4/SDP4 routines. I will leave this to Celestial
+Mechanics programming gurus to be safe!
+
+Hidden bugs?
+============
+
+There may well be (even should be) some hidden bugs in the ported C
+source as I made a big effort to streamline the flow and structure of
+the FORTRAN routines, especially getting rid of all goto's. Although
+I have been careful with the changes, the TLE sets in NORAD's report
+do not result in program flow in all the branches of control statements
+so that its not possible to check the integrity of the C source in all
+circumstances. However I have made sure that the results produced by my
+C routines agree to the 5th or 6th digit of NORAD's examples.
+The most complicated part of the NORAD routines is the 'dpsec' part of
+the Deep routine where most of the changes to flow control and 
+structure were made. This is were bugs affecting the deep-space 
+routines may be hiding.
+
+Using norad.c: 
+==============
+
+In order to use the ephemeris functions in norad.c you must retain
+all functions in main.c and norad.c, in addition to any functions
+of your own. Also norad.h must be #include'd in whatever files use
+functions in main.c and norad.c
+
+The five routines that calculate satellite position (SGP, SGP4,
+SDP4, SGP8 and SDP8) all have the same interface as follows:
+(double tsince, tle_t *tle, vector_t *pos, vector_t *vel).
+
+tsince is the time interval in minutes since epoch time.
+
+tle_t *tle is a pointer to a structure that holds the TLE set of
+the satellite. Please see norad.h for details.
+
+vector_t *pos and vector_t *vel are structures holding the calculated
+Cartesian position x, y, z and velocity xdot, ydot, zdot data
+for the satellite. Please see norad.h for details.
+
+Please note that all four arguments are safer declared static if
+they are declared outside the main() function.
+
+All the flags controlling program flow must be cleared before a new
+TLE set is used or when a different ephemeris function is called. 
+This is done by using ClearFlags(ALL_FLAGS); See main.c for details.
+
+Disclaimer:
+===========
+
+I have ported the NORAD FORTRAN routines to C so that I can use them
+in my satellite tracking projects. I am releasing this source-code in 
+the hope that other developers can benefit, as I have benefitted from
+available open source software. 
+
+I can make no guarantee explicit or implicit as to the integrity and
+usability of these software modules and I cannot be held responsible
+for any damage or loss incurred by using them. Use the material in 
+this package at your own risk.
+
+References:
+===========
+
+Dr. TS. Kelso maintains an excellent web-site with a lot of information
+and software for tracking celestial objects. A pdf version of the 
+NORAD Spacetrack report #3 is also included: http://celestrack.com/
+
+
+Neoklis Kyriazis  <neoklis@my-deja.com>    April 4  2001

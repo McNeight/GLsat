@@ -1,0 +1,17 @@
+#!/bin/sh
+# Script to delete executables and make a clean distribution.
+#
+rm -f predict predict.h
+rm -f vocalizer/vocalizer.h vocalizer/vocalizer
+rm -f clients/samples/demo
+cd clients
+	rm -f map/map
+	cd gsat-0.9.0
+		make clean
+		cd ..
+	rm -f geosat/geosat
+	rm -f earthtrack/earthtrack
+	rm -f kep_reload/kep_reload
+	cd ..
+cp -p $HOME/.predict/predict.tle default/predict.tle
+echo "Done!"

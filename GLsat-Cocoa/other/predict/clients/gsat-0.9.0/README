@@ -1,0 +1,40 @@
+WELCOME TO GSAT!
+
+gsat is a satellite tracking program. It is a graphical frontend to the predict orbital prediction program by John Magliacane KD2BD.
+
+To install, do the usual:
+
+	./configure
+	./make
+	./make install
+
+Make sure to have predict installed and the predict service configured in the /etc/services.
+Define the host with the predict server by:
+
+	export PREDICTHOST=<hostname>
+
+
+where <hostname> is the host name of the server.
+Then execute gsat by typing:
+
+	gsat
+
+or by using -s option, like:
+
+	gsat -s hostname
+
+where hostname is the host name of the server.
+If no PREDICTHOST variable or no -s option are used, localhost is assumed.
+
+From gsat version 0.9.0, you have to use the connect button to make a connection to a predict server.
+
+ABOUT PLUGINS
+
+gsat can do automatic doppler correction via plugins. Plugins must be placed in the /usr/local/lib/gsat/plugins directory or in a directory pointed to by the GSATPLUGINSDIR environment variable. Plugin's name must begin by "plugin_". Once you have the plugins installed, you can select it in the preferences window, pass it a config string and activate it in the doppler section of the main window.
+There is a file called Plugin_API with the info to program a custom plugin. There are some examples in the plugins subdir.
+
+Happy tracking !!!
+
+Xavier Crehueras, EB3CZS
+eb3czs@qsl.net
+

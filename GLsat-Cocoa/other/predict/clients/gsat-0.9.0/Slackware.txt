@@ -1,0 +1,8 @@
+The location of gtk-config under Slackware-8.0 is different from
+what the configure script for gsat-0.9.0 expects.  This problem
+can be solved by installing a symbolic link as follows:
+
+	ln -s /opt/gnome/bin/gtk-config /usr/bin
+
+73, de John, KD2BD
+

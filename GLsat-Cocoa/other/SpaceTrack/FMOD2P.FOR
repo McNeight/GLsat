@@ -1,0 +1,10 @@
+\begin{verbatim}
+      FUNCTION FMOD2P(X)
+      COMMON/C2/DE2RA,PI,PIO2,TWOPI,X3PIO2
+      FMOD2P=X
+      I=FMOD2P/TWOPI
+       FMOD2P=FMOD2P-I*TWOPI
+      IF(FMOD2P.LT.0) FMOD2P=FMOD2P+TWOPI
+      RETURN
+      END
+\end{verbatim}

@@ -1,0 +1,11 @@
+#!/bin/sh
+# Simple script for recording audio samples.  Use CTRL-C to quit.
+#
+echo -n "3... "
+sleep 1
+echo -n "2... "
+sleep 1
+echo -n "1... "
+sleep 1
+echo "You're on the air!"
+cat /dev/dsp > sample

@@ -1,0 +1,4 @@
+<font color="#ff00ff">  glClear </font>(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+<font color="#ff00ff">  glDisable </font>(GL_BLEND);
+<font color="#ff00ff">  glDisable </font>(GL_POLYGON_SMOOTH);
+<font color="#ff00ff">  glEnable </font>(GL_DEPTH_TEST);
