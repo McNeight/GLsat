@@ -41,12 +41,12 @@ void TLE::checksum()
 
   // If the string is long enough,
   // grab the checksum digits at position 69,
-  if (firstLine.length() == 69)
+  if (firstLine.length() > 68)
   {
     checksum1 = firstLine.at(68) - 48;
   }
 
-  if (secondLine.length() == 69)
+  if (secondLine.length() > 68)
   {
     checksum2 = secondLine.at(68) - 48;
   }
