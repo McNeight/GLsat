@@ -19,7 +19,7 @@
  */
 
 #include <cmath>
-#include <cstdlib>		/* for atoi and strtod */
+#include <cstdlib>		/* for atoi */
 #include <iostream>
 #include <string>
 #include "astro.h"
@@ -39,12 +39,12 @@ void TLE::checksum()
 
   // If the string is long enough,
   // grab the checksum digits at position 69,
-  if (firstLine.length() > 68)
+  if (firstLine.length() == 69)
   {
     checksum1 = firstLine.at(68) - 48;
   }
 
-  if (secondLine.length() > 68)
+  if (secondLine.length() == 69)
   {
     checksum2 = secondLine.at(68) - 48;
   }
@@ -108,22 +108,22 @@ void TLE::processData()
 
   //
   epochYear = atoi(firstLine.substr(18, 2).c_str());
-  epochDay = strtod(firstLine.substr(20, 12).c_str(), (char **)NULL);
+  epochDay = strtold(firstLine.substr(20, 12).c_str(), (char **)NULL);
 
   //
-  dotn_o = strtod(firstLine.substr(33, 10).c_str(), (char **)NULL);
+  dotn_o = strtold(firstLine.substr(33, 10).c_str(), (char **)NULL);
 
   // Bring in the value, put a decimal point on the left hand side,
   // and then process where it should be shifted to
-  ddotn_o = strtod(firstLine.substr(44, 6).c_str(), (char **)NULL);
+  ddotn_o = strtold(firstLine.substr(44, 6).c_str(), (char **)NULL);
   ddotn_o *= 1.0e-5;
-  ddotn_o *= pow(10.0, atof(firstLine.substr(50, 2).c_str()));
+  ddotn_o *= powl(10.0, atof(firstLine.substr(50, 2).c_str()));
 
   // Bring in the value, put a decimal point on the left hand side,
   // and then process where it should be shifted to
-  bStar = strtod(firstLine.substr(53, 6).c_str(), (char **)NULL);
+  bStar = strtold(firstLine.substr(53, 6).c_str(), (char **)NULL);
   bStar *= 1.0e-5;
-  bStar *= pow(10.0, atof(firstLine.substr(59, 2).c_str()));
+  bStar *= powl(10.0, atof(firstLine.substr(59, 2).c_str()));
   
   //
   epheremisType = (firstLine.at(62) - 48);
@@ -150,39 +150,39 @@ void TLE::processData()
   }
   
   //
-  i_o = strtod(secondLine.substr(8, 8).c_str(), (char **)NULL);
+  i_o = strtold(secondLine.substr(8, 8).c_str(), (char **)NULL);
   if ((i_o < 0) || (i_o > 180))
   {
     validData = false;
   }
 
   //
-  Omega_o = strtod(secondLine.substr(17, 8).c_str(), (char **)NULL);
+  Omega_o = strtold(secondLine.substr(17, 8).c_str(), (char **)NULL);
   if ((Omega_o < 0) || (Omega_o > 360))
   {
     validData = false;
   }
 
   //
-  e_o = strtod(secondLine.substr(26, 7).c_str(), (char **)NULL);
-  e_o *= pow(10.0, -7.0);
+  e_o = strtold(secondLine.substr(26, 7).c_str(), (char **)NULL);
+  e_o *= powl(10.0, -7.0);
   
   //
-  omega_o = strtod(secondLine.substr(34, 8).c_str(), (char **)NULL);
+  omega_o = strtold(secondLine.substr(34, 8).c_str(), (char **)NULL);
   if ((omega_o < 0) || (omega_o > 360))
   {
     validData = false;
   }
 
   //
-  M_o = strtod(secondLine.substr(43, 8).c_str(), (char **)NULL);
+  M_o = strtold(secondLine.substr(43, 8).c_str(), (char **)NULL);
   if ((M_o < 0) || (M_o > 360))
   {
     validData = false;
   }
 
   //
-  n_o = strtod(secondLine.substr(52, 11).c_str(), (char **)NULL);
+  n_o = strtold(secondLine.substr(52, 11).c_str(), (char **)NULL);
 
   //
   revolution = atoi(secondLine.substr(63, 5).c_str());
@@ -241,26 +241,26 @@ void TLE::setupConstants()
 {
   int			A;			// For computing Juilan Date of Epoch
   int			B;			// For computing Julian Date of Epoch
-  long double		temp;			// Used to keep epochDay safe when using modf()
+  long double		temp;			// Used to keep epochDay safe when using modfl()
     
   // Initialize the "constants"
   // Data dependant variables which are constant
   // throughout all orbital models
 
-  a_1 = pow((k_e / n_o), twoThirds);
-  cosi_o = cos(i_o);
-  sini_o = sin(i_o);
+  a_1 = powl((k_e / n_o), twoThirds);
+  cosi_o = cosl(i_o);
+  sini_o = sinl(i_o);
   theta2 = cosi_o * cosi_o;
   oneMinus5theta2 = 1.0 - 5.0 * theta2;
   oneMinustheta2 = 1.0 - theta2;
   seventheta2Minus1 = 7.0 * theta2 - 1.0;
-  theta4 = pow(cosi_o, 4);
+  theta4 = powl(cosi_o, 4);
   x3thm1 = 3.0 * theta2 - 1.0;
   e_o2 = e_o * e_o;
   beta_o2 = 1.0 - e_o2;
-  beta_o = sqrt(beta_o2);
-  sinM_o = sin(M_o);
-  a30overk2 = -J_3 * pow(a_E, 3) / k_2;
+  beta_o = sqrtl(beta_o2);
+  sinM_o = sinl(M_o);
+  a30overk2 = -J_3 * powl(a_E, 3) / k_2;
 #ifdef MATH_OUT
     cout << endl << "$ a_{1} = " << a_1 << " $"<< endl;
     cout << endl << "$ \\cos(i_{o} = " << cosi_o << " $"<< endl;
@@ -282,14 +282,14 @@ void TLE::setupConstants()
 #endif
   
   // Calculate UT, T_U, GMST, DS50 and Theta_G
-  UT = modf(epochDay,&temp);
+  UT = modfl(epochDay,&temp);
   T_U = (JD - 2451545.0) / 36525.0;
   // GMST = 24110.54841 + (8640184.812866 * T_U) + (0.093104 * T_{U}^{2}) + (6.2E-6 * T_{U}^{3})
   GMST = 24110.54841 + T_U * (8640184.812866 + T_U * (0.093104 - T_U * 6.2E-6));
-  GMST = fmod(GMST + secondsDay * omega_E * UT, secondsDay);
+  GMST = fmodl(GMST + secondsDay * omega_E * UT, secondsDay);
   DS50 = JD - 2433281.5 + UT;
   Theta_G = (2.0 * PI) * GMST / secondsDay;
-  Theta_G = fmod(6.3003880987 * DS50 + 1.72944494, (2.0 * PI));
+  Theta_G = fmodl(6.3003880987 * DS50 + 1.72944494, (2.0 * PI));
 
   // Check if deep() routines are needed
   // Borrowing delta_1, a_o, delta_o and n_odp
@@ -354,16 +354,16 @@ long double TLE::ArcTan(long double sinx, long double cosx)
     {
       if (sinx > 0)
       {
-        retVal = atan(sinx/cosx);
+        retVal = atanl(sinx/cosx);
       }
       else
       {
-        retVal = (2.0 * PI) + atan(sinx/cosx);
+        retVal = (2.0 * PI) + atanl(sinx/cosx);
       }
     }
     else
     {
-      retVal = (PI + atan(sinx/cosx));
+      retVal = (PI + atanl(sinx/cosx));
     }
   }
   return retVal;
@@ -390,22 +390,12 @@ TLE::TLE()
 // Snags a two-line element
 void TLE::getInput(istream &is)
 {
-  // 
   getline(is, name);
-  // For removing control characters at the end of the line
-  if (iscntrl(*(name.end() - 1)))
-  {
-    name.erase(name.end() - 1);
-  }
-  // Get the first line of data
   getline(is, firstLine);
-  // Get the second line of data
   getline(is, secondLine);
-  // Process the checksum
+
   checksum();
-  // Filter through the data and extract the numbers
   processData();
-  // Set up constants used by all orbital models
   setupConstants();
 }
 
@@ -528,7 +518,7 @@ ECI TLE::sgp(const long double timeJD)
     C_1 = k_2 * 1.5;
     C_2 = k_2 / 4.0;
     C_3 = k_2 / 2.0;
-    C_4 = J_3 * (pow(a_E, 3)) / (k_2 * 4.0);
+    C_4 = J_3 * (powl(a_E, 3)) / (k_2 * 4.0);
 
     D_1 = C_3 * sini_o * sini_o;
     D_2 = C_2 * seventheta2Minus1;
@@ -538,7 +528,7 @@ ECI TLE::sgp(const long double timeJD)
     // here is where a_1 was moved from
 
     // \[\delta_1=\dfrac34J_2\dfrac{a_E{}^2}{a_1{}^2}\dfrac{(3\cos^2i_o-1)}
-    delta_1 = (C_1 / (a_1 * a_1)) * ((3.0 * theta2) - 1.0) / (pow(beta_o2, (long double)1.5));
+    delta_1 = (C_1 / (a_1 * a_1)) * ((3.0 * theta2) - 1.0) / (powl(beta_o2, (long double)1.5));
 #ifdef MATH_OUT
     cout << endl << "$ \\delta_{1} = " << delta_1 << " $"<< endl;
 #endif
@@ -589,14 +579,14 @@ ECI TLE::sgp(const long double timeJD)
   // \[a=a_o\left\{\dfrac{n_o}{n_o+2\left(\dfrac{\dn_o}2\right)
   // \dt+3\left(\dfrac{\ddn_o}6\right)\dt^2}\right\}^{\frac23}\]
   a = (((3.0 * ddotn_o) * tt_0 + (2.0 * dotn_o)) * tt_0 + n_o);
-  a = a_o * pow((n_o / a), twoThirds);
+  a = a_o * powl((n_o / a), twoThirds);
 #ifdef MATH_OUT
   cout << endl << "$ a = " << a << " $" << endl;
 #endif
 
   //temp = n_o + (2.0 * (dotn_o / 2.0) * tt_0) + (3.0 * (ddotn_o / 6.0) * (tt_0 * tt_0));
   //temp = n_o / temp;
-  //temp = pow(temp, twoThirds);
+  //temp = powl(temp, twoThirds);
   //a = a_o * temp;
   
   if (a > q_o)
@@ -626,10 +616,10 @@ ECI TLE::sgp(const long double timeJD)
   cout << endl << "$ \\omega_{s_{o}} = " << omega_s_o << " $" << endl;
 #endif
 
-  // fmod(L_s, (2.0 * PI)) replaces FMOD2P function in original source
-  L_s = L_o + ((n_o + domegadt + dOmegadt) * tt_0) + ((dotn_o) * (tt_0 * tt_0)) + ((ddotn_o) * pow(tt_0, 3));
+  // fmodl(L_s, (2.0 * PI)) replaces FMOD2P function in original source
+  L_s = L_o + ((n_o + domegadt + dOmegadt) * tt_0) + ((dotn_o) * (tt_0 * tt_0)) + ((ddotn_o) * powl(tt_0, 3));
 #ifdef NEW_FUNCTIONS
-  L_s = fmod(L_s, (2.0 * PI));
+  L_s = fmodl(L_s, (2.0 * PI));
 #else
   L_s = FMod2p(L_s);
 #endif
@@ -637,47 +627,47 @@ ECI TLE::sgp(const long double timeJD)
   cout << endl << "$ L_{s} = " << L_s << " $" << endl;
 #endif
 
-  a_xnsl = e * cos(omega_s_o);
+  a_xnsl = e * cosl(omega_s_o);
 #ifdef MATH_OUT
   cout << endl << "$ a_xNSL = " << a_xnsl << " $" << endl;
 #endif
 
-  a_ynsl = (e * sin(omega_s_o) - (C_6 / p));
+  a_ynsl = (e * sinl(omega_s_o) - (C_6 / p));
 #ifdef MATH_OUT
   cout << endl << "$ a_yNSL = " << a_ynsl << " $" << endl;
 #endif
 
-  // fmod(L, (2.0 * PI)) replaces FMOD2P function in original source
+  // fmodl(L, (2.0 * PI)) replaces FMOD2P function in original source
   L = L_s - (C_5 / p) * a_xnsl;
 #ifdef NEW_FUNCTIONS
-  L = fmod(L, (2.0 * PI));
+  L = fmodl(L, (2.0 * PI));
 #else
   L = FMod2p(L);
 #endif
   
   /* Solve Kepler's Equation */
-  // fmod(U, (2.0 * PI)) replaces FMOD2P function in original source
+  // fmodl(U, (2.0 * PI)) replaces FMOD2P function in original source
   U = L - Omega_s_o;
 #ifdef NEW_FUNCTIONS
-  U = fmod(U, (2.0 * PI));
+  U = fmodl(U, (2.0 * PI));
 #else
   U = FMod2p(U);
 #endif
 
   /* Iterative solution to deriving (E + \omega) */
   Eomega_1 = U;
-  // while (fabs(temp2) > 1.0e-6)
+  // while (fabsl(temp2) > 1.0e-6)
   for (i = 0; i < 10; i++)
   {
-    sinEomega_1 = sin(Eomega_1);
-    cosEomega_1 = cos(Eomega_1);
-    if (fabs(temp2) > 1.0e-6)
+    sinEomega_1 = sinl(Eomega_1);
+    cosEomega_1 = cosl(Eomega_1);
+    if (fabsl(temp2) > 1.0e-6)
     {
       break;
     }
     temp2 = 1.0 - (cosEomega_1 * a_xnsl) - (sinEomega_1 * a_ynsl);
     temp2 = (U - (a_ynsl * cosEomega_1) + (a_xnsl * sinEomega_1) - Eomega_1)/temp2;
-    temp = fabs(temp2);
+    temp = fabsl(temp2);
     if (temp > 1.0)
     {
       temp2 = temp / temp2;
@@ -701,17 +691,17 @@ ECI TLE::sgp(const long double timeJD)
   cout << endl << "$ r = " << r << " $" << endl;
 #endif
 
-  dotr = k_e * (sqrt(a) / r) * esinE;
+  dotr = k_e * (sqrtl(a) / r) * esinE;
 #ifdef MATH_OUT
   cout << endl << "$ \\dot{r} = " << dotr << " $" << endl;
 #endif
 
-  rdotv = k_e * (sqrt(p_L) / r);
+  rdotv = k_e * (sqrtl(p_L) / r);
 #ifdef MATH_OUT
   cout << endl << "$ r \\dot{v} = " << rdotv << " $" << endl;
 #endif
 
-  temp = esinE / (1.0 + sqrt(1.0 - e_L2));
+  temp = esinE / (1.0 + sqrtl(1.0 - e_L2));
 
   sinu = (a / r) * (sinEomega_1 - a_ynsl - (a_xnsl * temp));
 #ifdef MATH_OUT
@@ -723,9 +713,9 @@ ECI TLE::sgp(const long double timeJD)
   cout << endl << "$ \\cos(u) = " << cosu << " $" << endl;
 #endif
 
-  // atan2(sinu, cosu) replaces ACTAN function in original source
+  // atan2l(sinu, cosu) replaces ACTAN function in original source
 #ifdef NEW_FUNCTIONS
-  u = atan2(sinu, cosu);
+  u = atan2l(sinu, cosu);
 #else
   u = ArcTan(sinu, cosu);
 #endif
@@ -744,14 +734,14 @@ ECI TLE::sgp(const long double timeJD)
   i_k = i_o + (D_4 / p_L2 * cos2u);
 
   /* Orientation vectors */
-  sinu_k = sin(u_k);
-  cosu_k = cos(u_k);
+  sinu_k = sinl(u_k);
+  cosu_k = cosl(u_k);
 
-  sinOmega_k = sin(Omega_k);
-  cosOmega_k = cos(Omega_k);
+  sinOmega_k = sinl(Omega_k);
+  cosOmega_k = cosl(Omega_k);
 
-  sini_k = sin(i_k);
-  cosi_k = cos(i_k);
+  sini_k = sinl(i_k);
+  cosi_k = cosl(i_k);
 
   xmx = -sinOmega_k * cosi_k;
   xmy =  cosOmega_k * cosi_k;
@@ -947,7 +937,7 @@ ECI TLE::sgp4(const long double timeJD)
     s4 = s;
     q_o = 120.0;					// constant in SGP4 model
     //q_oms2t = 1.88027916e-9;				// constant version
-    q_oms2t = pow(((q_o - s_o) * (a_E / e_R)), 4);	// calculated version
+    q_oms2t = powl(((q_o - s_o) * (a_E / e_R)), 4);	// calculated version
 #ifdef MATH_OUT
     cout << endl << "$ (q_o = " << q_oms2t << " $" << endl;
 #endif
@@ -963,7 +953,7 @@ ECI TLE::sgp4(const long double timeJD)
       {
 	s4 = perigee - s_o;
       }
-      q_oms24 = pow((q_o - s4) * a_E / e_R, 4);
+      q_oms24 = powl((q_o - s4) * a_E / e_R, 4);
       s4 = s4 / e_R + a_E;
     }
 
@@ -989,17 +979,17 @@ ECI TLE::sgp4(const long double timeJD)
     cout << endl << "$ e_{o} \\times eta = " << eeta << " $" << endl;
 #endif
 
-    psi2 = fabs(1.0 - eta2);
+    psi2 = fabsl(1.0 - eta2);
 #ifdef MATH_OUT
     cout << endl << "$ \\psi^{2} = " << psi2 << " $" << endl;
 #endif
 
-    coef = q_oms24 * pow(xi, 4);
+    coef = q_oms24 * powl(xi, 4);
 #ifdef MATH_OUT
     cout << endl << "$ coef = " << coef << " $" << endl;
 #endif
     
-    coef1 = coef / pow(psi2, (long double)3.5);
+    coef1 = coef / powl(psi2, 3.5);
 #ifdef MATH_OUT
     cout << endl << "$ coef1 = " << coef1 << " $" << endl;
 #endif
@@ -1020,7 +1010,7 @@ ECI TLE::sgp4(const long double timeJD)
     C_4 = 2.0 * n_odp * coef1 * a_odp * beta_o2 * (eta * (2.0 + 0.5 * eta2) +
 	  e_o * (0.5 + 2.0 * eta2) - 2.0 * k_2 * xi / (a_odp * psi2) * (-3.0
 	  * x3thm1 * (1.0 - 2.0 * eeta + eta2 * (1.5 - 0.5 * eeta)) + 0.75 *
-	  oneMinustheta2 * (2.0 * eta2 - eeta * (1.0 + eta2)) * cos(2.0 * omega_o)));
+	  oneMinustheta2 * (2.0 * eta2 - eeta * (1.0 + eta2)) * cosl(2.0 * omega_o)));
 
     C_5 = 2.0 * coef1 * a_odp * beta_o2 * (1.0 + (2.75 * (eta2 + eeta)) + (eeta * eta2));
 
@@ -1042,13 +1032,13 @@ ECI TLE::sgp4(const long double timeJD)
     omgdot = -0.5 * temp1 * oneMinus5theta2 + 0.0625 * temp2 * (7.0 - 114.0 * theta2 + 395.0 * theta4) + temp3 * (3.0 - 36.0 * theta2 + 49.0 * theta4);
     xhdot1 = -temp1 * cosi_o;
     xnodot = xhdot1 + (0.5 * temp2 * (4.0 - 19.0 * theta2) + 2.0 * temp3 * (3.0 - 7.0 * theta2)) * cosi_o;
-    omgcof = bStar * C_3 * cos(omega_o);
+    omgcof = bStar * C_3 * cosl(omega_o);
     xmcof = -twoThirds * coef * bStar * a_E / eeta;
     xnodcf = 3.5 * beta_o2 * xhdot1 * C_1;
     t2cof = 1.5 * C_1;
     xlcof = 0.125 * a30overk2 * sini_o * (3.0 + 5.0 * cosi_o)/(1.0 + cosi_o);
     aycof = 0.25 * a30overk2 * sini_o;
-    delmo = pow((1.0 + eta * cos(M_o)),3);
+    delmo = powl((1.0 + eta * cosl(M_o)),3);
     // here is where sinM_o was moved from
     // here is where seventheta2Minus1 was moved from
     if (!simple)
@@ -1084,52 +1074,52 @@ ECI TLE::sgp4(const long double timeJD)
   if (!simple)
   {
     deltaomega = omgcof * tt_0;
-    deltaM = xmcof * (pow(1.0 + eta * cos(M_DF),3) - delmo);
+    deltaM = xmcof * (powl(1.0 + eta * cosl(M_DF),3) - delmo);
     temp1 = deltaomega + deltaM;
     M_p = M_DF + temp1;
     omega = omega_DF - temp1;
     tt_03 = tt_02 * tt_0;
     tt_04 = tt_03 * tt_0;
     tempa = tempa - (D_2 * tt_02) - (D_3 * tt_03) - (D_4 * tt_04);
-    tempe = tempe + (bStar * C_5 * (sin(M_p) - sinM_o));
+    tempe = tempe + (bStar * C_5 * (sinl(M_p) - sinM_o));
     templ = templ + (t3cof * tt_03) + tt_04 * (t4cof + (t5cof * tt_0));
   }
 
-  a = a_odp * pow(tempa,2);
+  a = a_odp * powl(tempa,2);
   e = e_o - tempe;
   L = M_p + omega + Omega + (n_odp * templ);
-  beta = sqrt(1.0 - (e * e));
-  n = k_e / pow(a, (long double)1.5);
+  beta = sqrtl(1.0 - (e * e));
+  n = k_e / powl(a, 1.5);
 
   /* Long period periodics */
-  a_xN = e * cos(omega);
+  a_xN = e * cosl(omega);
   temp1 = 1.0 / (a * beta * beta);
   L_L = temp1 * xlcof * a_xN;
   a_yNL = temp1 * aycof;
   L_T = L + L_L;
-  a_yN = e * sin(omega) + a_yNL;
+  a_yN = e * sinl(omega) + a_yNL;
 
   /* Solve Kepler's' Equation */
-  // fmod(L_T - Omega, (2.0 * PI)) replaces FMOD2P function in original source
+  // fmodl(L_T - Omega, (2.0 * PI)) replaces FMOD2P function in original source
 #ifdef NEW_FUNCTIONS
-  U = fmod(L_T - Omega, (2.0 * PI));
+  U = fmodl(L_T - Omega, (2.0 * PI));
 #else
   U = FMod2p(L_T - Omega);
 #endif
   temp2 = U;
   
   //for (i = 0; i < 20; i++)
-  while ((fabs(epw - temp2)) > (1.0e-6))
+  while ((fabsl(epw - temp2)) > (1.0e-6))
   {
-    sinepw = sin(temp2);
-    cosepw = cos(temp2);
+    sinepw = sinl(temp2);
+    cosepw = cosl(temp2);
     temp3 = a_xN * sinepw;
     temp4 = a_yN * cosepw;
     temp5 = a_xN * cosepw;
     temp6 = a_yN * sinepw;
     epw = (U - temp4 + temp3 - temp2) / (1.0 - temp5 - temp6) + temp2;
     /*
-    if (fabs(epw - temp2) <= 1.0e-10)
+    if (fabsl(epw - temp2) <= 1.0e-10)
     {
       break;
     }
@@ -1145,15 +1135,15 @@ ECI TLE::sgp4(const long double timeJD)
   p_L = a * temp1;
   r = a * (1.0 - ecosE);
   temp2 = 1.0 / r;
-  dotr = k_e * sqrt(a) * esinE * temp2;
-  rdotf = k_e * sqrt(p_L) * temp2;
+  dotr = k_e * sqrtl(a) * esinE * temp2;
+  rdotf = k_e * sqrtl(p_L) * temp2;
   temp3 = a * temp2;
-  betal = sqrt(temp1);
+  betal = sqrtl(temp1);
   temp4 = 1.0 / (1.0 + betal);
   cosu = temp3 * (cosepw - a_xN + a_yN * esinE * temp4);
   sinu = temp3 * (sinepw - a_yN - a_xN * esinE * temp4);
 #ifdef NEW_FUNCTIONS
-  u = atan2(sinu, cosu);
+  u = atan2l(sinu, cosu);
 #else
   u = ArcTan(sinu, cosu);
 #endif
@@ -1176,14 +1166,14 @@ ECI TLE::sgp4(const long double timeJD)
   rdotf_k = rdotf + n * temp2 * (oneMinustheta2 * cos2u + 1.5 * x3thm1);
   
   /* Orientation vectors */
-  sinu_k = sin(u_k);
-  cosu_k = cos(u_k);
+  sinu_k = sinl(u_k);
+  cosu_k = cosl(u_k);
 
-  sinOmega_k = sin(Omega_k);
-  cosOmega_k = cos(Omega_k);
+  sinOmega_k = sinl(Omega_k);
+  cosOmega_k = cosl(Omega_k);
   
-  sini_k = sin(i_k);
-  cosi_k = cos(i_k);
+  sini_k = sinl(i_k);
+  cosi_k = cosl(i_k);
 
   xmx = (-1.0 * sinOmega_k) * cosi_k;
   xmy =  cosOmega_k * cosi_k;

@@ -21,40 +21,20 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
+#include <iostream>
 #include <string>
+#include <GL/glut.h>
 #include "tle.h"
 
 using namespace std;
 
-void GLgraphics               (int argc, char *argv[]);
-void GraphicsInit             (void);
-void GraphicsDisplay          (void);
-void GraphicsReshapeMain      (int w, int h);
-void GraphicsReshapeText      (int w, int h);
-void GraphicsText             (void);
-
-// Callback routines
-void GraphicsCallbackKeyboard (unsigned char key, int mouse_x, int mouse_y);
-void GraphicsCallbackSpecial  (int key, int mouse_x, int mouse_y);
-void GraphicsCallbackMouse    (int button, int state, int x, int y);
-void GraphicsCallbackMotion   (int x, int y);
-void GraphicsIncrementMenu    (int value);
-  
-// helper functions of my own
+void init(vector<TLE> &satellites);
+void reshape(int w, int h);
+void reshapeText(int w, int h);
+void display();
+void key(unsigned char x, int mouse_x, int mouse_y);
+void mouse(int button, int state, int x, int y);
+void text();
 void printString(string s);
-void BlueMarble(void);
-void DrawSat(TLE currentSat, long double &timeJD);
-
-
-// helper functions hacked in from gltZPR
-// http://www.nigels.com/glt/gltzpr/
-double vlen(double x,double y,double z);
-void viewPos(double *px, double *py, double *pz, const int x, const int y, const int *viewport);
-void   getMatrix();
-void   invertMatrix(const GLdouble *m, GLdouble *out );
-
-//
-// http://astronomy.swin.edu.au/~pbourke/opengl/sphere/
-void CreateSphere(double r,int n);
 
 #endif

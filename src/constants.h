@@ -55,7 +55,7 @@ const static long double	J_3 = -0.253881e-5;
 const static long double	J_4 = -0.165597e-5;
 
 const static long double	k_2 = (1.0 / 2.0) * J_2 * (a_E * a_E);
-const static long double	k_4 = (-3.0 / 8.0) * J_4 * (pow(a_E, 4));
+const static long double	k_4 = (-3.0 / 8.0) * J_4 * (powl(a_E, 4));
 
 // Value for 1984
 const static long double	omega_E = 1.00273791;	// Earth rotations per sidereal day

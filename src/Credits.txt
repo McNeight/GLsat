@@ -28,11 +28,6 @@ Prior Art (and Thanks)
   time on the whole series of classes, but what I got seems to be
   enough to get myself in trouble, at least.
 
-* Professor Jon Harris
-  For teaching me more about computer graphics than I ever hoped to
-  know. If this program has any cool tricks or features that really
-  stand out, it's because of his guidance.
-
 * NASA J-Track 3D
   http://liftoff.msfc.nasa.gov/RealTime/JTrack/3D/JTrack3D.html
   Nice. That is the interface that I am aiming for. Perhaps more
