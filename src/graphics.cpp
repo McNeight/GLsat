@@ -36,35 +36,36 @@
 
 using namespace std;
 
-float camerax = e_R * 2;
-float cameray = e_R * 2;
-float cameraz = e_R * 2;
+float           camera[3] = {e_R * 2, e_R * 2, e_R * 2};
 
 static GLdouble _left   = 0.0;
 static GLdouble _right  = 0.0;
 static GLdouble _bottom = 0.0;
 static GLdouble _top    = 0.0;
-static GLdouble _zNear  = 1.0;
-static GLdouble _zFar   = 300000.0;
+static GLdouble _zNear  =  0.0;
+static GLdouble _zFar   =  300000.0;
 
-static int  _mouseX      = 0;
-static int  _mouseY      = 0;
-static bool _mouseLeft   = false;
-static bool _mouseMiddle = false;
-static bool _mouseRight  = false;
+static int                      _mouseX      = 0;
+static int                      _mouseY      = 0;
+static bool                     _mouseLeft   = false;
+static bool                     _mouseMiddle = false;
+static bool                     _mouseRight  = false;
 
-static double _dragPosX  = 0.0;
-static double _dragPosY  = 0.0;
-static double _dragPosZ  = 0.0;
+static double                   _dragPosX  = 0.0;
+static double                   _dragPosY  = 0.0;
+static double                   _dragPosZ  = 0.0;
 
-static double _matrix[16];
-static double _matrixI[16];
+static double                   _matrix[16];
+static double                   _matrixI[16];
 
-static int mainWindow;
-static int textWindow;
+static int                      mainWindow;
+static int                      textWindow;
+static int			menuWindow;
 
-static bool positionWindow = true;
-static bool eciOutput = true;
+static long double		interval = 0.03333333333 / 24.0;
+
+static bool                     positionWindow = true;
+static bool                     eciOutput = true;
 
 extern vector<TLE>		sats;
 
@@ -76,6 +77,8 @@ static vector<TLE>::iterator	outputIter;
 static ECI			outECI;
 static LLA			outLLA;
 
+static ECI                      sunPos;
+
 /*
  *
  */
@@ -85,7 +88,7 @@ void GLgraphics(int argc, char *argv[])
   
   // Start GLUT routines
   glutInit(&argc, argv);
-  glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+  glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
   glutInitWindowSize(500, 500);
   // Create the main window
   mainWindow = glutCreateWindow("GLsat version 0.2");
@@ -96,31 +99,45 @@ void GLgraphics(int argc, char *argv[])
   getMatrix();
   glScaled(1 / (e_R * 2), 1 / (e_R * 2), 1 / (e_R * 2));
   
-    glutReshapeFunc(reshapeMain);
+    glutReshapeFunc(GraphicsReshapeMain);
     // Define keyboard function
-    glutKeyboardFunc(keyboard);
+    glutKeyboardFunc(GraphicsCallbackKeyboard);
     // Define function for special keys
-    glutSpecialFunc(special);
+    glutSpecialFunc(GraphicsCallbackSpecial);
     // Define mouse function
-    glutMouseFunc(mouse);
-    glutMotionFunc(motion);
+    glutMouseFunc(GraphicsCallbackMouse);
+    glutMotionFunc(GraphicsCallbackMotion);
     glutIdleFunc(GraphicsDisplay);
   
   // For the coordinates sub-window:
   // Create the coordinates sub-window
-  textWindow = glutCreateSubWindow(mainWindow, 0, 0, 500, 100);
+  textWindow = glutCreateSubWindow(mainWindow, 0, 0, 500, 53);
     glutDisplayFunc(GraphicsText);
-    glutReshapeFunc(reshapeText);
+    glutReshapeFunc(GraphicsReshapeText);
     // Define keyboard function
-    glutKeyboardFunc(keyboard);
+    glutKeyboardFunc(GraphicsCallbackKeyboard);
     // Define function for special keys
-    glutSpecialFunc(special);
+    glutSpecialFunc(GraphicsCallbackSpecial);
     // Define mouse function
-    glutMouseFunc(mouse);
+    glutMouseFunc(GraphicsCallbackMouse);
     // We don't want the text window to move, so no motion function
-    //glutMotionFunc(motion);
+    //glutMotionFunc(GraphicsCallbackMotion);
     glutIdleFunc(GraphicsText);
 
+  // Return to the main window
+  glutSetWindow(mainWindow);
+  // Create a pull down menu
+  menuWindow = glutCreateMenu(GraphicsIncrementMenu);
+    glutAddMenuEntry("Set Satellite Prediction Interval", 0);
+    glutAddMenuEntry("2 minutes", 1);
+    glutAddMenuEntry("5 minutes", 2);
+    glutAddMenuEntry("10 minutes", 3);
+    glutAddMenuEntry("15 minutes", 4);
+    glutAddMenuEntry("30 minutes", 5);
+    glutAddMenuEntry("1 hour", 6);
+    // Now attach it
+    glutAttachMenu( GLUT_RIGHT_BUTTON );
+    
   // Now loop it
   glutMainLoop();
 }
@@ -148,32 +165,42 @@ GraphicsInit(void)
   glClearColor(0.0, 0.0, 0.0, 0.0);
   // Clear buffers to preset values
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  // Set smooth (Gouraud) shading
-  glShadeModel(GL_SMOOTH);
-  // Set depth buffer comparison
-  glDepthFunc(GL_LESS);
   // Enable color blending and depth testing
   glEnable(GL_BLEND | GL_DEPTH_TEST);
   // Enable backface culling
   glEnable(GL_CULL_FACE);
   // Enable normalize
-  glEnable(GL_COLOR_MATERIAL | GL_NORMALIZE);
+  glEnable(GL_NORMALIZE);
+  // Enable material properties
+  glEnable(GL_COLOR_MATERIAL);
+  // Generate surface normals automatically
+  glEnable(GL_AUTO_NORMAL);
   // Blend by alpha values
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  // Cull the backside of objects
+  glCullFace(GL_BACK);
+  //
+  glDepthMask(GL_TRUE);
+  // Set depth buffer comparison
+  glDepthFunc(GL_LEQUAL);
+  // Set smooth (Gouraud) shading model
+  glShadeModel(GL_SMOOTH);
+  // 
+  glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
   // Turn on the lights
-  //glEnable(GL_LIGHTING);
+  glEnable(GL_LIGHTING);
   // Set up sunlight
-  /*
-  GLfloat light_ambient[] = {1.0, 1.0, 1.0, 1.0};
+  
+  GLfloat light_ambient[] = {0.2, 0.2, 0.2, 1.0};
   GLfloat light_diffuse[] = {1.0, 1.0, 1.0, 1.0};
   GLfloat light_specular[] = {1.0, 1.0, 1.0, 1.0};
-  GLfloat light_position[] = {e_R * 2, e_R * 2, e_R * 2, 0.0};
+  GLfloat light_position[] = {e_R * 100, e_R * 100, e_R * 100, 1.0};
   glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
   glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
   glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
   glLightfv(GL_LIGHT0, GL_POSITION, light_position);
   glEnable(GL_LIGHT0);
-  */
+  
 }
 
 
@@ -196,13 +223,12 @@ void GraphicsDisplay(void)
   glutSetWindow(mainWindow);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  //glLoadIdentity();
-
   // Switch from right-hand to left-hand coordinate space
   // glScalef(1.0, 1.0, -1.0);
 
   // Place the camera
-  //gluLookAt(camerax, cameray, cameraz, 0, 0, 0, 0, 1, 0);
+  glLoadIdentity();
+  gluLookAt(camera[0], camera[1], camera[2], 0, 0, 0, 0, 1, 0);
   
   //glTranslated(e_R * 2, e_R * 2, e_R * 2);
 
@@ -223,6 +249,14 @@ void GraphicsDisplay(void)
 
   currentTime = time(NULL);
   timeJD = julianDate(gmtime(&currentTime));
+
+  // Move the light around?
+  glPushMatrix();
+    //sunPos = sunPosition(timeJD);
+    //GLfloat light_position[] = {sunPos.X, sunPos.Y, sunPos.Z, 0.0};
+    GLfloat light_position[] = {e_R * 100, e_R * 100, e_R * 100, 1.0};
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+  glPopMatrix();
   
   for (posIter = sats.begin(); posIter != sats.end(); posIter++)
   {
@@ -239,68 +273,19 @@ void GraphicsDisplay(void)
     cout << posLLA << endl;
 #endif
 
-  // x represents semi-major axis
-  // y represents semi-minor axis
-  // z represents orbital inclination
-  // 
-  // x = 
-  // y = A_0 * sqrt(1 - e_0 * e_0)
-  //   =  beta_0
-  // z = inclination * sin(i)
-  /*
-  glBegin(GL_LINE_LOOP);
-    glColor3f(1,0,0);
-    // go from 0 to 2 \Pi in \frac{\Pi}{4} steps
-    for (i = 0; i < (2 * PI); i += M_PI_4)
-    {
-      glVertex3f( (cos(i + RA) * (A * e_R)),
-                  (sin(i + PER) * (B * e_R)),
-                  (I_o * sin(i)) * e_R
-                );
-    }
-  glEnd();
-  */
-  
-    // Put a big red square pixel where the satellite should be
-    /*
-    glPointSize(100);
-    glBegin(GL_POINTS);
-      glColor3f(1,0,0);
-      glVertex3d(posECI.X, posECI.Y, posECI.Z);
-    glEnd();
-    */
+    DrawSat(*posIter, timeJD);
     
-    // Put a teapot where the satellite should be
-    glPushMatrix();
-      glColor3d(0.0, 1.0, 0.0);
-      glTranslated(posECI.X, posECI.Y, posECI.Z);
-      glutWireTeapot(100);
-    glPopMatrix();
-
-    // Slap a label next to the teapot
-    glRasterPos3d(posECI.X,posECI.Y,posECI.Z);
-    printString(posECI.name);
-
-    // draw a line from the satellite to the center of the earth
-    glBegin(GL_LINES);
-      glColor3d(1.0, 1.0, 1.0);
-      glVertex3d(posECI.X,posECI.Y,posECI.Z);
-      glVertex3d(0.0, 0.0, 0.0);
-    glEnd();
-
   }
-
+  
   // Leave these in only if you want shit to move in real time!
   glutSwapBuffers();
   glFlush();
   glutPostRedisplay();
-
-  // sleep(1);
 }
 
 
 /*
- * reshapeMain()
+ * GraphicsReshapeMain()
  *
  * The GLUT calls this function after the window has created, and
  * every time the window is reshaped.
@@ -311,7 +296,7 @@ void GraphicsDisplay(void)
  * Viewing transformations will be covered in detail in workshop 2.
  */
 void
-reshapeMain(int w, int h)
+GraphicsReshapeMain(int w, int h)
 {
   glViewport(0, 0, (GLsizei)w, (GLsizei)h);
 
@@ -321,16 +306,28 @@ reshapeMain(int w, int h)
   _right  = -_left;
   
   glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  //gluPerspective(60, (GLfloat)w/h, 10, 300000);
-  glOrtho(_left, _right, _bottom, _top, _zNear, _zFar);
+  //glPushMatrix();
+    glLoadIdentity();
+    //glOrtho(_left, _right, _bottom, _top, _zNear, _zFar);
+    //glFrustum(_left, _right, _bottom, _top, _zNear, _zFar);
+    gluPerspective(60, (GLfloat)w / (GLfloat)h, 10, 300000);
+  //glPopMatrix();
+
   glMatrixMode(GL_MODELVIEW);
+
+  //glPushMatrix();
+    glLoadIdentity();
+    gluLookAt(camera[0], camera[1], camera[2], 0, 0, 0, 0, 1, 0);
+    //glRotatef(_dragPosY, 0.f, 1.f, 0.f);
+  //glPopMatrix();
 }
 
 
-//
+/*
+ *
+ */
 void
-reshapeText(int w, int h)
+GraphicsReshapeText(int w, int h)
 {
   glViewport(0, 0, (GLsizei)w, (GLsizei)h);
   glMatrixMode(GL_PROJECTION);
@@ -354,6 +351,10 @@ printString(string s)
   }
 }
 
+
+/*
+ *
+ */
 void GraphicsText(void)
 {
   glutSetWindow(textWindow);
@@ -394,11 +395,9 @@ void GraphicsText(void)
     printString(outLLA.stringAlt());
   }
   
-  // Testing stuff...
-  
+  // Leave these in only if you want shit to move in real time!
   glutSwapBuffers();
   glFlush();
-  
   glutPostRedisplay();
 }
 
@@ -409,11 +408,29 @@ void GraphicsText(void)
 void
 BlueMarble(void)
 {
+  // Set up the material properties
+  GLfloat mat_ambient[] = {0.2, 0.2, 0.2, 1.0};
+  GLfloat mat_diffuse[] = {0.0, 0.0, 1.0, 1.0};
+  GLfloat mat_specular[] = {0.0, 0.0, 0.0, 1.0};
+  GLfloat mat_emissive[] = {0.0, 0.0, 0.0, 1.0};
+  GLfloat mat_shininess[] = {0.0};
+
+  // Prime the colors
+  glColor3d(0.0, 0.0, 1.0);
+  glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+  glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+  glMaterialfv(GL_FRONT, GL_EMISSION, mat_emissive);
+  glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+  
   // Insert big blue marble
-  glColor3f(0,0,1);
   glutSolidSphere(e_R, 24, 18);
   //glutWireSphere(e_R, 24, 18);
 
+  // Wireframe sphere with texture mapping coordinates
+  // CreateSphere(e_R, 100);
+  
+  
   /*
    * from xplanet
 void
@@ -432,9 +449,6 @@ GraphicsInit(const ProjectionRectangular *image_rect)
 
     glEnable(GL_TEXTURE_2D);
 
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
-
     Quadric = gluNewQuadric();
     gluQuadricTexture(Quadric, GL_TRUE);
 
@@ -446,14 +460,85 @@ GraphicsInit(const ProjectionRectangular *image_rect)
   
 }
 
+
 /*
- * keyboard()
+ *
+ */
+void DrawSat(TLE currentSat, long double &timeJD)
+{
+  // Put a big red square pixel where the satellite should be
+  /*
+  glPointSize(100);
+  glBegin(GL_POINTS);
+    glColor3f(1,0,0);
+    glVertex3d(posECI.X, posECI.Y, posECI.Z);
+  glEnd();
+  */
+
+  // Someday, these colors will be satellite dependent
+  GLfloat mat_diffuse[] = {0.0, 1.0, 0.0, 1.0};
+  GLfloat mat_specular[] = {0.0, 0.5, 0.0, 1.0};
+  
+  // Put a teapot where the satellite should be
+  glPushMatrix();
+    glColor3d(0.0, 1.0, 0.0);
+    glMaterialfv(GL_FRONT , GL_DIFFUSE, mat_diffuse);
+    //glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+    glTranslated(posECI.X, posECI.Y, posECI.Z);
+    glutSolidTeapot(100);
+  glPopMatrix();
+
+  // Slap a label next to the teapot
+  glRasterPos3d(posECI.X,posECI.Y,posECI.Z);
+  printString(posECI.name);
+
+  // draw a line from the satellite to the center of the earth
+  glBegin(GL_LINES);
+    glColor3d(1.0, 1.0, 1.0);
+    glVertex3d(posECI.X,posECI.Y,posECI.Z);
+    glVertex3d(0.0, 0.0, 0.0);
+  glEnd();
+
+  // Start the NURBS curve for the satellite path
+  GLUnurbsObj *theNurb;
+  GLfloat      ctlpoints[4][3];
+  GLfloat      knots[4] = {0.0, 0.0, 1.0, 1.0};
+  ECI          tempECI;
+
+  ctlpoints[0][0] = posECI.X;
+  ctlpoints[0][1] = posECI.Y;
+  ctlpoints[0][2] = posECI.Z;
+  
+  for (int i = 1; i <= 3; i++)
+  {
+    tempECI = currentSat.position4(timeJD + (i * interval));
+    ctlpoints[i][0] = tempECI.X;
+    ctlpoints[i][1] = tempECI.Y;
+    ctlpoints[i][2] = tempECI.Z;
+    glPushMatrix();
+      glTranslated(tempECI.X, tempECI.Y, tempECI.Z);
+      //glutSolidCone(50, 100, 10, 10);
+      glutSolidSphere(50, 18, 24);
+    glPopMatrix();
+  }
+    
+  theNurb = gluNewNurbsRenderer();
+  //gluNurbsProperty(theNurb, );
+  gluBeginCurve(theNurb);
+    gluNurbsCurve(theNurb, 8, knots, 1, &ctlpoints[0][0], 4, GL_MAP1_VERTEX_3);
+  gluEndCurve(theNurb);
+  //gluDeleteNurbsRenderer(theNurb);
+}
+
+
+/*
+ * GraphicsCallbackKeyboard()
  *       Gets called when a button on the keyboard is pressed.
  *       x is a char containing the ascii value of the pressed button.
  *       mouse_x and mouse_y are the coordinates of the mouse in the
  *       window at time of keystroke.
  */
-void keyboard(unsigned char key, int mouse_x, int mouse_y)
+void GraphicsCallbackKeyboard(unsigned char key, int mouse_x, int mouse_y)
 {
   switch (key)
   {
@@ -470,9 +555,9 @@ void keyboard(unsigned char key, int mouse_x, int mouse_y)
       break;
     case 'o':
     case 'O':
-      camerax = posECI.X;
-      cameray = posECI.Y;
-      cameraz = posECI.Z;
+      camera[0] = outECI.X;
+      camera[1] = outECI.Y;
+      camera[2] = outECI.Z;
       break;
     case 'p':
     case 'P':
@@ -495,40 +580,44 @@ void keyboard(unsigned char key, int mouse_x, int mouse_y)
       break;
     case 's':
     case 'S':
-      camerax *= 1.3;
-      cameray *= 1.3;
-      cameraz *= 1.3;
+      camera[0] *= 1.3;
+      camera[1] *= 1.3;
+      camera[2] *= 1.3;
       break;
     case 'w':
     case 'W':
-      camerax /= 1.3;
-      cameray /= 1.3;
-      cameraz /= 1.3;
+      camera[0] /= 1.3;
+      camera[1] /= 1.3;
+      camera[2] /= 1.3;
       break;
     case 'x':
     case 'X':
-      camerax = 10000;
-      cameray = 0;
-      cameraz = 0;
+      camera[0] = e_R * 2;
+      camera[1] = 0;
+      camera[2] = 0;
       break;
     case 'y':
     case 'Y':
-      camerax = 1;
-      cameray = 10000;
-      cameraz = 1;
+      camera[0] = 1;
+      camera[1] = e_R * 2;
+      camera[2] = 1;
       break;
     case 'z':
     case 'Z':
-      camerax = 0;
-      cameray = 0;
-      cameraz = 10000;
+      camera[0] = 0;
+      camera[1] = 0;
+      camera[2] = e_R * 2;
       break;
   }
 
   glutPostRedisplay();
 }
 
-void special(int key, int mouse_x, int mouse_y)
+
+/*
+ *
+ */
+void GraphicsCallbackSpecial(int key, int mouse_x, int mouse_y)
 {
   switch(key)
   {
@@ -575,12 +664,16 @@ void special(int key, int mouse_x, int mouse_y)
   }
 }
 
+
 /*
  *
  */
-void mouse(int button, int state, int x, int y)
+void GraphicsCallbackMouse(int button, int state, int x, int y)
 {
-  int viewport[4];
+  GLint      viewport[4];
+  GLdouble   mvmatrix[16], projmatrix[16];
+  GLint      realy;
+  GLdouble   wx, wy, wz;
 
   _mouseX = x;
   _mouseY = y;
@@ -617,14 +710,48 @@ void mouse(int button, int state, int x, int y)
   }
 
   //glutPostRedisplay();
+  if (_mouseLeft)
+  {
+    /*
   glGetIntegerv(GL_VIEWPORT, viewport);
-  viewPos(&_dragPosX, &_dragPosY, &_dragPosZ, x, y, viewport);
+  glGetDoublev(GL_MODELVIEW_MATRIX, mvmatrix);
+  glGetDoublev(GL_PROJECTION_MATRIX, projmatrix);
+  realy = viewport[3] - (GLint)y - 1;
+  gluUnProject((GLdouble) x, (GLdouble) realy, 1.0, mvmatrix, projmatrix, viewport, &wx, &wy, &wz);
+  printf ("World coords at z=1.0 are (%f, %f, %f)\n", wx, wy, wz);
+
+  camera[0] = wx;
+  camera[1] = wy;
+  camera[2] = wz;
+  */
+
+ if (camera[0] < (e_R * 2))
+      {
+	camera[0] += 1000;
+      }
+      else if (camera[0] > (e_R * 2))
+      {
+	camera[0] -= 1000;
+      }
+      else if (camera[0] < -(e_R * 2))
+      {
+	camera[0] += 1000;
+      }
+      else
+      {
+	camera[0] -= 1000;
+      }
+      gluLookAt(camera[0], camera[1], camera[2], 0, 0, 0, 0, 1, 0);
+  glutPostRedisplay();
+  }
+  //viewPos(&_dragPosX, &_dragPosY, &_dragPosZ, x, y, viewport);
 }
+
 
 /*
  *
  */
-void motion(int x, int y)
+void GraphicsCallbackMotion(int x, int y)
 {
   bool changed = false;
   
@@ -638,6 +765,7 @@ void motion(int x, int y)
   {
     if (_mouseLeft)
     {
+      /*
       double ax, ay, az;
       double bx, by, bz;
       double angle;
@@ -646,20 +774,36 @@ void motion(int x, int y)
       ay = dx;
       az = 0.0;
       angle = vlen(ax,ay,az)/(double)(viewport[2]+1)*180.0;
+      */
 
       /* Use inverse matrix to determine local axis of rotation */
+      /*
       bx = _matrixI[0]*ax + _matrixI[4]*ay + _matrixI[8]*az;
       by = _matrixI[1]*ax + _matrixI[5]*ay + _matrixI[9]*az;
       bz = _matrixI[2]*ax + _matrixI[6]*ay + _matrixI[10]*az;
       
       glRotatef(angle,bx,by,bz);
+      */
 
+      /*
+glGetIntegerv(GL_VIEWPORT, viewport);
+  glGetDoublev(GL_MODELVIEW_MATRIX, mvmatrix);
+  glGetDoublev(GL_PROJECTION_MATRIX, projmatrix);
+  realy = viewport[3] - (GLint)y - 1;
+  gluUnProject((GLdouble) x, (GLdouble) realy, 1.0, mvmatrix, projmatrix, viewport, &wx, &wy, &wz);
+  printf ("World coords at z=1.0 are (%f, %f, %f)\n", wx, wy, wz);
+
+  camera[0] = wx;
+  camera[1] = wy;
+  camera[2] = wz;
+  */
+     
       changed = true;
     }
     else if (_mouseMiddle || (_mouseLeft && _mouseRight))
     {
-      double s = exp((double)dy*0.1);
-      glScalef(s,s,s);
+      double s = exp((double)dy*0.01);
+      glScaled(s, s, s);
       changed = true;
     }
   }
@@ -669,10 +813,47 @@ void motion(int x, int y)
   
   if (changed)
   {
-    getMatrix();
+    //getMatrix();
+    //gluUnProject???
     glutPostRedisplay();
   }
 }
+
+
+/*
+ *
+ */
+void
+GraphicsIncrementMenu(int value)
+{
+  switch(value)
+  {
+    case 0:
+      break;
+    case 1:
+      interval = 0.03333333333 / 24.0;
+      break;
+    case 2:
+      interval = 0.08333333333 / 24.0;
+      break;
+    case 3:
+      interval = 0.16666666667 / 24.0;
+      break;
+    case 4:
+      interval = 0.25 / 24.0;
+      break;
+    case 5:
+      interval = 0.5 / 24.0;
+      break;
+    case 6:
+      interval = 1.0 / 24.0;
+      break;
+  }
+
+  glutSetWindow( mainWindow );
+  glutPostRedisplay();
+}
+
 
 /*
  *
@@ -694,13 +875,14 @@ void viewPos(double *px,double *py,double *pz,const int x,const int y,const int 
    * co-ordinates
    */
 
-  *px = (double)(x-viewport[0])/(double)(viewport[2]);
-  *py = (double)(y-viewport[1])/(double)(viewport[3]);
+  *px = (GLdouble)(x - viewport[0])/(GLdouble)(viewport[2]);
+  *py = (GLdouble)(y - viewport[1])/(GLdouble)(viewport[3]);
 
   *px = _left + (*px)*(_right-_left);
   *py = _top  + (*py)*(_bottom-_top);
   *pz = _zNear;
 }
+
 
 /*
  *
@@ -710,6 +892,7 @@ void getMatrix()
   glGetDoublev(GL_MODELVIEW_MATRIX,_matrix);
   invertMatrix(_matrix,_matrixI);
 }
+
 
 /*
  *
@@ -818,5 +1001,62 @@ invertMatrix(const GLdouble *m, GLdouble *out )
 #undef m43
 #undef m44
 #undef MAT
+}
+
+
+//
+void CreateSphere(double r,int n)
+{
+  long double theta1,theta2,theta3;
+  ECI e,p;
+
+  if (r < 0)
+    r = -r;
+  if (n < 0)
+    n = -n;
+
+  if ((n < 4) || (r <= 0))
+  {
+    glBegin(GL_POINTS);
+    glVertex3f(0,0,0);
+  }
+  else
+  {
+    for (int j = 0; j < (n / 2); j++)
+    {
+      theta1 = j * 2 * PI / n - PI_2;
+      theta2 = (j + 1) * 2 * PI / n - PI_2;
+
+      //glBegin(GL_QUAD_STRIP);
+      glBegin(GL_TRIANGLE_STRIP); 
+      for (int i = 0; i <= n; i++)
+      {
+        theta3 = i * 2 * PI / n;
+
+        e.X = cos(theta2) * cos(theta3);
+        e.Y = sin(theta2);
+        e.Z = cos(theta2) * sin(theta3);
+        p.X = 0 + r * e.X;
+        p.Y = 0 + r * e.Y;
+        p.Z = 0 + r * e.Z;
+
+        glNormal3d(e.X,e.Y,e.Z);
+        glTexCoord2d(i/(long double)n, 2*(j+1)/(long double)n);
+        glVertex3f(p.X,p.Y,p.Z);
+
+        e.X = cos(theta1) * cos(theta3);
+        e.Y = sin(theta1);
+        e.Z = cos(theta1) * sin(theta3);
+        p.X = 0 + r * e.X;
+        p.Y = 0 + r * e.Y;
+        p.Z = 0 + r * e.Z;
+
+        glNormal3f(e.X,e.Y,e.Z);
+        glTexCoord2f(i/(long double)n, 2*j/(long double)n);
+        glVertex3f(p.X,p.Y,p.Z);
+      }
+    }
+  }
+  glEnd();
 }
 
