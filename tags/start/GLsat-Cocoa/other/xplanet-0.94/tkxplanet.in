@@ -1,0 +1,480 @@
+#!@WISH@
+
+set opts(day.1) @prefix@/@auxdir@/earth.@mapext@
+
+proc set_rect {} {
+    for {set i 0} {$i < 3} {incr i} {
+	.position.top.$i deselect
+    }
+    for {set i 0} {$i < 2} {incr i} {
+	.position.bottom.$i deselect
+    }
+    .imagefiles.background.check deselect
+    .topright.left.latitude set 0
+    .topright.left.longitude set 0
+    .topright.right.rotate set 0
+    .chkbttns.blend.button deselect
+    .otheroptsleft.center.check deselect
+    .otheroptsleft.demfile.check deselect
+    .otheroptsleft.demscale.check deselect
+    .otheroptsright.observer.check deselect
+    .otheroptsright.radius.check deselect
+    .otheroptsright.range.check deselect
+    .topright.right.starfreq set -3
+}
+
+proc set_ortho {} {
+    global opts
+     if {$opts(projection) == "rectangular"} {
+	 .projection.bottom.0 select
+     }
+}
+
+proc set_ortho2 {value} {
+    global opts
+    if {$opts(projection) == "rectangular" && $value != 0} {.projection.bottom.0 select}
+    for {set i 0} {$i < 3} {incr i} {
+	.position.top.$i deselect
+    }
+    for {set i 0} {$i < 2} {incr i} {
+	.position.bottom.$i deselect
+    }
+}
+
+proc set_starfreq {value} {
+    global opts
+    if {$value != -3} {.projection.bottom.0 select}
+    set opts(starfreq) [expr pow(10, $value)]
+}
+
+proc check_entry {parent argname text} {
+    set framename $parent.$argname
+    frame $framename
+    checkbutton $framename.check -text $text -variable opts($argname.0)
+    entry $framename.field -relief sunken -width 30 -textvar opts($argname.1)
+    pack $framename.check -side left
+    pack $framename.field -side right
+}
+
+proc check_entry_ortho {parent argname text} {
+    set framename $parent.$argname
+    frame $framename
+    checkbutton $framename.check -text $text -variable opts($argname.0) -command set_ortho
+    entry $framename.field -relief sunken -width 30 -textvar opts($argname.1)
+    pack $framename.check -side left
+    pack $framename.field -side right
+}
+
+proc label_entry {parent argname text} {
+    set framename $parent.$argname
+    frame $framename
+    label $framename.label -text $text
+    entry $framename.field -relief sunken -width 30 -textvar opts($argname)
+    pack $framename.label -side left
+    pack $framename.field -side right
+}
+
+wm title . TkXplanet
+
+# .top holds .topleft & .topright
+# .topleft holds render, projection, position, and body
+# .topright holds all sliders
+frame .top
+frame .topleft
+frame .topright
+
+# .middle holds .middleleft & .middleright
+# .middleleft holds .imagefiles and .otheroptsleft
+# .middleright holds .otheroptsright
+frame .middle
+frame .middleleft
+frame .middleright
+
+# .bottom holds run button
+frame .bottom
+
+frame .render
+frame .render.top
+label .render.label -text "Render options:"
+set render_opts {-root -window -animate}
+set render_text {Root Window Animate}
+set i 0
+foreach option $render_opts {
+    radiobutton .render.top.$i -variable opts(render) -text [lindex $render_text $i] -value $option
+    pack .render.top.$i -side left
+    incr i
+}
+.render.top.0 select
+
+frame .render.bottom
+radiobutton .render.bottom.0 -variable opts(render) -text "Output to file:" -value "-output "
+pack .render.bottom.0 -side left
+entry .render.bottom.ofile -relief sunken -width 30 -textvar opts(outputfile)
+pack .render.bottom.ofile -side left
+pack .render.label -side left -fill y
+pack .render.top -side top -fill x
+pack .render.bottom -side bottom -fill x
+
+frame .projection
+frame .projection.top
+frame .projection.bottom
+label .projection.label -text "Projection opts:"
+set projection_opts_1 {azimuthal mercator mollweide}
+set projection_text_1 {Azimuthal Mercator Mollweide}
+set i 0
+foreach option $projection_opts_1 {
+        radiobutton .projection.top.$i -variable opts(projection) -text [lindex $projection_text_1 $i] -value $option
+    pack .projection.top.$i -side left
+    incr i
+}
+
+set projection_opts_2 {orthographic peters rectangular}
+set projection_text_2 {Orthographic Peters Rectangular}
+set i 0
+foreach option $projection_opts_2 {
+        radiobutton .projection.bottom.$i -variable opts(projection) -text [lindex $projection_text_2 $i] -value $option
+    pack .projection.bottom.$i -side left
+    incr i
+}
+
+pack .projection.label -side left
+pack .projection.top -side top -fill x
+pack .projection.bottom -side bottom -fill x
+
+.projection.bottom.2 select
+.projection.bottom.2 configure -command set_rect
+
+frame .position
+frame .position.top
+frame .position.bottom
+set position_opts_1 {-dayside -nightside -moonside}
+set position_text_1 {Dayside Nightside Moonside}
+label .position.label -text "Position opts:"
+set i 0
+foreach option $position_opts_1 {
+        radiobutton .position.top.$i -variable opts(position) -text [lindex $position_text_1 $i] -value $option -command set_ortho
+    pack .position.top.$i -side left
+    incr i
+}
+set i 0
+set position_opts_2 {-earthside -random}
+set position_text_2 {Earthside Random}
+foreach option $position_opts_2 {
+        radiobutton .position.bottom.$i -variable opts(position) -text [lindex $position_text_2 $i] -value $option -command set_ortho
+    pack .position.bottom.$i -side left
+    incr i
+}
+pack .position.label -side left
+pack .position.top -side top -fill x
+pack .position.bottom -side bottom -fill x
+
+frame .body
+label .body.label -text "View body:"
+pack .body.label -side left
+tk_optionMenu .body.list opts(body) \
+	Earth Moon Mercury Venus Mars Jupiter Saturn Uranus Neptune Pluto Random
+pack .body.list -side left -fill x
+ 
+frame .north
+label .north.label -text "North:"
+set north_opts {Body Orbit Galactic}
+pack .north.label -side left
+set i 0
+foreach option $north_opts {
+    	radiobutton .north.$i -variable opts(north) -text [lindex $north_opts $i] -value $option
+    pack .north.$i -side left
+    incr i
+}
+.north.0 select
+
+frame .chkbttns
+frame .chkbttns.blend 
+checkbutton .chkbttns.blend.button -text "blend" -variable opts(blend) -command set_ortho
+pack .chkbttns.blend.button -side left
+
+frame .chkbttns.grid
+checkbutton .chkbttns.grid.button -text "grid" -variable opts(grid)
+pack .chkbttns.grid.button -side left
+
+frame .chkbttns.label
+checkbutton .chkbttns.label.button -text "label" -variable opts(label)
+pack .chkbttns.label.button -side left
+
+frame .chkbttns.markers
+checkbutton .chkbttns.markers.button -text "markers" -variable opts(markers)
+pack .chkbttns.markers.button -side left
+
+pack .chkbttns.blend -side left -in .chkbttns
+pack .chkbttns.grid -side left -in .chkbttns
+pack .chkbttns.label -side left -in .chkbttns
+pack .chkbttns.markers -side left -in .chkbttns
+
+frame .imagefiles
+check_entry .imagefiles day "Day Map:"
+pack .imagefiles.day -fill x
+
+check_entry .imagefiles night "Night Map:"
+pack .imagefiles.night -fill x
+
+check_entry .imagefiles cloud "Cloud Map:"
+pack .imagefiles.cloud -fill x
+
+check_entry_ortho .imagefiles background "Background Image:"
+pack .imagefiles.background -fill x
+
+frame .otheroptsleft
+frame .otheroptsright
+
+check_entry_ortho .otheroptsleft center "center:"
+pack .otheroptsleft.center -fill x
+
+check_entry .otheroptsleft color "color:"
+pack .otheroptsleft.color -fill x
+
+check_entry .otheroptsleft date "date:"
+pack .otheroptsleft.date -fill x
+set opts(date.1) [exec date "+%d %b %Y %X"]
+
+check_entry_ortho .otheroptsleft demfile "demfile:"
+pack .otheroptsleft.demfile -fill x 
+
+check_entry_ortho .otheroptsleft demscale "demscale:"
+pack .otheroptsleft.demscale -fill x
+
+check_entry .otheroptsright font "font:"
+pack .otheroptsright.font -fill x
+
+check_entry .otheroptsright fuzz "fuzz:"
+pack .otheroptsright.fuzz -fill x
+
+check_entry .otheroptsright geometry "geometry:"
+pack .otheroptsright.geometry -fill x
+
+check_entry .otheroptsright labelgeom "label geometry:"
+pack .otheroptsright.labelgeom -fill x
+
+check_entry .otheroptsright markerfile "marker file:"
+pack .otheroptsright.markerfile -fill x
+
+check_entry_ortho .otheroptsright observer "observer:"
+pack .otheroptsright.observer -fill x
+
+check_entry_ortho .otheroptsright radius "radius:"
+pack .otheroptsright.radius -fill x 
+
+check_entry_ortho .otheroptsright range "range:"
+pack .otheroptsright.range -fill x  
+
+check_entry_ortho .otheroptsright sunrel "sunrel:"
+pack .otheroptsright.sunrel -fill x  
+
+frame .topright.left
+frame .topright.right
+
+scale .topright.left.grid1 -from 0 -to 90 -variable opts(grid1) \
+	-orient horizontal -label "grid1:" \
+	-showvalue true 
+pack .topright.left.grid1
+
+scale .topright.left.latitude -from -90 -to 90 -variable opts(latitude) \
+	-orient horizontal -label "latitude:" \
+	-showvalue true -command set_ortho2 
+pack .topright.left.latitude
+
+scale .topright.left.localtime -from 0 -to 24 -variable opts(localtime) \
+	-orient horizontal -label "localtime:" -showvalue true -resolution 0.1 
+pack .topright.left.localtime
+
+scale .topright.left.longitude -from -180 -to 180 -variable opts(longitude) \
+	-orient horizontal -label "longitude:" \
+	-showvalue true
+pack .topright.left.longitude
+
+scale .topright.right.grid2 -from 0 -to 90 -variable opts(grid2) \
+	-orient horizontal -label "grid2:" \
+	-showvalue true 
+pack .topright.right.grid2
+
+scale .topright.right.rotate -from 0 -to 360 -variable opts(rotate) \
+	-orient horizontal -label "rotate:" \
+	-showvalue true 
+pack .topright.right.rotate
+
+set opts(shade) 30
+scale .topright.right.shade -from 0 -to 100 -variable opts(shade) \
+	-orient horizontal -label "shade:" \
+	-showvalue true
+pack .topright.right.shade
+
+scale .topright.right.starfreq -from 0 -to -6 \
+	-orient horizontal -label "log10(starfreq):" \
+	-command set_starfreq -resolution -1 
+.topright.right.starfreq set -3
+pack .topright.right.starfreq
+
+button .run -text Run -command {parse}
+
+pack .render -side top -fill x -in .topleft
+pack .projection -side top -fill x -in .topleft
+pack .position -side top -fill x -in .topleft
+pack .body -side top -fill x -in .topleft
+pack .north -side top -fill x -in .topleft
+pack .chkbttns -side top -fill x -in .topleft
+pack .imagefiles -side top -fill x -in .middleleft
+pack .otheroptsleft -side top -fill x -in .middleleft
+pack .otheroptsright -side top -fill x -in .middleright
+pack .middleleft -side left -in .middle
+pack .middleright -side right -in .middle
+pack .topright.left -side left -expand true -in .topright
+pack .topright.right -side right -expand true -in .topright
+pack .topleft -side left -in .top
+pack .topright -expand true -in .top
+
+pack .top -side top -expand true -fill both
+pack .middle -side top -expand true -fill both
+pack .run -side bottom
+
+proc parse {} {
+    global opts
+    set command "xplanet "
+    append command "$opts(render) "
+    if {$opts(render) == "-output "} {
+	.render.bottom.ofile config -state normal
+	append command "$opts(outputfile) "
+    } 
+    append command "-projection $opts(projection) "
+    if {$opts(position) != ""} { 
+	append command "$opts(position) "
+    }
+    if {$opts(body) != 0} {
+	append command "-body $opts(body) "
+    }
+
+    if {$opts(north) != 0} {
+	append command "-north $opts(north) "
+    }
+
+    if {$opts(day.0) && $opts(day.1) != ""} {
+	append command "-image $opts(day.1) "
+    }
+    if {$opts(night.0) && $opts(night.1) != ""} {
+	append command "-night_image $opts(night.1) "
+    }
+    if {$opts(cloud.0) && $opts(cloud.1) != ""} {
+	append command "-cloud_image $opts(cloud.1) "
+    }
+    if {$opts(background.0) && $opts(background.1) != ""} {
+	append command "-background $opts(background.1) "
+    }
+
+    if {$opts(blend) != 0} {
+	append command "-blend "
+    }
+
+    if {$opts(center.0) && $opts(center.1) != ""} {
+	append command "-center $opts(center.1) "
+    }
+
+    if {$opts(color.0) && $opts(color.1) != ""} {
+	append command "-color $opts(color.1) "
+    }
+
+    if {$opts(date.0) && $opts(date.1) != ""} {
+	append command "-date \"$opts(date.1)\" "
+    }
+
+    if {$opts(demfile.0) && $opts(demfile.1) != ""} {
+	append command "-demfile $opts(demfile.1) "
+    }
+
+    if {$opts(demscale.0) && $opts(demscale.1) != ""} {
+	append command "-demscale $opts(demscale.1) "
+    }
+
+    if {$opts(font.0) && $opts(font.1) != ""} {
+	append command "-font $opts(font.1) "
+    }
+
+    if {$opts(fuzz.0) && $opts(fuzz.1) != ""} {
+	append command "-fuzz $opts(fuzz.1) "
+    }
+
+    if {$opts(geometry.0) && $opts(geometry.1) != ""} {
+	append command "-geometry $opts(geometry.1) "
+    }
+
+    if {$opts(grid) != 0} {
+	append command "-grid "
+    }
+
+    if {$opts(grid1) != 0} {
+	append command "-grid1 $opts(grid1) "
+    }
+
+    if {$opts(grid2) != 0} {
+	append command "-grid2 $opts(grid2) "
+    }
+
+    if {$opts(label) != 0} {
+	append command "-label "
+    }
+
+    if {$opts(labelgeom.0) && $opts(labelgeom.1) != ""} {
+	append command "-labelpos $opts(labelgeom.1) "
+    }
+
+    if {$opts(latitude) != 0} {
+	append command "-latitude $opts(latitude) "
+    }
+
+    if {$opts(localtime) != 0} {
+	append command "-localtime $opts(localtime) "
+    }
+
+    if {$opts(longitude) != 0} {
+	append command "-longitude $opts(longitude) "
+    }
+
+    if {$opts(markers) != 0} {
+	append command "-markers "
+    }
+
+    if {$opts(markerfile.0) && $opts(markerfile.1) != ""} {
+	append command "-markerfile $opts(markerfile.1) "
+    }
+
+    if {$opts(observer.0) && $opts(observer.1) != ""} {
+	append command "-observer $opts(observer.1) "
+    }
+
+    if {$opts(radius.0) && $opts(radius.1) != ""} {
+	append command "-radius $opts(radius.1) "
+    }
+
+    if {$opts(range.0) && $opts(range.1) != ""} {
+	append command "-range $opts(range.1) "
+    }
+
+    if {$opts(sunrel.0) && $opts(sunrel.1) != ""} {
+	append command "-sunrel $opts(sunrel.1) "
+    }
+
+    if {$opts(rotate) != 0} {
+	append command "-rotate $opts(rotate) "
+    }
+
+    if {$opts(shade) != 30} {
+	append command "-shade $opts(shade) "
+    }
+
+    if {$opts(starfreq) != 1E-3} {
+	append command "-starfreq $opts(starfreq) "
+    }
+
+    puts stdout $command
+ 
+    if [catch {open "|$command |& cat"} errormsg] {    
+	puts stdout $errormsg 
+    }
+}
+

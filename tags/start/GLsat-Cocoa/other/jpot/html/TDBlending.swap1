@@ -1,0 +1,27 @@
+<font color="#ff00ff">   glPushMatrix</font>();
+<font color="#ff00ff">   glBlendFunc</font>(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+<font color="#ff00ff">   glTranslatef</font>(0.0, 0.0, -10.0);
+<font color="#ff00ff">   glScalef</font>(4.0, 4.0, 3.0);
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_SHININESS, mat_shininess);  
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_black);
+<font color="#ff00ff">   glutSolidCube</font>(1.0);
+<font color="#ff00ff">   glPopMatrix</font>();
+
+<font color="#ff00ff">   glPushMatrix</font>();
+<font color="#ff00ff">   glTranslatef</font>(-0.5, 0.0, -5.0);
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_SHININESS, mat_shininess);  
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_cyan);
+<font color="#ff00ff">   glBlendFunc</font>(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+<font color="#ff00ff">   glScalef</font>(3.0, 2.0, 1.0);
+<font color="#ff00ff">   glutSolidCube</font>(1.0);
+<font color="#ff00ff">   glPopMatrix</font>();
+
+<font color="#ff00ff">   glPushMatrix</font>();
+<font color="#ff00ff">   glTranslatef</font>(1.5, 0.0, -2.0);
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_SHININESS, mat_shininess);  
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_red);
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_SPECULAR, mat_specular);
+<font color="#ff00ff">   glBlendFunc</font>(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+<font color="#ff00ff">   glutSolidSphere</font>(1.25, 30, 30);
+<font color="#ff00ff">   glPopMatrix</font>();
+<font color="#ff00ff">   glFlush</font>();

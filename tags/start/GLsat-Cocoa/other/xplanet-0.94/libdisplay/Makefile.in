@@ -1,0 +1,63 @@
+prefix = @prefix@
+
+CXX = @CXX@
+CPPFLAGS += @OTHER_CPPFLAGS@ -I..
+CXXFLAGS += @FREETYPE_CFLAGS@ @X_CFLAGS@
+
+SRCS = \
+	DisplayBase.cc \
+	@DISPLAYMACAQUA@ \
+	@DISPLAYMSWIN@ \
+	DisplayOutput.cc \
+	@DISPLAYX11@ \
+	getDisplay.cc
+
+OBJS = $(SRCS:.cc=.o)
+
+libdisplay.a: $(OBJS)
+	@AR@ @ARFLAGS@ $@ $(OBJS)
+	@RANLIB@
+
+DisplayBase.o: DisplayBase.cc ../auxfiles.h ../checkfuncs.h \
+ DisplayBase.h ../Location.h ../Marker.h ../Options.h ../keywords.h \
+ ../Planet.h ../util.h ../libannotate/libannotate.h \
+ ../libprojection/libprojection.h ../libprojection/ProjectionBase.h \
+ ../libprojection/ProjectionRectangular.h
+
+DisplayMSWin.o: DisplayMSWin.cc DisplayMSWin.h DisplayBase.h \
+ ../checkfuncs.h ../Options.h ../keywords.h \
+ ../libannotate/libannotate.h ../libimage/libimage.h \
+ ../libprojection/libprojection.h ../libprojection/ProjectionBase.h \
+ ../libprojection/ProjectionRectangular.h ../Location.h
+
+DisplayMacAqua.o: DisplayMacAqua.cc DisplayMacAqua.h DisplayBase.h \
+ ../checkfuncs.h ../Options.h ../keywords.h \
+ ../libannotate/libannotate.h ../libimage/libimage.h \
+ ../libprojection/libprojection.h ../libprojection/ProjectionBase.h \
+ ../libprojection/ProjectionRectangular.h ../Location.h
+
+DisplayOutput.o: DisplayOutput.cc DisplayOutput.h DisplayBase.h \
+ ../checkfuncs.h ../Options.h ../keywords.h ../libimage/libimage.h \
+ ../libprojection/libprojection.h ../libprojection/ProjectionBase.h \
+ ../libprojection/ProjectionRectangular.h ../Location.h
+
+DisplayX11.o: DisplayX11.cc ../auxfiles.h DisplayX11.h \
+ DisplayX11Base.h DisplayBase.h ../checkfuncs.h ../Marker.h \
+ ../Options.h ../keywords.h ../util.h ../libannotate/libannotate.h \
+ ../libimage/libimage.h
+
+DisplayX11Base.o: DisplayX11Base.cc ../auxfiles.h DisplayX11Base.h \
+ DisplayBase.h ../checkfuncs.h ../Marker.h ../Options.h ../keywords.h \
+ ../util.h ../libimage/libimage.h ../libprojection/libprojection.h \
+ ../libprojection/ProjectionBase.h \
+ ../libprojection/ProjectionRectangular.h ../Location.h vroot.h
+
+getDisplay.o: getDisplay.cc ../checkfuncs.h ../keywords.h \
+ DisplayBase.h DisplayOutput.h DisplayX11Base.h DisplayX11.h
+
+.PHONY : clean distclean
+clean:
+	-@RM@ -f *.o libdisplay.a
+
+distclean:
+	-@RM@ -f *.o libdisplay.a Makefile

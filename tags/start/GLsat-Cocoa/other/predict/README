@@ -1,0 +1,78 @@
+			=========================
+			PREDICT QUICK START GUIDE
+			=========================
+
+SYSTEM REQUIREMENTS
+===================
+This program requires ncurses version 4.2 or higher.  Earlier versions have
+been known to cause segmentation faults and/or odd display colors with this
+program.  ncurses may be obtained via anonymous FTP at:
+
+	prep.ai.mit.edu
+
+in the pub/gnu subdirectory
+
+or:
+	ftp.clark.net
+
+in the pub/dickey/ncurses subdirectory.
+
+The Linux pthreads library is also required.  Both of these libraries are
+usually available in modern Linux distributions.
+
+
+UNPACKING
+=========
+The PREDICT archive can be unpacked in any directory for which read access
+is provided for all system users (such as /usr/src or /usr/local/src for
+Slackware Linux).  As root, move the tar file to such a directory and
+issue the command:
+
+	tar xvfz predict-2.1.4.tar.gz
+
+to unpack the file.
+
+
+COMPILATION
+===========
+PREDICT's compilation and installation procedure differs slightly from
+that of most software, but should easy enough to understand and follow.
+First, move (cd) into the predict directory and execute the included
+"configure" script by typing:
+
+	./configure
+
+as root on your command prompt.  This script compiles and runs the install
+program that configures the source code for PREDICT.  It then compiles and
+installs PREDICT by creating symbolic links between the executables created
+in the installation directory and /usr/local/bin.
+
+
+FIRST TIME USE
+==============
+First time users will be asked to enter their groundstation latitude in
+decimal degrees NORTH (SOUTH may be entered as a negative), longitude in
+decimal degrees WEST (0-360 degrees) (EAST may be entered as a negative),
+and altitude in meters above mean sea level.  A recent set of Keplerian
+orbital data for the satellites of interest and an accurately set system
+clock are also required if successful real-time satellite tracking is
+also desired.  Sources for such data include http://www.celestrak.com/
+and http://www.amsat.org/.  (These sites also act as FTP servers
+as well.)
+
+
+FOR FURTHER INFORMATION
+=======================
+Please consult the files under the "docs" subdirectory for more
+information on the use and capabilities of PREDICT.  The latest
+news and information regarding PREDICT software is available at:
+http://www.qsl.net/kd2bd/predict.html.
+
+
+Happy Tracking!
+ 
+--
+John, KD2BD
+kd2bd@amsat.org
+June 2001
+

@@ -1,0 +1,61 @@
+<html><body><pre>
+<font color="#0000ff">#include</font> &lt;GL/glut.h&gt;
+
+void init()
+{  
+<font color="#ff00ff">  glClearColor</font>(0.0, 0.0, 0.0, 0.0);
+<font color="#ff00ff">  glShadeModel</font>(GL_SMOOTH);
+<font color="#ff00ff">  glMatrixMode</font>(GL_PROJECTION);
+<font color="#ff00ff">  glLoadIdentity</font>();
+<font color="#ff00ff">  glOrtho</font>(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
+
+}
+
+void display(void)
+{  
+  /* clear all pixels */
+<font color="#ff00ff">   glClear</font>(GL_COLOR_BUFFER_BIT);   
+  /* draw polygon (rectangle) with corners at 
+   *  (0.25, 0.25, 0.0) and (0.75, 0.75, 0.0)
+   */
+<font color="#ff00ff">  glColor3f</font>(<A name="gohere"></a><font color="#ff0000"><b><font color="#ff0000"><b>JPOT$1</b></font></b></font>, <font color="#ff0000"><b>JPOT$2</b></font>, <font color="#ff0000"><b><font color="#ff0000"><b>JPOT$3</b></font></b></font>);
+
+<font color="#ff00ff">  glBegin</font>(GL_POLYGON);
+<font color="#ff00ff">    glVertex3f</font>(0.25, 0.25, 0.0);
+<font color="#ff00ff">    glVertex3f</font>(0.75, 0.25, 0.0);
+<font color="#ff00ff">    glVertex3f</font>(0.75, 0.75, 0.0);
+<font color="#ff00ff">    glVertex3f</font>(0.25, 0.75, 0.0);
+<font color="#ff00ff">  glEnd</font>();
+<font color="#ff00ff">  glFlush</font>();
+}
+
+void idlefunc(void)
+{
+}
+
+int main(int argc, char* argv[])
+{
+<font color="#ff00ff">  glutInit</font>(&argc, argv);
+<font color="#ff00ff">  glutInitDisplayMode</font>(GLUT_SINGLE|GLUT_RGB);
+<font color="#ff00ff">  glutInitWindowSize</font>(450, 450);
+<font color="#ff00ff">  glutInitWindowPosition</font>(0,0);
+<font color="#ff00ff">  glutCreateWindow</font>("Foreground - Object Color");
+  init();
+<font color="#ff00ff">  glutDisplayFunc</font>(display);
+<font color="#ff00ff">  glutIdleFunc</font>(idlefunc);
+<font color="#ff00ff">  glutMainLoop</font>();
+  return 0;
+}
+
+/* 
+ *  Extended by Binh Phu Le from the original program by Mahesh Kumar
+ *  parts of this program might have been adopted from or inspired by 
+ *  sample programs in 
+ *  "OpenGL Programming Guide", 
+ *  Copyright (c) 1993-1997, Silicon Graphics, Inc.
+ *  "Interactive Computer Graphics"  
+ *  Copyright (c) 1997, Addison-Wesley,
+ *  and/or those written by Dr. Sumanta Guha guha@cs.uwm.edu
+ *  and/or those written by Dr. Ichiro Suzuki suzuki@cs.uwm.edu
+ */
+</pre></body></html>

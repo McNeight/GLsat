@@ -1,0 +1,70 @@
+Prior Art (and Thanks)
+======================
+
+* North American Aerospace Defense Command (NORAD)
+  For designing and implementing the original mathematical models used
+  for satellite orbit prediction.
+
+* T.S. Kelso <TSKelso@celestrak.com>
+  For making the original NORAD Spacetrack Report Number 3 publically
+  available on the Internet. Details in the document helped me to
+  interpret what the code was *really* trying to do, and assisted me in
+  applying human-readable variable names.
+
+* Neoklis Kyriazis  <neoklis@my-deja.com>
+  I am most grateful to his implementation, as he has eliminated the
+  goto's that were woven throught the original FORTRAN code and
+  generally brought the code up to the level of a true C program.
+
+* Varol Okan <varol.okan@MovingSatellites.com>
+  Although his site does not specifically state whether or not his code
+  is GPL'ed, I believe that since it is based upon the work of Dr. Kelso
+  and the source code is publicly available, it is reasonable to believe
+  that it is GPL. A 'COPYING' file included with his source code would
+  greatly clarify this.
+
+* Sergey Klibanov and Mike Rodehorst from UofM ACM SIGGRAPH
+  For attempting to teach me OpenGL. I wish I could have spent more
+  time on the whole series of classes, but what I got seems to be
+  enough to get myself in trouble, at least.
+
+* NASA J-Track 3D
+  http://liftoff.msfc.nasa.gov/RealTime/JTrack/3D/JTrack3D.html
+  Nice. That is the interface that I am aiming for. Perhaps more
+  information can be displayed, but it's click-and-rotate-the-galaxy
+  method is what I had in mind before I saw this applet.
+
+Since my work is not a derivative of any of the above works, I don't
+believe that there is any copyright conflict. I claim that my
+implementation is directly derived from the public domain algorithms
+and FORTRAN source code listed in NORAD Spacetrack Report Number 3.
+However, I admit to looking at the source from all of the above listed
+projects for advice and hints.
+
+I release my source code under the GNU General Public License, version 2,
+but retain the copyright for myself. All rights reserved.
+
+
+References
+==========
+
+I wish I could rank these books in order of importance, but it truly
+is impossible. Each book has contributed something, and no one piece
+played a greater role over the other.
+
+* 'Astronomical Formulae for Calculators' by Jean Meeus
+  Fourth Edition
+  ISBN 0-943396-22-0
+
+* 'Practical Astronomy with your Calculator' by Peter Duffett-Smith
+  Third Edition
+  ISBN 0-521-35699-7
+
+lots of books
+
+* The soundtrack to the movie 'O Brother, Where Art Thou?'
+  I really can't explain it. I finally saw the movie on March 2nd, 2002.
+  Not long after, I realized I couldn't get "I'll Fly Away" out of my
+  head, so I bought the soundtrack and I've been listening to it almost
+  every day since.
+

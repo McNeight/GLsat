@@ -1,0 +1,122 @@
+<HTML>
+<BODY LINK="#0000ff" VLINK="#800080">
+<B><FONT SIZE=5 COLOR="#008080"><P>Introduction of Blending </P></FONT></B>
+<U><FONT SIZE=4 COLOR="#ff0000"><B>Idea</B></FONT></U>
+<P>Blending is the act of combining color value of pixels so that parts of the
+scene are translucent. When blending is enabled, the alpha value is often used 
+to combine the color value of the fragment being processed with that of the 
+pixel already stored in the framebuffer. Blending occurs after the scene has 
+been rasterized and converted to fragments, and just before the final pixels 
+are drawn in the framebuffer.With blending, we can control the combination of 
+the existing color value and the new fragment's value. Therefore we can use 
+alpha blending to create translucent effect to the drawing object. So far in 
+all our programs we have seen an alpha value associated with <B>glColor*()</B>
+ command and the <B>glClearColor()</B> command, or the <B>glLight*()</B> and 
+the <B>glMaterial*()</B> command, and we always set it to be 1.0. To create 
+the blending effect, we set alpha value in the range of 0.0-1.0. An alpha 
+value of 1.0 implies fully opaque like a rock whereas lower alpha values 
+would mean translucent and still lower values tend towards transparency. 
+</P>
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>The Source and Destination </P></FONT></U></B>
+<P>Factors Blending of incoming pixel color values with the existing ones is done as follows: </P>
+<OL>
+<LI>First specify how to compute the source and destination factors. Specify RGBA quadrapulets for both the source and the destination.
+<LI>Multiply the RGBA quadrapulets with the corresponding RGBA values in the source and destination.
+<LI>Add up the corresponding components of the source and destination.
+</OL>
+<U><FONT SIZE=4 COLOR="#ff0000"><P>Example</P>
+</U></FONT><P>Say Source has the following values (Rs, Gs, Bs, As) Destination has the following (Rd, Gd, Bd, Ad) Source factor is the following (Sr, Sg, Sb, As) Destination factor is the following (Dr, Dg, Db, Ad) </P>
+<P>Then the above computation would result in the following: </P>
+<P>(RsSr + RdDr, GsSg + GdDg, BsSb + BdDb, AsSa + AdDa) </P>
+<P>Each component of this quadrupulet is eventually clamped to [0,1]</P>
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>The OpenGL function calls</P>
+</B></U></FONT><P>The function <B>void glBlendFunc(GLenum sfactor, GLenu dfactor)</B> specifies the source and the destination factor. To enable blending call: <B>glEnable(GL_BLEND.</B> Similarly use <B>glDiable(GL_BLEND)</B> to disable blending in your programs. The following table shows possible values for the <B>glBendFunc()</B>. The RGBA values of the source and destination are indicated with the subscripts s and d, respectively. Subtraction of quadrupulets means subtracting them componentwise. The Relevant Factor column indicates whether the corresponding constant can be used to specify the source or destination blending factor or used for both</P>
+<TABLE CELLSPACING=0 BORDER=0 CELLPADDING=7 WIDTH=637>
+<TR><TD WIDTH="42%" VALIGN="TOP">
+<P>Constant to use in <B>Glenum</B> sfactor and dfactor</TD>
+<TD WIDTH="27%" VALIGN="TOP">
+<P>Relevant factor</TD>
+<TD WIDTH="31%" VALIGN="TOP">
+<P>Computed blend factor</TD>
+</TR>
+<TR><TD WIDTH="42%" VALIGN="TOP">
+<P>GL_ZERO</TD>
+<TD WIDTH="27%" VALIGN="TOP">
+<P>Source or destination</TD>
+<TD WIDTH="31%" VALIGN="TOP">
+<P>(0, 0, 0, 0)</TD>
+</TR>
+<TR><TD WIDTH="42%" VALIGN="TOP">
+<P>GL_ONE</TD>
+<TD WIDTH="27%" VALIGN="TOP">
+<P>Source or destination</TD>
+<TD WIDTH="31%" VALIGN="TOP">
+<P>(1, 1, 1, 1)</TD>
+</TR>
+<TR><TD WIDTH="42%" VALIGN="TOP">
+<P>GL_DST_COLOR</TD>
+<TD WIDTH="27%" VALIGN="TOP">
+<P>Source</TD>
+<TD WIDTH="31%" VALIGN="TOP">
+<P>(R<SUB>d</SUB>, G<SUB>d</SUB>, B<SUB>b</SUB>, A<SUB>d</SUB>)</TD>
+</TR>
+<TR><TD WIDTH="42%" VALIGN="TOP">
+<P>GL_SRC_COLOR</TD>
+<TD WIDTH="27%" VALIGN="TOP">
+<P>Destination</TD>
+<TD WIDTH="31%" VALIGN="TOP">
+<P>(R<SUB>s</SUB>, G<SUB>s</SUB>, B<SUB>s</SUB>, A<SUB>s</SUB>)</TD>
+</TR>
+<TR><TD WIDTH="42%" VALIGN="TOP">
+<P>GL_ONE_MINUS_DST_COLOR</TD>
+<TD WIDTH="27%" VALIGN="TOP">
+<P>Source</TD>
+<TD WIDTH="31%" VALIGN="TOP">
+<P>(1, 1, 1, 1)-(R<SUB>d</SUB>, G<SUB>d</SUB>, B<SUB>b</SUB>, A<SUB>d</SUB>)</TD>
+</TR>
+<TR><TD WIDTH="42%" VALIGN="TOP">
+<P>GL_ONE_MINUS_SRC_COLOR</TD>
+<TD WIDTH="27%" VALIGN="TOP">
+<P>Destination</TD>
+<TD WIDTH="31%" VALIGN="TOP">
+<P>(1, 1, 1, 1)- (R<SUB>s</SUB>, G<SUB>s</SUB>, B<SUB>s</SUB>, A<SUB>s</SUB>)</TD>
+</TR>
+<TR><TD WIDTH="42%" VALIGN="TOP">
+<P>GL_SRC_ALPHA</TD>
+<TD WIDTH="27%" VALIGN="TOP">
+<P>Source or destination</TD>
+<TD WIDTH="31%" VALIGN="TOP">
+<P>(A<SUB>s</SUB>, A<SUB>s</SUB>, A<SUB>s</SUB>, A<SUB>s</SUB>)</TD>
+</TR>
+<TR><TD WIDTH="42%" VALIGN="TOP">
+<P>GL_ONE_MINUS_SRC_ALPHA</TD>
+<TD WIDTH="27%" VALIGN="TOP">
+<P>Source or destination</TD>
+<TD WIDTH="31%" VALIGN="TOP">
+<P>(1, 1, 1, 1)- (A<SUB>s</SUB>, A<SUB>s</SUB>, A<SUB>s</SUB>, A<SUB>s</SUB>)</TD>
+</TR>
+<TR><TD WIDTH="42%" VALIGN="TOP">
+<P>GL_DST_ALPHA</TD>
+<TD WIDTH="27%" VALIGN="TOP">
+<P>Source or destination</TD>
+<TD WIDTH="31%" VALIGN="TOP">
+<P>(A<SUB>d</SUB>, A<SUB>d</SUB>, A<SUB>d</SUB>, A<SUB>d</SUB>)</TD>
+</TR>
+<TR><TD WIDTH="42%" VALIGN="TOP">
+<P>GL_ONE_MINUS_DST_ALPHA</TD>
+<TD WIDTH="27%" VALIGN="TOP">
+<P>Source or destination</TD>
+<TD WIDTH="31%" VALIGN="TOP">
+<P>(1, 1, 1, 1)- (A<SUB>d</SUB>, A<SUB>d</SUB>, A<SUB>d</SUB>, A<SUB>d</SUB>)</TD>
+</TR>
+<TR><TD WIDTH="42%" VALIGN="TOP">
+<P>GL_SRC_ALPHA_SATURATE</TD>
+<TD WIDTH="27%" VALIGN="TOP">
+<P>Source</TD>
+<TD WIDTH="31%" VALIGN="TOP">
+<P>(f, f, f, 1); f=min(A<SUB>s</SUB>, 1 - A<SUB>d</SUB>)</TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

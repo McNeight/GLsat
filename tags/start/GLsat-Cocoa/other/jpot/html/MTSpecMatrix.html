@@ -1,0 +1,345 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Specifying Matrices For Transformation</TITLE>
+<META NAME="Template" CONTENT="E:\Software\Microsoft Office\Office\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5 COLOR="#008080"><P>Transformation Matrix</P>
+</FONT><U><FONT SIZE=4 COLOR="#ff0000"><P>Idea:</P>
+</B></U></FONT><P>Since transformations are performed by matrix multiplications, one could specify matrices explicitly to perform required transformations.
+Let us first review the matrices for the basic transformations. </P>
+
+</B></U></FONT><P>The translation matrix by Dx, Dy, Dz:</P>
+<TABLE CELLSPACING=0 BORDER=0 CELLPADDING=7 WIDTH=288>
+<TR><TD WIDTH="45%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<P>1</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<P>Dx</TD>
+</TR>
+<TR><TD WIDTH="45%" VALIGN="TOP">
+<P>T(Dx, Dy, Dz)=</TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>1</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<P>Dy</TD>
+</TR>
+<TR><TD WIDTH="45%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>1</TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<P>Dz</TD>
+</TR>
+<TR><TD WIDTH="45%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<P>1</TD>
+</TR>
+</TABLE>
+
+<P>The rotation matrix by angle A about the x axis:</P>
+<TABLE CELLSPACING=0 BORDER=0 CELLPADDING=7 WIDTH=330>
+<TR><TD WIDTH="29%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<P>1</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>0</TD>
+</TR>
+<TR><TD WIDTH="29%" VALIGN="TOP">
+<P>Rx(A) =</TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>Cos(A)</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>-sin(A)</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>0</TD>
+</TR>
+<TR><TD WIDTH="29%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>Sin(A)</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>cos(A)</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>0</TD>
+</TR>
+<TR><TD WIDTH="29%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>1</TD>
+</TR>
+</TABLE>
+
+<P>The rotation matrix by angle A about the y axis:</P>
+<TABLE CELLSPACING=0 BORDER=0 CELLPADDING=7 WIDTH=330>
+<TR><TD WIDTH="29%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>cos(A)</TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>sin(A) </TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>0</TD>
+</TR>
+<TR><TD WIDTH="29%" VALIGN="TOP">
+<P>Ry(A) =</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<P>1</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>0</TD>
+</TR>
+<TR><TD WIDTH="29%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>-sin(A)</TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>cos(A) </TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>0</TD>
+</TR>
+<TR><TD WIDTH="29%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>1</TD>
+</TR>
+</TABLE>
+
+<P>The rotation matrix by angle A about the z axis:</P>
+<TABLE CELLSPACING=0 BORDER=0 CELLPADDING=7 WIDTH=330>
+<TR><TD WIDTH="29%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>cos(A) </TD>
+<TD WIDTH="22%" VALIGN="TOP">
+<P>-sin(A)</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>0</TD>
+</TR>
+<TR><TD WIDTH="29%" VALIGN="TOP">
+<P>Rz(A) =</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>sin(A) </TD>
+<TD WIDTH="22%" VALIGN="TOP">
+<P>cos(A) </TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>0</TD>
+</TR>
+<TR><TD WIDTH="29%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="22%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>1</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>0</TD>
+</TR>
+<TR><TD WIDTH="29%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="22%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>1</TD>
+</TR>
+</TABLE>
+
+<P>The scaling matrix by
+factors Sx, Sy, and Sz (all non-zero) with respect to the origin:</P>
+<TABLE CELLSPACING=0 BORDER=0 CELLPADDING=7 WIDTH=300>
+<TR><TD WIDTH="43%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<P>Sx</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>0</TD>
+</TR>
+<TR><TD WIDTH="43%" VALIGN="TOP">
+<P>S(Sx, Sy, Sz)=</TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>Sy</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>0</TD>
+</TR>
+<TR><TD WIDTH="43%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>Sz</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>0</TD>
+</TR>
+<TR><TD WIDTH="43%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>1</TD>
+</TR>
+</TABLE>
+
+<P>The reflection matrix about the xy plane:</P>
+<TABLE CELLSPACING=0 BORDER=0 CELLPADDING=7 WIDTH=300>
+<TR><TD WIDTH="43%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<P>1</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>0</TD>
+</TR>
+<TR><TD WIDTH="43%" VALIGN="TOP">
+<P>S(1, 1, -1)=</TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>1</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>0</TD>
+</TR>
+<TR><TD WIDTH="43%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>-1</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>0</TD>
+</TR>
+<TR><TD WIDTH="43%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>1</TD>
+</TR>
+</TABLE>
+
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>Experiment:</P>
+</B></U></FONT><P><A HREF="SpecMatrix.class">Click here</A> to run the example. <B>glMultMatrix(m)</B> changes the current matrix C into Cm by multilplying m from right. 
+m is a 4x4 matrix of floating point values stored in column-major order, 
+so for instance the translation matrix given by :</P>
+<TABLE CELLSPACING=0 BORDER=0 CELLPADDING=7 WIDTH=174>
+<TR><TD WIDTH="24%" VALIGN="TOP">
+<P>1</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="28%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>3</TD>
+</TR>
+<TR><TD WIDTH="24%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>1</TD>
+<TD WIDTH="28%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>0</TD>
+</TR>
+<TR><TD WIDTH="24%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="28%" VALIGN="TOP">
+<P>1</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>0</TD>
+</TR>
+<TR><TD WIDTH="24%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="28%" VALIGN="TOP">
+<P>0</TD>
+<TD WIDTH="24%" VALIGN="TOP">
+<P>1</TD>
+</TR>
+</TABLE>
+
+<P>is specified as: m = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 3, 0, 0, 1} (i.e., 
+m[0]=1, m[12]=3, etc.).</P>
+<P>Try changing the values of the matrix elements to perform the following: </P><DIR>
+<P>a) Translation of +2 units along the x axis.</P>
+<P>b) Translation of +2 units along the x axis, +3 units along the y axis,
+ and -2 units along the z axis.</P>
+<P>c) Rotation of 30 degrees about the x axis (use sin 30 = 0.5 and cos 30 = 0.866).</P>
+</DIR>
+
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>Answers:</P><DIR>
+
+</B></U></FONT><P>a) m = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 0, 0, 1}</P>
+<P>b) m = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 3, -2, 1}</P>
+<P>c) m = {1, 0, 0, 0, 0, 0.866, 0.5, 0, 0, -0.5, 0.866, 0, 0, 0, 0, 1}.</P></DIR>
+
+<P>&nbsp;</P></BODY>
+</HTML>

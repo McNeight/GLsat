@@ -1,0 +1,184 @@
+<html><body><pre>
+<font color="#0000ff">#include</font> &lt;GL/glut.h&gt;
+
+GLfloat light_diffuse[] = {1.0, 1.0, 1.0, 1.0};
+GLfloat light_specular[] = {1.0, 1.0, 1.0, 1.0};
+GLfloat light_position[] = {1.0, 1.0, 1.0, 0.0};
+GLfloat mat_shininess[] = {50};
+GLfloat mat_amb_diff_black[] = {0.0, 0.0, 0.0, 0.2};
+GLfloat mat_amb_diff_cyan[]  = {0.0, 1.0, 1.0, 0.6};
+GLfloat mat_amb_diff_red[] = {1.0, 0.0, 0.0, 0.1};
+GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0};
+
+void init(void)
+{  
+<font color="#ff00ff">   glEnable </font>(GL_BLEND);
+<font color="#ff00ff">   glShadeModel </font>(GL_SMOOTH);
+<font color="#ff00ff">   glClearColor </font>(1.0, 1.0, 1.0, 0.0);
+<font color="#ff00ff">   glEnable</font>(GL_LIGHTING);
+<font color="#ff00ff">   glLightfv</font>(GL_LIGHT0, GL_POSITION, light_position);
+<font color="#ff00ff">   glLightfv</font>(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+<font color="#ff00ff">   glLightfv</font>(GL_LIGHT0, GL_SPECULAR, light_specular);
+<font color="#ff00ff">   glEnable</font>(GL_LIGHT0);
+<font color="#ff00ff">   glEnable</font>(GL_DEPTH_TEST);
+}
+
+void display(void)
+{
+
+<font color="#ff00ff">   glClear</font>(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+   mat_amb_diff_black[3] = <A name="gohere"></a><font color="#ff0000"><b><font color="#ff0000"><b>JPOT$1</b></font></b></font>;
+   mat_amb_diff_cyan[3] = <font color="#ff0000"><b>JPOT$2</b></font>;
+   mat_amb_diff_red[3] = <font color="#ff0000"><b><font color="#ff0000"><b>JPOT$3</b></font></b></font>;
+ 
+<font color="#ff00ff">   glPushMatrix</font>();
+<font color="#ff00ff">   glBlendFunc</font>(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+<font color="#ff00ff">   glTranslatef</font>(0.0, 0.0, -10.0);
+<font color="#ff00ff">   glScalef</font>(4.0, 4.0, 3.0);
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_SHININESS, mat_shininess);  
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_black);
+<font color="#ff00ff">   glutSolidCube</font>(1.0);
+<font color="#ff00ff">   glPopMatrix</font>();
+
+<font color="#ff00ff">   glPushMatrix</font>();
+<font color="#ff00ff">   glTranslatef</font>(-0.5, 0.0, -5.0);
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_SHININESS, mat_shininess);  
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_cyan);
+<font color="#ff00ff">   glBlendFunc</font>(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+<font color="#ff00ff">   glScalef</font>(3.0, 2.0, 1.0);
+<font color="#ff00ff">   glutSolidCube</font>(1.0);
+<font color="#ff00ff">   glPopMatrix</font>();
+
+<font color="#ff00ff">   glPushMatrix</font>();
+<font color="#ff00ff">   glTranslatef</font>(1.5, 0.0, -2.0);
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_SHININESS, mat_shininess);  
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_red);
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_SPECULAR, mat_specular);
+<font color="#ff00ff">   glBlendFunc</font>(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+<font color="#ff00ff">   glutSolidSphere</font>(1.25, 30, 30);
+<font color="#ff00ff">   glPopMatrix</font>();
+<font color="#ff00ff">   glFlush</font>();
+ 
+ 
+<font color="#ff00ff">   glPushMatrix</font>();
+<font color="#ff00ff">   glTranslatef</font>(1.5, 0.0, -2.0);
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_SHININESS, mat_shininess);  
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_red);
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_SPECULAR, mat_specular);
+<font color="#ff00ff">   glBlendFunc</font>(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+<font color="#ff00ff">   glutSolidSphere</font>(1.25, 30, 30);
+<font color="#ff00ff">   glPopMatrix</font>();
+
+<font color="#ff00ff">   glPushMatrix</font>();
+<font color="#ff00ff">   glTranslatef</font>(-0.5, 0.0, -5.0);
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_SHININESS, mat_shininess);  
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_cyan);
+<font color="#ff00ff">   glBlendFunc</font>(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+<font color="#ff00ff">   glScalef</font>(3.0, 2.0, 1.0);
+<font color="#ff00ff">   glutSolidCube</font>(1.0);
+<font color="#ff00ff">   glPopMatrix</font>();
+
+<font color="#ff00ff">   glPushMatrix</font>();
+<font color="#ff00ff">   glBlendFunc</font>(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+<font color="#ff00ff">   glTranslatef</font>(0.0, 0.0, -10.0);
+<font color="#ff00ff">   glScalef</font>(4.0, 4.0, 3.0);
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_SHININESS, mat_shininess);  
+<font color="#ff00ff">   glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_black);
+<font color="#ff00ff">   glutSolidCube</font>(1.0);
+<font color="#ff00ff">   glPopMatrix</font>();
+ 
+}
+
+void reshape(int w, int h)
+{
+<font color="#ff00ff">  glViewport</font>(0,0, (GLsizei) w, (GLsizei) h);
+<font color="#ff00ff">  glMatrixMode</font>(GL_PROJECTION);
+<font color="#ff00ff">  glLoadIdentity</font>();
+<font color="#ff00ff">  gluPerspective</font>(30.0, (GLfloat) w /(GLfloat) h, 1.0, 20.0);
+<font color="#ff00ff">  glMatrixMode</font>(GL_MODELVIEW);
+<font color="#ff00ff">  glLoadIdentity</font>();
+<font color="#ff00ff">  gluLookAt</font>(0.0, 0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+}
+
+void idlefunc(void)
+{
+}
+
+int main(int argc, char** argv)
+{
+<font color="#ff00ff">   glutInit</font>(&argc, argv);
+<font color="#ff00ff">   glutInitDisplayMode </font>(GLUT_SINGLE | GLUT_RGB|GLUT_DEPTH);
+<font color="#ff00ff">   glutInitWindowSize </font>(350, 350);
+<font color="#ff00ff">   glutInitWindowPosition</font>(0, 0);
+<font color="#ff00ff">   glutCreateWindow </font>("Three translucent surfaces");
+   init();
+<font color="#ff00ff">   glutDisplayFunc </font>(display);
+<font color="#ff00ff">   glutReshapeFunc </font>(reshape);
+<font color="#ff00ff">   glutIdleFunc</font>(idlefunc);
+<font color="#ff00ff">   glutMainLoop</font>();
+   return 0;
+}
+
+/*
+ * Copyright (c) 1993-1997, Silicon Graphics, Inc.
+ * ALL RIGHTS RESERVED 
+ * Permission to use, copy, modify, and distribute this software for 
+ * any purpose and without fee is hereby granted, provided that the above
+ * copyright notice appear in all copies and that both the copyright notice
+ * and this permission notice appear in supporting documentation, and that 
+ * the name of Silicon Graphics, Inc. not be used in advertising
+ * or publicity pertaining to distribution of the software without specific,
+ * written prior permission. 
+ *
+ * THE MATERIAL EMBODIED ON THIS SOFTWARE IS PROVIDED TO YOU "AS-IS"
+ * AND WITHOUT WARRANTY OF ANY KIND, EXPRESS, IMPLIED OR OTHERWISE,
+ * INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY OR
+ * FITNESS FOR A PARTICULAR PURPOSE.  IN NO EVENT SHALL SILICON
+ * GRAPHICS, INC.  BE LIABLE TO YOU OR ANYONE ELSE FOR ANY DIRECT,
+ * SPECIAL, INCIDENTAL, INDIRECT OR CONSEQUENTIAL DAMAGES OF ANY
+ * KIND, OR ANY DAMAGES WHATSOEVER, INCLUDING WITHOUT LIMITATION,
+ * LOSS OF PROFIT, LOSS OF USE, SAVINGS OR REVENUE, OR THE CLAIMS OF
+ * THIRD PARTIES, WHETHER OR NOT SILICON GRAPHICS, INC.  HAS BEEN
+ * ADVISED OF THE POSSIBILITY OF SUCH LOSS, HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE
+ * POSSESSION, USE OR PERFORMANCE OF THIS SOFTWARE.
+ * 
+ * US Government Users Restricted Rights 
+ * Use, duplication, or disclosure by the Government is subject to
+ * restrictions set forth in FAR 52.227.19(c)(2) or subparagraph
+ * (c)(1)(ii) of the Rights in Technical Data and Computer Software
+ * clause at DFARS 252.227-7013 and/or in similar or successor
+ * clauses in the FAR or the DOD or NASA FAR Supplement.
+ * Unpublished-- rights reserved under the copyright laws of the
+ * United States.  Contractor/manufacturer is Silicon Graphics,
+ * Inc., 2011 N.  Shoreline Blvd., Mountain View, CA 94039-7311.
+ *
+ * OpenGL(R) is a registered trademark of Silicon Graphics, Inc.
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre></body></html>

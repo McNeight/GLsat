@@ -1,0 +1,9 @@
+<HTML>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5 COLOR="#008080"><P>RGB Values for Lights and Materials </P>
+</FONT><U><FONT SIZE=4 COLOR="#ff0000"><P>Idea </P>
+</B></U></FONT><P>The color components specified for lights mean something different than for materials. For a light, the numbers correspond to a percentage of full intensity for each color. If the R,G, and B values for a light's color are 1.0 the light is the brightest possible white. If the values are 0.5, the color is still light, but only at half intensity so it appears gray. If R=G=1 and B=0 (i.e. full red and full green with no blue), the light appears yellow. For materials the numbers correspond to the reflected proportions of those colors. So if R=1, G=0.5 and B=0 for a material, that material reflects all the incoming red light, half the incoming green, and none of the incoming blue light. </P>
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>Example</P>
+</B></U></FONT><P>If an OpenGL light has components (LR, LG, LB) and a material has the corresponding components (MR, MG, MB) then ignoring all other reflectivity effects, the light that arrives at the eye is given by (LR*MR, LG*MG, LB*MB); Similarly if we have two lights OpenGL just adds the red, green and blue components and clamps the results to 1. </P></BODY>
+</HTML>

@@ -1,0 +1,33 @@
+<HTML>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5 COLOR="#008080"><P>Polygons and Triangulation</P>
+</FONT><U><FONT SIZE=4 COLOR="#ff0000"><P>Idea:</P>
+</B></U></FONT><P>In this section we discuss some basic ideas useful in 
+designing on-screen objects.. </P>
+<B><U><FONT SIZE=4 COLOR="#ff0000">Polygon Design</FONT></U></B>
+<UL>
+<LI>Keep polygon orientations consistent. Make sure, that when viewed from the outside, all polygons on the surface are oriented in the same direction i.e. (all clockwise or all counterclockwise). Consistency in orientation is necessary for two sided lighting. </LI>
+<LI>When subdividing a surface watch out for any non triangular polygons. The three vertices of a triangle are guaranteed to lie on a plane; any polygon with four or more vertices might not. </LI>
+<LI>There is a tradeoff between how fine you want to subdivide and the rendering speed. i.e. the more the triangles used the slower the rendering. A general rule of thumb is that objects whicha are further away in a screen can be rendered with fewer polygons than objects closer to the viewpoint. </LI>
+<LI>Avoid drawing line segments that meet in a T (T-intersections). Eg., in the figure below segments AB, BC and BD make a T at the vertex B.</LI></UL>
+
+<B><U><FONT SIZE=4 COLOR="#ff0000"><P>Triangulation of Surfaces</P>
+</B></U></FONT><P>A valid triangulation of a figure X is a collection of triangles satisfying the following 2 conditions:</P>
+<P>(1) The collection together exactly covers X.</P>
+<P>(2) Two triangles in the collection are either</P>
+<DIR>
+<P>(a) disjoint (ie., do not intersect at all), or</P>
+<P>(b) intersect exactly in a vertex of both, or</P>
+<P>(c) intersect exactly in a side of both.</P>
+</DIR>
+<P>The 2 triangles BCD and DAB give a valid triangulation of the rectangle ABCD.</P>
+<P ALIGN="CENTER"><IMG SRC="Triang2.GIF" WIDTH=129 HEIGHT=136></P>
+<P>The 3 triangles ABC, ADE, and CDE do not give a valid triangulation of ABCD as ABC intersects ADE in AE, which is a side of ADE but *not* of ABC (it's just *part* of the side AC).</P>
+<P ALIGN="CENTER"><IMG SRC="Triang3.GIF" WIDTH=123 HEIGHT=148></P>
+<P>In other words, an implication of condition (2) above is that if a vertex of one triangle lies on another then it *must* also be a vertex of that triangle. The 2 triangles ABD and ACD do not form a valid triangulation of the *pentagon* ABECD as they intersect in a triangle AED which is, of course, neither a side nor vertex of either. However, triangles ABE, ADE, and DEC do form a valid triangulation of the pentagon.</P>
+<P ALIGN="CENTER"><IMG SRC="Traing4.GIF" WIDTH=101 HEIGHT=156></P>
+<P>Note: The vertices of the triangles in a triangulation do not all have to come from the vertices of the figure being triangulated. Extra vertices can be introduced (called Steiner vertices). Eg, AED, DEC,BEC, and ABE give a triangulation of ABCD with a Steiner vertex E.</P>
+<P ALIGN="CENTER"><IMG SRC="Triang5.GIF" WIDTH=108 HEIGHT=149></P>
+<P>Steiner vertices are not necessary, but, nevertheless, are often introduced to improve the "quality" of a triangulation (one popular measure of quality is the minimum of the angles in the triangles - the larger this is the better; in other words skinny triangles with small angles are undesirable). </P></BODY>
+</HTML>

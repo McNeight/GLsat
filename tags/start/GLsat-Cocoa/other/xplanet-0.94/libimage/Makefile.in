@@ -1,0 +1,24 @@
+prefix = @prefix@
+
+CC = @CC@
+CPPFLAGS += @OTHER_CPPFLAGS@ 
+
+SRCS = \
+	@GRAPHICS_SOURCE@ \
+	bmp.c \
+	image.c 
+
+OBJS = $(SRCS:.c=.o)
+
+all: libimage.a
+
+libimage.a: $(OBJS)
+	@AR@ @ARFLAGS@ $@ $(OBJS)
+	@RANLIB@
+
+.PHONY : clean distclean
+clean:
+	@RM@ -f *.o libimage.a
+
+distclean:
+	@RM@ -f *.o libimage.a Makefile config.* checkfuncs.h

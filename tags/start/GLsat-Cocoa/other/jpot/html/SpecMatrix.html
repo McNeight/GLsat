@@ -1,0 +1,115 @@
+<html><body><pre>
+<font color="#0000ff">#include</font> &lt;GL/glut.h&gt;
+
+static GLfloat light0_position[] = {0.0, 2.0, 2.0, 0.0};
+GLfloat mat_specular[]         = {1.0, 1.0, 1.0, 1.0};
+GLfloat mat_shininess[]        = {50.0};
+GLfloat mat_amb_diff_white[]   = {1.0, 1.0, 1.0, 1.0};
+GLfloat mat_amb_diff_green[]   = {0.0, 1.0, 0.0, 1.0};
+GLfloat mat_amb_diff_cyan[]    = {0.0, 1.0, 1.0, 1.0}; 
+GLfloat matrix[16] = {1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1};
+GLint i=0;
+
+void init()
+{ 
+<font color="#ff00ff">  glClearColor</font>(0.0, 0.0, 0.0, 0.0);
+<font color="#ff00ff">  glShadeModel</font>(GL_SMOOTH);   
+<font color="#ff00ff">  glEnable</font>(GL_DEPTH_TEST);
+<font color="#ff00ff">  glEnable</font>(GL_LIGHTING);
+<font color="#ff00ff">  glEnable</font>(GL_LIGHT0);
+} 
+
+
+void drawaxes()
+{
+<font color="#ff00ff">  glLineWidth</font>(2.0);
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_white);
+<font color="#ff00ff">  glBegin</font>(GL_LINES);
+<font color="#ff00ff">    glVertex3f</font>(-7,0,0);
+<font color="#ff00ff">    glVertex3f</font>(7,0,0);
+<font color="#ff00ff">    glVertex3f</font>(0,-7,0);
+<font color="#ff00ff">    glVertex3f</font>(0,7,0);
+<font color="#ff00ff">    glVertex3f</font>(0, 0, -12);
+<font color="#ff00ff">    glVertex3f</font>(0, 0, 7);
+<font color="#ff00ff">  glEnd</font>();
+}
+
+void drawlocalaxes()
+{
+<font color="#ff00ff">  glLineWidth</font>(2.0);
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_cyan);
+<font color="#ff00ff">  glBegin</font>(GL_LINES);
+<font color="#ff00ff">    glVertex3f</font>(-3,0,0);
+<font color="#ff00ff">    glVertex3f</font>(3,0,0);
+<font color="#ff00ff">    glVertex3f</font>(0,-3,0);
+<font color="#ff00ff">    glVertex3f</font>(0,3,0);
+<font color="#ff00ff">    glVertex3f</font>(0, 0, -3);
+<font color="#ff00ff">    glVertex3f</font>(0, 0, 3);
+<font color="#ff00ff">  glEnd</font>();
+}
+
+void display()
+{ 
+<font color="#ff00ff">  glClear</font>(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);   
+<font color="#ff00ff">  glLoadIdentity</font>();          /* clear the matrix */
+<font color="#ff00ff">  gluLookAt</font>(2, 4, 15, 0 , 0 , 0, 0, 1, 0);
+<font color="#ff00ff">  glLightfv</font>(GL_LIGHT0, GL_POSITION, light0_position);
+  drawaxes();
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_green);
+  matrix[0] =<A name="gohere"></a><font color="#ff0000"><b>JPOT$1</b></font>; matrix[1] = <font color="#ff0000"><b>JPOT$5</b></font>; matrix[2] = <font color="#ff0000"><b>JPOT$9</b></font>; matrix[3] = <font color="#ff0000"><b>JPOT$13</b></font>;
+  matrix[4] = <font color="#ff0000"><b>JPOT$2</b></font>; matrix[5] = <font color="#ff0000"><b>JPOT$6</b></font>; matrix[6] = <font color="#ff0000"><b>JPOT$10</b></font>; matrix[7] = <font color="#ff0000"><b>JPOT$14</b></font>;
+  matrix[8] = <font color="#ff0000"><b>JPOT$3</b></font>; matrix[9] = <font color="#ff0000"><b>JPOT$7</b></font>; matrix[10] = <font color="#ff0000"><b>JPOT$11</b></font>; matrix[11] = <font color="#ff0000"><b>JPOT$15</b></font>;
+  matrix[12] = <font color="#ff0000"><b>JPOT$4</b></font>; matrix[13] = <font color="#ff0000"><b>JPOT$8</b></font>; matrix[14] = <font color="#ff0000"><b>JPOT$12</b></font>; matrix[15] = <font color="#ff0000"><b>JPOT$16</b></font>;
+
+<font color="#ff00ff">  glMultMatrixf</font>(matrix);
+<font color="#ff00ff">  glutSolidTeapot</font>(1.0);
+  drawlocalaxes();
+<font color="#ff00ff">  glFlush</font>();
+}
+
+void reshape (int w, int h)
+{
+<font color="#ff00ff">  glViewport</font>(0,0, (GLsizei) w, (GLsizei) h);
+<font color="#ff00ff">  glMatrixMode</font>(GL_PROJECTION);
+<font color="#ff00ff">  glLoadIdentity</font>();
+<font color="#ff00ff">  glFrustum</font>(-1.0, 1.0, -1.0, 1.0, 2.0, 40.0);
+<font color="#ff00ff">  glMatrixMode</font>(GL_MODELVIEW);
+}
+
+int main(int argc, char** argv)
+{	
+<font color="#ff00ff">  glutInit</font>(&argc, argv);
+<font color="#ff00ff">  glutInitDisplayMode</font>(GLUT_SINGLE |GLUT_RGB|GLUT_DEPTH);
+<font color="#ff00ff">  glutInitWindowSize</font>(475, 475);
+<font color="#ff00ff">  glutInitWindowPosition</font>(0, 0);
+<font color="#ff00ff">  glutCreateWindow</font>("Specifying Matrices");
+  init(); 
+<font color="#ff00ff">  glutDisplayFunc</font>(display);
+<font color="#ff00ff">  glutReshapeFunc</font>(reshape);
+<font color="#ff00ff">  glutMainLoop</font>();
+  return 0;
+}
+	
+
+/* 
+ *  By Binh Phu Le
+ *  parts of this program might have been adopted from or inspired by 
+ *  sample programs in 
+ *  "OpenGL Programming Guide", 
+ *  Copyright (c) 1993-1997, Silicon Graphics, Inc.
+ *  "Interactive Computer Graphics"  
+ *  Copyright (c) 1997, Addison-Wesley,
+ *  and/or those written by Mahesh Kumar
+ *  and/or those written by Dr. Sumanta Guha guha@cs.uwm.edu
+ *  and/or those written by Dr. Ichiro Suzuki suzuki@cs.uwm.edu
+ */
+
+
+
+
+
+
+
+
+
+</pre></body></html>

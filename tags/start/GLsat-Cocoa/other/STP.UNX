@@ -1,0 +1,9 @@
+/*  defaults for files */
+
+#define NasaFile      "../STP/nasa.dat"
+#define KeplerFile    "../STP/kepler.dat"
+#define RevCorFile    "../STP/revcor.dat"
+#define ModeFile      "../STP/mode.dat"
+#define MyQthFile     "../STP/myqth.dat"
+#define DxQthFile     "../STP/qth.dat"
+#define FlagFile      "../STP/stp.ini"

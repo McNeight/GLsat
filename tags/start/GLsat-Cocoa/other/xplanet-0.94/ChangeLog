@@ -1,0 +1,425 @@
+Version 0.94 (released 21 Mar 2002)
+
+	* Minor changes to allow compilation with Sun Workshop compiler.
+
+	* Great arc files may now be placed in an "arcs" subdirectory.
+
+	* Added the -mapbounds options.  Xplanet now works with maps that
+	don't cover the whole globe.  This is useful if the user has a
+	hi-res map and wants to display a small area.
+
+	* Added the -print_coordinates option.  Xplanet will print out the
+	observer's location and then exit.  This might be useful for
+	satellite tracking, or getting the position of the sun or moon.
+
+	* Added the -start_cloud and -stop_cloud options to xplanetbg.
+	They are cloud images assumed to be at the start and end times of
+	the run.  Intermediate cloud images are interpolated linearly.
+	This only works if the -num_times option is also used.
+
+	* Added the -specular_file option.  This adds the sunlight
+	reflected off of the ocean. 
+	
+	* Set LC_NUMERIC to C so that satellite marker files get written
+	properly for some locales.
+
+	* Added the -spacing option to set spacing between great arc
+	points.
+
+	* Added the "symbolsize" option to the marker file.
+
+	* Added the -hibernate and -idlewait options to xplanetbg.
+	Contributed by Leif Van Horn.
+
+Version 0.93 (released 22 Jan 2002)
+
+	* Colors may be specified as hex values (e.g. 0xff = blue,
+	0xff0000 = red)
+
+	* Added timezone keyword to marker file.
+
+	* Updated marker file for earth, added marker files in Chinese and
+	Greek, contributed by Tomohiro Kubota.
+
+Version 0.92 (released 2001 Dec 30)
+
+	* Added locale support for label and markers, as well as marker
+	file transliterations in Cyrillic, Japanese Katakana, and Korean
+	Hangul, contributed by Tomohiro Kubota.  Additional
+	transliterations should go into the appropriate subdirectories of
+	$prefix/share/xplanet/markers/locale.
+
+	* Added the -labelformat option.
+
+Version 0.91 (released 2001 Dec 20)
+
+	* Added the -labelrot option.
+	
+	* Added the -north option, contributed by Frank Solensky.
+	
+	* Modified tzcoord.pl as suggested by Marcus Harnish to output
+	-lat -lon instead of -observer.  Removed the -observer option.
+
+	* -transpng now takes an argument so that "-transpng filename"
+	can be used instead of "-transpng -output filename"
+	
+	* Removed ImageMagick support.
+
+	* An id of 0 in the satellite file will plot all satellites in the
+	TLE file not otherwise specified in the satellite file,
+	contributed by Marian Aldenhövel.
+
+	* Added limb darkening in the orthographic and hemispherical
+	projections.
+
+	* Made some Makefile modifications.
+
+Version 0.90 (released 2001 Oct 14)
+
+        * Added -transpng option.
+
+	* Added -sattrackid option.
+
+	* Improved Saturn's shadow on the rings.  Added satellite
+	tracking.
+
+	* Created libannotate library.
+
+	* Created libdisplay and libprojection libraries.
+
+	* Created libsgp4sdp4 library based on sgp4sdp4-0.1 beta from
+	Neoklis Kyriazis (http://leonardo.spidernet.net/Copernicus/22420)
+
+	* Added support for multiple great arc files.  Started creating
+	Satellite class.
+
+Version 0.84 (released 2001 Aug 20)
+
+	* Improved rendering of Saturn's rings.
+	
+	* Changed xplanetbg -command option to -prev_command and
+	-post_command.
+
+	* Added -labelname option.
+
+	* Improved parsing of marker files.
+
+	* Added --with-gl and --with-glut options to configure script.
+
+Version 0.83 (released 2001 Jun 6)
+
+	* Added Saturn's rings.
+
+Version 0.82 (released 2001 May 02)
+
+	* Added support for multiple marker files.
+
+	* Started writing DisplayMacAqua class.
+
+	* Made some changes to get Xplanet to compile on Darwin with X
+	windows.
+
+	* Added -fontsize option.
+
+	* Added DisplayX11Base class for using FreeType fonts instead of
+	X11 fonts if desired.
+
+	* Added -markerbounds option.  Thanks to James Riley
+	(James_Riley@bnz.co.nz) for the suggestion.
+
+Version 0.81 (released 2001 Apr 03)
+
+	* -mapdir and -fontdir are now searched first before any other
+	directories.
+
+	* Added -command option to xplanetbg.
+	
+	* Added "image", "position", and "transparent" keywords to marker
+	file.
+
+	* Replaced most of the char * variables by strings.
+	
+Version 0.80 (released 2001 Mar 16)
+
+	* Added -xscreensaver option for compatibility with xscreensaver.
+
+	* Added a fonts/ directory and helr____.ttf from the
+	OpenOffice.org distribution.
+
+	* Moved image and marker files into $(prefix)/share/xplanet/images
+	and markers, respectively.
+
+	* Added FreeType support for annotation in OUTPUT mode without
+	ImageMagick.  Also added rgb.txt to the distribution for mapping
+	colors to RGB values on non X11 systems.
+
+	* Added "smart" placement of markers.
+
+	* Changed -cloud_enhance to -cloud_gamma.
+
+	* Wrote DisplayMagickpp class, which uses the Magick++ API to
+	replace DisplayMagick.
+
+	* Wrote DisplayMSWin class, which works with the Cygwin
+	environment on Windows.  Thanks to Nigel Stewart for a lot of help
+	with this.
+
+	* Reorganized xroutines.cc into Display* classes.
+
+	* Added -greatarcfile option.
+
+	* Added -cloud_enhance option.
+
+	* Added Peters projection, contributed by Martin Pool
+	(mbp@linuxcare.com.au).
+	
+	* Added Ancient and Hemispherical projections, contributed by
+	Richard Rognlie <rrognlie@gamerz.net>
+	
+Version 0.73 (released 2000 Aug 03)
+
+	* Added -mapdir option.  When looking for an image, Xplanet will
+	first look in the current directory, then the directory specified
+	by -mapdir, and finally the prefix directory specified at
+	configure time.
+
+	* Added a tzcoord.pl manpage, written by Gopal Narayanan
+	(gopal@debian.org).  Also closed some other bugs reported through
+	debian as suggested by Gopal and Jay Treacy (treacy@debian.org),
+	mostly where xplanet didn't deal gracefully with an unknown option
+	or a file it can't find.
+
+Version 0.72 (released 2000 Jul 16)
+
+	* Smoothed out the seam at the 180 Longitude line in the SSEC
+	cloud maps.
+	
+	* Added a patch from James Baughman to select the proper visual on
+	an X display which has multiple visuals with the default depth and
+	class.  Added some code to enhance the contrast of the SSEC cloud
+	image.
+
+Version 0.71 (released 2000 Jul 02)
+	
+	* Added -cloud_threshold option.
+
+	* Added xp_getopt_long function.  This is a wrapper around the GNU
+	getopt_long_only function.  I did this because the Sun and SGI C++
+	compilers don't like getopt.h, but their C compilers accept it
+	with no problem.
+
+Version 0.70 (released 2000 Jun 26)
+
+	* Improved GIF reader/writer.
+	
+	* Got x & y positioning with -geometry flag to work.  Added the
+	-fullscreen option.
+	
+	* Created a new marker file for earth.  The old one was from
+	xearth, which isn't under the GPL.
+
+	* Added the other outer planets and Titan.
+
+	* Added -cloud_ssec option.  This takes an image from
+	http://www.ssec.wisc.edu/data/comp/latest_moll.gif, removes the
+	pink continent lines, reprojects to rectangular and overlays onto
+	the image.  GIF support works well enough for this but otherwise
+	doesn't work too well.
+
+	* Added ImageMagick 5.2.0 support.
+
+	* Added Jupiter and the Galilean satellites.  The -body option now
+	takes names instead of numbers.
+	
+	* Rewrote some labeling code I had lifted from xearth, which isn't
+	under the GPL.
+
+	* Added TIFF support.  Started adding other planets and
+	satellites.
+
+	* Added PNG support.  Added -terminator option, which places
+	observer over the terminator and rotates the globe so that the
+	terminator is vertical.  It's still off by a few degrees near
+	solstice at mid-high latitudes.
+
+	* Removed Imlib completely.  Xplanet now reads and writes JPEG and
+	PNM files.
+
+	* Started writing new image library to replace Imlib for reading
+	and writing image files.
+
+Version 0.60 (released 2000 May 09)
+
+	* Added decompose_pixmap routine which can be used instead of
+	Imlib_create_image_from_drawable.  Also added 8 bit PseudoColor
+	support.
+	
+	* Added create_pixmap routine which can be used instead of
+	Imlib_render.
+
+	* Xplanet should compile with either ImageMagick 4.2.* or
+	ImageMagick 5.1.1 (API changed between the two).  Added
+	--with-magick option to configure script.  Compiling with
+	ImageMagick is disabled by default.  Fixed animate mode to work
+	with Mesa 3.1.
+
+	* Added code to use ImageMagick library to write output file in
+	case DISPLAY variable isn't set.
+
+	* Added "color" and "font" keywords to marker file.
+
+	* Added changes suggested by Daniel Martin to compute proper
+	-rotate values when running xplanetbg in -orbit mode.  Also
+	modified aclocal.m4 to link to -lGL and -lGLU instead of -lMesaGL
+	and -lMesaGLU.
+
+Version 0.50 (released 2000 Feb 22)
+
+	* Made Xplanet more compatible with xearth: getopt_long_only is
+	now used to parse options, so options may now be preceded by "-"
+	as well as "--".  Added support for the "align" keyword in the
+	marker file.  Changed --marker_file to --markerfile and --star_den
+	to --starfreq.
+
+	* Edited autoconf macros to add --disable-anim.  Xplanet will now
+	build without OpenGL/Mesa/glut.  The --animate option will not
+	work in this case.
+
+	* Added ProjectionAzimuthal.class.  Also projections are now
+	specified as an argument to --projection (i.e. --projection
+	mercator instead of --mercator).
+
+	* Added ProjectionMollweide class.
+
+	* Added ProjectionMercator class.
+
+	* Started restructuring the code - created Projection class and
+	derived classes ProjectionRectangular and ProjectionOrthographic.
+	This will allow the easy incorporation of new projections, like
+	Mercator & Mollweide.  Also moved X & imlib dependent code into
+	xroutines.cc, to ease porting to other windowing systems.
+
+	* The "mercator" projection is actually a rectangular projection.
+	All instances of "mercator", including the --mercator option, have
+	been changed to "rectangular".
+
+	* Modified options.cc and xplanetbg.cc to use getopt_long().
+
+	* Fixed a bug in tkxplanet: changed --markerfile to --marker_file.
+
+Version 0.45 (released 1999 Dec 29)
+
+	* Added --nice option to xplanetbg.
+
+	* Fixed a bug where --earthside didn't work properly for other
+	planets.  Xplanet 0.44 released.
+
+	* Sped up blending code a bit.
+
+Version 0.43 (released 1999 Dec 06)
+
+	* Fixed a bug where the --longitude option didn't work properly
+	for the other planets.
+
+	* Fixed a bug where labels & markers weren't appearing for
+	--window or --output options.  Added --swap option to swap planes
+	when writing image files on big endian machines, --notransparency
+	option to disable updating the background pixmap for Eterms and
+	aterms, and --localtime option.  --longitude option no longer
+	implies --orthographic.
+	
+Version 0.42 (released 1999 Nov 22)
+
+	* Added code to update background pixmaps for Eterms and aterms
+	with transparency enabled.  Also generate icon pixmap for --window
+	option.  Doesn't work with xplanetbg though.
+
+	* Fixed a bug where markers weren't positioned properly if
+	--center was specified.  Thanks to John Tillema for finding this.
+	Xplanet 0.41 released.
+
+Version 0.40 (released 1999 Oct 20)
+	
+	* Added --observer and --sunrel options.
+	
+	* Added --center option.
+
+	* Cleaned up tkxplanet.
+	
+	* --demfile and --demscale work better now.
+
+	* Changed all ftime() calls to gettimeofday().
+	
+	* KDE and GNOME default to putting icons in the upper left, so
+	moved default label position to upper right.
+
+	* Started writing tkxplanet.
+	
+	* Fixed a dangling pointer which caused xplanet to fail to render
+	on some machines.
+
+	* Started writing --demfile and --demscale options.
+
+	* Allow background stars to have variable brightnesses.  Added
+	--background option.
+
+	* Added --num_times and --output options to xplanetbg.
+
+	* Check if we're on a big-endian machine when using --output
+	option.
+
+Version 0.30 (released 1999 Jul 8)
+
+	* Added listener for "delete window" when in --window mode.
+
+	* Improved reading of marker files.
+
+	* Added --body option for the moon.
+
+	* Added --body option and parameters for Mercury, Venus, and Mars.
+	Also added --color, --font, and --labelpos options.
+
+	* Added the --timewarp option.
+
+	* Added the --date option.
+	
+	* Rewrote the create_merc subroutine for better terminator
+	shading.  Added --random option and Detlev Zundel's code for the
+	--orbit option.
+
+	* Modified configure script to look for OpenGL/Mesa.
+
+Version 0.20 (released 1999 Jun 13)
+
+	* Changed --ppmfile option to --output.
+
+	* Added --marker option.  Can read markers from xearth files.
+
+	* Added titles to windows. Renamed xplanetroot to xplanetbg.
+	Added --label option.
+	
+	* Xplanet and xplanetroot can render into its own window, added
+	--window and --geometry options.
+	
+	* Added --radius and --range options.
+
+	* Moved parts of sunpos.cc into util.cc.  Added --moonside option.
+
+	* Added --gridspace option, created autoconf files.
+
+Version 0.11 (released 1999 May 18)
+
+	* Added --rotate option, allows for rotation of the orthographic
+	projection so that north isn't at top.
+
+	* Fixed a bug in process_args: strlen(argv[i]+1) should have been
+	strlen(argv[i]) + 1.  Thanks to Per Erik Stendahl and Larry Reeder
+	for catching this.
+
+	* Also added HP-UX flags in Makefile and made minor changes to
+	allow compilation with HP's aCC compiler.  Thanks to James
+	Baughman for this.
+
+	* Added --blend option, like GL_LINEAR in OpenGL texture mapping.
+
+	* Added --star_den parameter, adds random stars like xearth.

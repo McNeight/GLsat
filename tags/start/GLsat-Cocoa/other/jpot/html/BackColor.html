@@ -1,0 +1,56 @@
+<html><body><pre>
+<font color="#0000ff">#include</font> &lt;GL/glut.h&gt;
+
+
+void init()
+{  
+<font color="#ff00ff">  glClearColor</font>(0.0, 0.0, 0.0, 0.0);
+<font color="#ff00ff">  glShadeModel</font>(GL_SMOOTH);
+<font color="#ff00ff">  glMatrixMode</font>(GL_PROJECTION);
+<font color="#ff00ff">  glLoadIdentity</font>();
+<font color="#ff00ff">  glOrtho</font>(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
+}
+
+void display(void)
+{  
+<font color="#ff00ff">   glClearColor</font>(<A name="gohere"></a><font color="#ff0000"><b><font color="#ff0000"><b>JPOT$1</b></font></b></font>, <font color="#ff0000"><b>JPOT$2</b></font>, <font color="#ff0000"><b><font color="#ff0000"><b>JPOT$3</b></font></b></font>, 0.0);
+<font color="#ff00ff">   glClear</font>(GL_COLOR_BUFFER_BIT);
+<font color="#ff00ff">   glFlush</font>();
+}
+
+/*
+ *  Declare initial window size, position, and display mode
+ *  (single buffer and RGBA).  Call initialization routines.
+ *  Register callback function to display graphics.
+ *  Enter main loop and process events.
+ */
+
+int main(int argc, char* argv[])
+{
+<font color="#ff00ff">  glutInit</font>(&argc, argv);
+<font color="#ff00ff">  glutInitDisplayMode</font>(GLUT_SINGLE|GLUT_RGB);
+<font color="#ff00ff">  glutInitWindowSize</font>(250, 250);
+<font color="#ff00ff">  glutInitWindowPosition</font>(0,0);
+<font color="#ff00ff">  glutCreateWindow</font>("Background Color");
+  init();
+<font color="#ff00ff">  glutDisplayFunc</font>(display);
+<font color="#ff00ff">  glutIdleFunc</font>(idlefunc);
+<font color="#ff00ff">  glutMainLoop</font>();
+  return 0;
+}
+
+/* 
+ *  by Binh Phu Le 
+ *  parts of this program might have been adopted from or inspired by 
+ *  sample programs in 
+ *  "OpenGL Programming Guide", 
+ *  Copyright (c) 1993-1997, Silicon Graphics, Inc.
+ *  "Interactive Computer Graphics"  
+ *  Copyright (c) 1997, Addison-Wesley,
+ *  and/or those written by Dr. Sumanta Guha guha@cs.uwm.edu
+ *  and/or those written by Dr. Ichiro Suzuki suzuki@cs.uwm.edu
+ */
+
+
+
+</pre></body></html>

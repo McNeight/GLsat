@@ -1,0 +1,30 @@
+<HTML>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<PRE>
+<B><FONT SIZE=4 COLOR="#008080">Multiple Lights 
+</B></FONT>
+<B><U><FONT COLOR="#ff0000">Idea
+</B></U></FONT>Here we have two lights.  A regular light (Light 1) and a spotlight.  In the default condition both lights are enabled.
+Right clicking the mouse on the sphere will give a pop up menu.  Use this and the following sections to become more familiarized with spot light settings and effects.
+
+<B><U><FONT COLOR="#ff0000">Experiment 
+</B></U></FONT>
+1.  Disable Light1.  You see only the spotlight effect
+2.  Enable Light1.
+3.  Set the Diffuse component of the spotlight to red. Why do we still see a white patch to the right of the spot? Can you get rid of it?
+4.  Set the Diffuse component to white light. Now set the ambient component to red.  What happens to the sphere and why?
+5.  Reset the ambient component to the default condition and disable Light1 to better see the next few examples.
+6.  Set the specular component to all red.  Does this answer question 3?
+7.  Similarly try out the different positions for the spotlight.  When changing the spot light position, one has to correctly specify its direction also.  Usually the negative of the position vector will yield a suitable direction.
+8.  With Light1 still disabled, try out the various attenuation parameters. In the default condition the constant attenuation was set at 1.5, the linear attenuation at 0.5 and the quadratic attenuation at 0.2. Which one of these attenuation factors do you think has the greatest effect?
+9.  The spot can be made bigger or smaller by specifying a bigger or smaller cutoff angle. Here the default cutoff angle is 10 degrees.  Try the other values provided. What happens when the cutoff angle is 180?
+
+<B><U><FONT COLOR="#ff0000">Answers
+</B></U></FONT>
+3.  That is the specular component.  Try setting the specular component to be the same as the diffuse component to remove the red patch.
+4.  Ambient lighting contributes to the overall environmental light and hence bathes the entire sphere in a reddish hue.
+8.  Quadratic attenuation followed by linear attenuation and finally constant attenuation factor.
+9.  At a cutoff angle of 180 degrees the cone angle (twice the cutoff angle) is now 360 degrees. Hence it is no longer a spotlight, but a regular light, and the whole sphere is illuminated instead of just a part of it.
+</PRE></BODY>
+</HTML>

@@ -1,0 +1,381 @@
+<html><body><pre>
+<font color="#0000ff">#include</font> &lt;GL/glut.h&gt;
+<font color="#0000ff">#include</font> &lt;stdlib.h&gt;
+
+static GLfloat light0_position[] = {1.0, 3.0, 1.0, 0.0};
+GLfloat mat_amb_diff_white[]   = {1.0, 1.0, 1.0, 1.0};
+GLfloat mat_amb_diff_red[]     = {1.0, 0.0, 0.0, 1.0};
+GLfloat mat_amb_diff_green[]   = {0.0, 1.0, 0.0, 1.0};
+GLfloat mat_amb_diff_blue[]    = {0.0, 0.0, 1.0, 1.0};
+GLfloat mat_amb_diff_yellow[]  = {1.0, 1.0, 0.0, 1.0}; 
+GLfloat mat_amb_diff_magenta[] = {1.0, 0.0, 1.0, 1.0}; 
+GLfloat mat_amb_diff_cyan[]    = {0.0, 1.0, 1.0, 1.0}; 
+GLint id1, id2;
+
+void drawglobalaxes()
+{
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_white);
+<font color="#ff00ff">  glLineWidth </font>(2.0);
+
+<font color="#ff00ff">  glBegin</font>(GL_LINES);
+<font color="#ff00ff">    glVertex3f</font>(-7,0,0);
+<font color="#ff00ff">    glVertex3f</font>(0,0,0);
+<font color="#ff00ff">  glEnd</font>();
+	
+<font color="#ff00ff">  glBegin</font>(GL_LINES);
+<font color="#ff00ff">    glVertex3f</font>(0,0,0);
+<font color="#ff00ff">    glVertex3f</font>(7,0,0);
+<font color="#ff00ff">  glEnd</font>();
+	
+<font color="#ff00ff">  glBegin</font>(GL_LINES);   
+<font color="#ff00ff">    glVertex3f</font>(0, -7, 0);
+<font color="#ff00ff">    glVertex3f</font>(0, 0, 0);
+<font color="#ff00ff">  glEnd</font>();
+
+<font color="#ff00ff">  glBegin</font>(GL_LINES);   
+<font color="#ff00ff">    glVertex3f</font>(0, 0, 0);
+<font color="#ff00ff">    glVertex3f</font>(0, 7, 0);
+<font color="#ff00ff">  glEnd</font>();
+	
+<font color="#ff00ff">  glBegin</font>(GL_LINES);   
+<font color="#ff00ff">    glVertex3f</font>(0, 0, 0);
+<font color="#ff00ff">    glVertex3f</font>(0, 0, -7);
+<font color="#ff00ff">  glEnd</font>();
+	
+<font color="#ff00ff">  glBegin</font>(GL_LINES);   
+<font color="#ff00ff">    glVertex3f</font>(0, 0, 0);
+<font color="#ff00ff">    glVertex3f</font>(0, 0, 7);
+<font color="#ff00ff">  glEnd</font>();
+}
+
+
+void drawlocalaxes()
+{
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_cyan);
+<font color="#ff00ff">  glLineWidth </font>(1.5);
+
+<font color="#ff00ff">  glBegin</font>(GL_LINES);
+<font color="#ff00ff">    glVertex3f</font>(-2.8,0,0);
+<font color="#ff00ff">    glVertex3f</font>(0,0,0);
+<font color="#ff00ff">  glEnd</font>();
+	
+<font color="#ff00ff">  glBegin</font>(GL_LINES);
+<font color="#ff00ff">    glVertex3f</font>(0,0,0);
+<font color="#ff00ff">    glVertex3f</font>(2.8,0,0);
+<font color="#ff00ff">  glEnd</font>();
+	
+<font color="#ff00ff">  glBegin</font>(GL_LINES);   
+<font color="#ff00ff">    glVertex3f</font>(0, -2.8, 0);
+<font color="#ff00ff">    glVertex3f</font>(0, 0, 0);
+<font color="#ff00ff">  glEnd</font>();
+	
+<font color="#ff00ff">  glBegin</font>(GL_LINES);   
+<font color="#ff00ff">    glVertex3f</font>(0, 0, 0);
+<font color="#ff00ff">    glVertex3f</font>(0, 2.8, 0);
+<font color="#ff00ff">  glEnd</font>();
+	
+<font color="#ff00ff">  glBegin</font>(GL_LINES);   
+<font color="#ff00ff">    glVertex3f</font>(0, 0, 0);
+<font color="#ff00ff">    glVertex3f</font>(0, 0, -2.8);
+<font color="#ff00ff">  glEnd</font>();
+	
+<font color="#ff00ff">  glBegin</font>(GL_LINES);   
+<font color="#ff00ff">    glVertex3f</font>(0, 0, 0);
+<font color="#ff00ff">    glVertex3f</font>(0, 0, 2.8);
+<font color="#ff00ff">  glEnd</font>();
+}
+
+
+void drawcube() {
+
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_red);
+  /* draw the back */
+<font color="#ff00ff">  glBegin</font>(GL_POLYGON);
+<font color="#ff00ff">    glNormal3f</font>(0.0, 0.0, -1.0);
+<font color="#ff00ff">    glVertex3f</font>(1.0, -1.0, -1.0);
+<font color="#ff00ff">    glVertex3f</font>(-1.0, -1.0, -1.0);
+<font color="#ff00ff">    glVertex3f</font>(-1.0, 1.0, -1.0);
+<font color="#ff00ff">    glVertex3f</font>(1.0, 1.0, -1.0);
+<font color="#ff00ff">  glEnd</font>();
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_green);
+  /* draw the left */
+<font color="#ff00ff">  glBegin</font>(GL_POLYGON);
+<font color="#ff00ff">    glNormal3f</font>(-1.0, 0.0, 0.0);
+<font color="#ff00ff">    glVertex3f</font>(-1.0, -1.0, -1.0);
+<font color="#ff00ff">    glVertex3f</font>(-1.0, -1.0, 1.0);
+<font color="#ff00ff">    glVertex3f</font>(-1.0, 1.0, 1.0);
+<font color="#ff00ff">    glVertex3f</font>(-1.0, 1.0, -1.0);
+<font color="#ff00ff">  glEnd</font>();
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_blue);
+  /* draw the right */
+<font color="#ff00ff">  glBegin</font>(GL_POLYGON);
+<font color="#ff00ff">    glNormal3f</font>(1.0, 0.0, 0.0);
+<font color="#ff00ff">    glVertex3f</font>(1.0, -1.0, 1.0);
+<font color="#ff00ff">    glVertex3f</font>(1.0, -1.0, -1.0);
+<font color="#ff00ff">    glVertex3f</font>(1.0, 1.0, -1.0);
+<font color="#ff00ff">    glVertex3f</font>(1.0, 1.0, 1.0);
+<font color="#ff00ff">  glEnd</font>();
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_yellow);
+  /* draw the front */
+<font color="#ff00ff">  glBegin</font>(GL_POLYGON);
+<font color="#ff00ff">    glNormal3f</font>(0.0, 0.0, 1.0);
+<font color="#ff00ff">    glVertex3f</font>(-1.0, -1.0, 1.0);
+<font color="#ff00ff">    glVertex3f</font>(1.0, -1.0, 1.0);
+<font color="#ff00ff">    glVertex3f</font>(1.0, 1.0, 1.0);
+<font color="#ff00ff">    glVertex3f</font>(-1.0, 1.0, 1.0);
+<font color="#ff00ff">  glEnd</font>();
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_magenta);
+  /* draw the bottom */
+<font color="#ff00ff">  glBegin</font>(GL_POLYGON);
+<font color="#ff00ff">    glNormal3f</font>(0.0, -1.0, 0.0);
+<font color="#ff00ff">    glVertex3f</font>(-1.0, -1.0, -1.0);
+<font color="#ff00ff">    glVertex3f</font>(1.0, -1.0, -1.0);
+<font color="#ff00ff">    glVertex3f</font>(1.0, -1.0, 1.0);
+<font color="#ff00ff">    glVertex3f</font>(-1.0, -1.0, 1.0);
+<font color="#ff00ff">  glEnd</font>();
+<font color="#ff00ff">  glMaterialfv</font>(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff_cyan);
+  /* draw the top */
+<font color="#ff00ff">  glBegin</font>(GL_POLYGON);
+<font color="#ff00ff">    glNormal3f</font>(0.0, 1.0, 0.0);
+<font color="#ff00ff">    glVertex3f</font>(1.0, 1.0, -1.0);
+<font color="#ff00ff">    glVertex3f</font>(-1.0, 1.0, -1.0);
+<font color="#ff00ff">    glVertex3f</font>(-1.0, 1.0, 1.0);
+<font color="#ff00ff">    glVertex3f</font>(1.0, 1.0, 1.0);
+<font color="#ff00ff">  glEnd</font>();
+}
+
+
+void init()
+{
+<font color="#ff00ff">  glClearColor</font>(0.0, 0.0, 0.0, 0.0);
+<font color="#ff00ff">  glShadeModel</font>(GL_SMOOTH);
+<font color="#ff00ff">  glEnable</font>(GL_DEPTH_TEST);
+<font color="#ff00ff">  glEnable</font>(GL_LIGHTING);
+<font color="#ff00ff">  glEnable</font>(GL_LIGHT0);
+}
+
+
+void reshape (int w, int h)
+{
+<font color="#ff00ff">  glViewport</font>(0, 0, (GLsizei) w, (GLsizei) h);
+<font color="#ff00ff">  glMatrixMode</font>(GL_PROJECTION);
+<font color="#ff00ff">  glLoadIdentity</font>();
+<font color="#ff00ff">  gluPerspective</font>(45.0, (GLfloat) w / (GLfloat) h, 0.1, 50.0);
+<font color="#ff00ff">  glMatrixMode</font>(GL_MODELVIEW);
+}
+
+
+void display1()
+{     
+  GLint i = 0;
+
+<font color="#ff00ff">  glutSetWindow</font>(id1);
+<font color="#ff00ff">  glPushMatrix</font>();
+<font color="#ff00ff">  glLoadIdentity</font>();
+<font color="#ff00ff">  gluLookAt</font>(5, 12, 16, 0, 0, 0, 0, 1, 0);
+<font color="#ff00ff">  glLightfv</font>(GL_LIGHT0, GL_POSITION, light0_position);
+  drawglobalaxes();
+
+  for(i = 0; i &lt;= 30; i++)
+    {  
+<font color="#ff00ff">      glClearColor</font>(0.0, 0.0, 0.0, 0.0);
+<font color="#ff00ff">      glClear</font>(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+      drawglobalaxes();
+<font color="#ff00ff">      glPushMatrix</font>();
+        drawcube();
+<font color="#ff00ff">      glPopMatrix</font>();
+<font color="#ff00ff">      glutSwapBuffers</font>();
+    }
+
+  for(i = 0; i &lt;= 30; i++)
+    {  
+<font color="#ff00ff">      glClearColor</font>(0.0, 0.0, 0.0, 0.0);
+<font color="#ff00ff">      glClear</font>(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+      drawglobalaxes();
+<font color="#ff00ff">      glPushMatrix</font>();
+<font color="#ff00ff">        glTranslatef</font>(0.2*i, 0.0, 0.0);
+        drawcube();
+<font color="#ff00ff">      glPopMatrix</font>();
+<font color="#ff00ff">      glutSwapBuffers</font>();
+    }
+	
+  for(i = 0; i &lt;= 30; i++)
+    {  
+<font color="#ff00ff">      glClearColor</font>(0.0, 0.0, 0.0, 0.0);
+<font color="#ff00ff">      glClear</font>(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+      drawglobalaxes();
+<font color="#ff00ff">      glPushMatrix</font>();
+<font color="#ff00ff">        glRotatef</font>(3.0*i, 0.0, 1.0, 0.0);
+<font color="#ff00ff">        glTranslatef</font>(6.0, 0.0, 0.0);
+	drawcube();
+<font color="#ff00ff">      glPopMatrix</font>();
+<font color="#ff00ff">      glutSwapBuffers</font>();
+    }
+        
+    for(i = 0; i &lt;= 30; i++)
+      {  
+<font color="#ff00ff">        glClearColor</font>(0.0, 0.0, 0.0, 0.0);
+<font color="#ff00ff">	glClear</font>(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+	drawglobalaxes();
+<font color="#ff00ff">	glPushMatrix</font>();
+<font color="#ff00ff">	  glTranslatef</font>(0.1*i, 0.0, 0.0);
+<font color="#ff00ff">	  glRotatef</font>(90, 0.0, 1.0, 0.0);
+<font color="#ff00ff">	  glTranslatef</font>(6.0, 0.0, 0.0);
+	  drawcube();
+<font color="#ff00ff">	glPopMatrix</font>();
+<font color="#ff00ff">	glutSwapBuffers</font>();
+      }
+
+<font color="#ff00ff">    glPopMatrix</font>(); 
+<font color="#ff00ff">    glutSwapBuffers</font>();    
+<font color="#ff00ff">    glFlush</font>();
+}
+
+void display2()
+{     
+  GLint i = 0;
+
+<font color="#ff00ff">  glutSetWindow</font>(id2);
+<font color="#ff00ff">  glPushMatrix</font>();
+<font color="#ff00ff">  glLoadIdentity</font>();
+<font color="#ff00ff">  gluLookAt</font>(5, 12, 16, 0, 0, 0, 0, 1, 0);
+<font color="#ff00ff">  glLightfv</font>(GL_LIGHT0, GL_POSITION, light0_position);
+  drawglobalaxes();
+
+  for(i = 0; i &lt;= 30; i++)
+    {  
+<font color="#ff00ff">      glClearColor</font>(0.0, 0.0, 0.0, 0.0);
+<font color="#ff00ff">      glClear</font>(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+      drawglobalaxes();
+<font color="#ff00ff">      glPushMatrix</font>();
+        drawlocalaxes();
+<font color="#ff00ff">      glPopMatrix</font>();
+<font color="#ff00ff">      glutSwapBuffers</font>();
+    }
+
+  for(i = 0; i &lt;= 30; i++)
+    {  
+<font color="#ff00ff">      glClearColor</font>(0.0, 0.0, 0.0, 0.0);
+<font color="#ff00ff">      glClear</font>(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+      drawglobalaxes();
+<font color="#ff00ff">      glPushMatrix</font>();
+<font color="#ff00ff">        glTranslatef</font>(0.1*i, 0.0, 0.0);
+        drawlocalaxes();
+<font color="#ff00ff">      glPopMatrix</font>();
+<font color="#ff00ff">      glutSwapBuffers</font>();
+    }
+	
+  for(i = 0; i &lt;= 30; i++)
+    {  
+<font color="#ff00ff">      glClearColor</font>(0.0, 0.0, 0.0, 0.0);
+<font color="#ff00ff">      glClear</font>(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+      drawglobalaxes();
+<font color="#ff00ff">      glPushMatrix</font>();
+<font color="#ff00ff">        glTranslatef</font>(3.0, 0.0, 0.0);
+<font color="#ff00ff">        glRotatef</font>(3.0*i, 0.0, 1.0, 0.0);
+	drawlocalaxes();
+<font color="#ff00ff">      glPopMatrix</font>();
+<font color="#ff00ff">      glutSwapBuffers</font>();
+    }
+        
+    for(i = 0; i &lt;= 30; i++)
+      {  
+<font color="#ff00ff">        glClearColor</font>(0.0, 0.0, 0.0, 0.0);
+<font color="#ff00ff">	glClear</font>(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+	drawglobalaxes();
+<font color="#ff00ff">	glPushMatrix</font>();
+<font color="#ff00ff">	  glTranslatef</font>(3.0, 0.0, 0.0);
+<font color="#ff00ff">	  glRotatef</font>(90, 0.0, 1.0, 0.0);
+<font color="#ff00ff">	  glTranslatef</font>(0.2*i, 0.0, 0.0);
+	  drawlocalaxes();
+<font color="#ff00ff">	glPopMatrix</font>();
+<font color="#ff00ff">	glutSwapBuffers</font>();
+      }
+
+    for(i = 0; i &lt;= 30; i++)
+      {  
+<font color="#ff00ff">        glClearColor</font>(0.0, 0.0, 0.0, 0.0);
+<font color="#ff00ff">        glClear</font>(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+        drawglobalaxes();
+<font color="#ff00ff">        glPushMatrix</font>();
+<font color="#ff00ff">          glTranslatef</font>(3.0, 0.0, 0.0);
+<font color="#ff00ff">  	  glRotatef</font>(90, 0.0, 1.0, 0.0);
+<font color="#ff00ff">	  glTranslatef</font>(6.0, 0.0, 0.0);
+	  drawlocalaxes();
+<font color="#ff00ff">        glPopMatrix</font>();
+<font color="#ff00ff">        glutSwapBuffers</font>();
+      }
+
+    for(i = 0; i &lt;= 30; i++)
+      {  
+<font color="#ff00ff">        glClearColor</font>(0.0, 0.0, 0.0, 0.0);
+<font color="#ff00ff">        glClear</font>(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+        drawglobalaxes();
+<font color="#ff00ff">        glPushMatrix</font>();
+<font color="#ff00ff">          glTranslatef</font>(3.0, 0.0, 0.0);
+<font color="#ff00ff">  	  glRotatef</font>(90, 0.0, 1.0, 0.0);
+<font color="#ff00ff">	  glTranslatef</font>(6.0, 0.0, 0.0);
+	  drawlocalaxes();
+	  drawcube();
+<font color="#ff00ff">        glPopMatrix</font>();
+<font color="#ff00ff">        glutSwapBuffers</font>();
+      }
+
+    for(i = 0; i &lt;= 30; i++)
+      {  
+<font color="#ff00ff">        glClearColor</font>(0.0, 0.0, 0.0, 0.0);
+<font color="#ff00ff">        glClear</font>(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+        drawglobalaxes();
+<font color="#ff00ff">        glPushMatrix</font>();
+<font color="#ff00ff">          glTranslatef</font>(3.0, 0.0, 0.0);
+<font color="#ff00ff">  	  glRotatef</font>(90, 0.0, 1.0, 0.0);
+<font color="#ff00ff">	  glTranslatef</font>(6.0, 0.0, 0.0);
+	  drawcube();
+<font color="#ff00ff">        glPopMatrix</font>();
+<font color="#ff00ff">        glutSwapBuffers</font>();
+      }
+
+<font color="#ff00ff">    glPopMatrix</font>(); 
+<font color="#ff00ff">    glutSwapBuffers</font>();    
+<font color="#ff00ff">    glFlush</font>();
+}
+
+
+void mouse(int button, int state, int x, int y)
+{
+  switch(button) {
+  case GLUT_LEFT_BUTTON:
+  case GLUT_MIDDLE_BUTTON:
+  case GLUT_RIGHT_BUTTON:
+    if(state == GLUT_DOWN)
+<font color="#ff00ff">      glutPostRedisplay</font>();
+    break;
+  default:
+    break;
+  }
+}
+
+
+int main(int argc, char** argv)
+{
+<font color="#ff00ff">  glutInit</font>(&argc, argv);
+<font color="#ff00ff">  glutInitDisplayMode</font>(GLUT_DOUBLE |GLUT_RGB|GLUT_DEPTH);
+<font color="#ff00ff">  glutInitWindowSize</font>(300, 300);
+<font color="#ff00ff">  glutInitWindowPosition</font>(0, 0);
+  id1 = glutCreateWindow("Fixed Coordinate System Approach");
+  init(); 
+<font color="#ff00ff">  glutDisplayFunc</font>(display1);
+<font color="#ff00ff">  glutReshapeFunc</font>(reshape);
+<font color="#ff00ff">  glutMouseFunc</font>(mouse);
+  
+<font color="#ff00ff">  glutInitWindowSize</font>(300, 300);
+<font color="#ff00ff">  glutInitWindowPosition</font>(0, 300);
+  id2 = glutCreateWindow("Fixed Coordinate System Approach II");
+  init();
+<font color="#ff00ff">  glutDisplayFunc</font>(display2);
+<font color="#ff00ff">  glutReshapeFunc</font>(reshape);
+<font color="#ff00ff">  glutMouseFunc</font>(mouse);
+<font color="#ff00ff">  glutMainLoop</font>();
+  return 0;
+}
+</pre></body></html>
