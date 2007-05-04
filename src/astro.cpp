@@ -18,11 +18,10 @@
  * 
  */
 
-#include <cmath>
+#include "constants.h"
 #include <ctime>
 #include <iostream>
 #include "astro.h"
-#include "constants.h"
 #include "eci.h"
 
 using namespace std;
