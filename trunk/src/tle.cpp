@@ -18,12 +18,11 @@
  * 
  */
 
-#include <cmath>
+#include "constants.h"
 #include <cstdlib>		/* for atoi and strtod */
 #include <iostream>
 #include <string>
 #include "astro.h"
-#include "constants.h"
 #include "eci.h"
 #include "lla.h"
 #include "tle.h"

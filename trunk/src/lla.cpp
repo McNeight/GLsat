@@ -24,13 +24,12 @@
  */
 
 //#include <ctime>
-#include <cmath>
+#include "constants.h"
 #include <iomanip>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include "astro.h"
-#include "constants.h"
 #include "eci.h"
 #include "lla.h"
 
@@ -315,7 +314,7 @@ void LLA::operator = (const ECI &rhs)
   
   theta_mine = atan2(rhs.Y, rhs.X);
 
-  lon = fmod(theta_mine - ThetaG_JD(rhs.JD), (2.0 * PI));
+  lon = fmod(theta_mine - ThetaG_JD(rhs.JD), (long double)(2.0 * PI));
   
   r_mine = sqrt((rhs.X * rhs.X) + (rhs.Y * rhs.Y));
   e2 = f * (2.0 - f);

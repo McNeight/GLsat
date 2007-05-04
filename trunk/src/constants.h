@@ -21,6 +21,10 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+#ifdef WIN32
+#define _USE_MATH_DEFINES
+#endif
+
 #include <cmath>
 
 // Set up Pi to be either double or long double,
