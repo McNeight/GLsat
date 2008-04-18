@@ -24,7 +24,7 @@ MACHINE := $(shell uname)
 ifeq ("$(MACHINE)", "Linux")
   CXX = g++3
 else
-  CXX = g++
+  CXX = g++ -I/usr/X11R6/include -I/sw/include/ -L/usr/X11R6/lib -L/sw/lib
 endif
 
 GLsat: eci.o lla.o tle.o graphics.o astro.o main.o
