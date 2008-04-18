@@ -32,5 +32,7 @@ long double julianDate(const struct tm *date);
 long double julianDateFromNow();
 long double ThetaG_JD(long double jd_L);
 ECI sunPosition(const long double jd);
+ECI sunPositionLow(const long double jd);
+long double range360(long double x);
 
 #endif
