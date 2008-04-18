@@ -468,3 +468,38 @@ sunPosition(const long double jd)
   
   return retVal;
 }
+
+
+/*
+ * Formula adapted from http://www.btinternet.com/~kburnett/kepler/astrofnc.html
+ *
+ */
+ECI
+sunPositionLow(const long double jd)
+{
+	long double g, l, r, theta, phi, x, y, z;
+	ECI		retVal;
+	g = range360(357.528 + 0.9856003 * jd);
+	l = range360(280.461 + 0.9856474 * jd);
+	
+	r = 1.00014 - 0.01671 * cos(deg2rad * g) - 0.00014 * cos(deg2rad * 2 * g);
+	theta = 0;
+	phi = range360(l + 1.915 * sin(deg2rad * g) + 0.02 * sin(deg2rad * 2 * g));
+	
+	x = r * cos(deg2rad * theta) * cos(deg2rad * phi);
+	y = r * cos(deg2rad * theta) * sin(deg2rad * phi);
+	z = r * sin(deg2rad * theta);
+	
+	retVal.X = x * 1.496 * pow(10.0, 11);
+	retVal.Y = y * 1.496 * pow(10.0, 11);
+	retVal.Z = z * 1.496 * pow(10.0, 11);
+	
+	return retVal;
+}
+
+
+long double
+range360(long double x)
+{
+	return (x - 360 * (int)(x / 360));
+}

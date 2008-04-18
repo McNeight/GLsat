@@ -39,9 +39,10 @@ static const char rcsid[] = "";
 #include <unistd.h>		// for sleep()
 #include <vector>
 
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
+//#include <GL/gl.h>
+//#include <GL/glu.h>
+//#include <GL/glut.h>
+#include <GLUT/glut.h>
 
 #include "astro.h"
 #include "constants.h"
@@ -74,8 +75,9 @@ int main(int argc, char *argv[])
   else
   {
     //cin >> sat;
-    cout << "Usage: " << argv[0] << " datafile.tle" << endl;
-    exit(1);
+    //cout << "Usage: " << argv[0] << " datafile.tle" << endl;
+    //exit(1);
+    grabTLE("../tle/noaa.txt");
   }
   
   for (satIter = sats.begin(); satIter != sats.end(); satIter++)

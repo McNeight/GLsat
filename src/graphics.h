@@ -22,6 +22,8 @@
 #define GRAPHICS_H
 
 #include <string>
+//#include <GL/glut.h>
+#include <GLUT/glut.h>
 #include "tle.h"
 
 using namespace std;
@@ -38,23 +40,14 @@ void GraphicsCallbackKeyboard (unsigned char key, int mouse_x, int mouse_y);
 void GraphicsCallbackSpecial  (int key, int mouse_x, int mouse_y);
 void GraphicsCallbackMouse    (int button, int state, int x, int y);
 void GraphicsCallbackMotion   (int x, int y);
+void GraphicsMainMenu					(int value);
 void GraphicsIncrementMenu    (int value);
   
 // helper functions of my own
-void printString(string s);
-void BlueMarble(void);
-void DrawSat(TLE currentSat, long double &timeJD);
-
-
-// helper functions hacked in from gltZPR
-// http://www.nigels.com/glt/gltzpr/
-double vlen(double x,double y,double z);
-void viewPos(double *px, double *py, double *pz, const int x, const int y, const int *viewport);
-void   getMatrix();
-void   invertMatrix(const GLdouble *m, GLdouble *out );
-
-//
-// http://astronomy.swin.edu.au/~pbourke/opengl/sphere/
-void CreateSphere(double r,int n);
+void printString							(string s);
+void GraphicsSetupTextureMaps (void);
+void GraphicsBlueMarble				(void);
+void GraphicsDrawSat					(TLE currentSat, long double &timeJD);
+void GraphicsDrawNOAA17				(void);
 
 #endif
