@@ -1,0 +1,423 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXApplicationTarget section */
+		29B97326FDCFA39411CA2CEA /* GLsat.cocoa */ = {
+			isa = PBXApplicationTarget;
+			buildConfigurationList = AF9E1B6E0DBA895C00425DDF /* Build configuration list for PBXApplicationTarget "GLsat.cocoa" */;
+			buildPhases = (
+				29B97327FDCFA39411CA2CEA /* Headers */,
+				29B97328FDCFA39411CA2CEA /* Resources */,
+				29B9732BFDCFA39411CA2CEA /* Sources */,
+				29B9732DFDCFA39411CA2CEA /* Frameworks */,
+			);
+			dependencies = (
+			);
+			name = GLsat.cocoa;
+			productInstallPath = "$(HOME)/Applications";
+			productName = GLsat.cocoa;
+			productReference = 17587328FF379C6511CA2CBB /* GLsat.cocoa.app */;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>GLsat.cocoa</string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>0.2</string>
+	<key>NSMainNibFile</key>
+	<string>MainMenu</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+</dict>
+</plist>
+";
+		};
+/* End PBXApplicationTarget section */
+
+/* Begin PBXBuildFile section */
+		AF80BF9E0DBA8B5400B71670 /* astro.h in Headers */ = {isa = PBXBuildFile; fileRef = AF80BF960DBA8B5300B71670 /* astro.h */; };
+		AF80BF9F0DBA8B5400B71670 /* color.h in Headers */ = {isa = PBXBuildFile; fileRef = AF80BF970DBA8B5300B71670 /* color.h */; };
+		AF80BFA00DBA8B5400B71670 /* constants.h in Headers */ = {isa = PBXBuildFile; fileRef = AF80BF980DBA8B5300B71670 /* constants.h */; };
+		AF80BFA10DBA8B5400B71670 /* eci.h in Headers */ = {isa = PBXBuildFile; fileRef = AF80BF990DBA8B5300B71670 /* eci.h */; };
+		AF80BFA20DBA8B5400B71670 /* graphics.h in Headers */ = {isa = PBXBuildFile; fileRef = AF80BF9A0DBA8B5300B71670 /* graphics.h */; };
+		AF80BFA30DBA8B5400B71670 /* image.h in Headers */ = {isa = PBXBuildFile; fileRef = AF80BF9B0DBA8B5400B71670 /* image.h */; };
+		AF80BFA40DBA8B5400B71670 /* lla.h in Headers */ = {isa = PBXBuildFile; fileRef = AF80BF9C0DBA8B5400B71670 /* lla.h */; };
+		AF80BFA50DBA8B5400B71670 /* tle.h in Headers */ = {isa = PBXBuildFile; fileRef = AF80BF9D0DBA8B5400B71670 /* tle.h */; };
+		AF9E1B820DBA8A8100425DDF /* astro.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF9E1B790DBA8A8100425DDF /* astro.cpp */; };
+		AF9E1B830DBA8A8100425DDF /* color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF9E1B7A0DBA8A8100425DDF /* color.cpp */; };
+		AF9E1B840DBA8A8100425DDF /* eci.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF9E1B7B0DBA8A8100425DDF /* eci.cpp */; };
+		AF9E1B850DBA8A8100425DDF /* graphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF9E1B7C0DBA8A8100425DDF /* graphics.cpp */; };
+		AF9E1B860DBA8A8100425DDF /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF9E1B7D0DBA8A8100425DDF /* image.cpp */; };
+		AF9E1B870DBA8A8100425DDF /* lla.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF9E1B7E0DBA8A8100425DDF /* lla.cpp */; };
+		AF9E1B880DBA8A8100425DDF /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF9E1B7F0DBA8A8100425DDF /* main.cpp */; };
+		AF9E1B8A0DBA8A8100425DDF /* tle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF9E1B810DBA8A8100425DDF /* tle.cpp */; };
+		F5B7B6EE039F28F101A4B43C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B7B6DC039F28F101A4B43C /* OpenGL.framework */; };
+		F5B7B6F3039F291801A4B43C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97325FDCFA39411CA2CEA /* Foundation.framework */; };
+		F5F44AA7039F23B30117EE9C /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5F44A93039F23B30117EE9C /* GLUT.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		17587328FF379C6511CA2CBB /* GLsat.cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = GLsat.cocoa.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		AF80BF960DBA8B5300B71670 /* astro.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = astro.h; path = ../../src/astro.h; sourceTree = SOURCE_ROOT; };
+		AF80BF970DBA8B5300B71670 /* color.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = color.h; path = ../../src/color.h; sourceTree = SOURCE_ROOT; };
+		AF80BF980DBA8B5300B71670 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = constants.h; path = ../../src/constants.h; sourceTree = SOURCE_ROOT; };
+		AF80BF990DBA8B5300B71670 /* eci.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = eci.h; path = ../../src/eci.h; sourceTree = SOURCE_ROOT; };
+		AF80BF9A0DBA8B5300B71670 /* graphics.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = graphics.h; path = ../../src/graphics.h; sourceTree = SOURCE_ROOT; };
+		AF80BF9B0DBA8B5400B71670 /* image.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = image.h; path = ../../src/image.h; sourceTree = SOURCE_ROOT; };
+		AF80BF9C0DBA8B5400B71670 /* lla.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = lla.h; path = ../../src/lla.h; sourceTree = SOURCE_ROOT; };
+		AF80BF9D0DBA8B5400B71670 /* tle.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = tle.h; path = ../../src/tle.h; sourceTree = SOURCE_ROOT; };
+		AF9E1B790DBA8A8100425DDF /* astro.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = astro.cpp; path = ../../src/astro.cpp; sourceTree = SOURCE_ROOT; };
+		AF9E1B7A0DBA8A8100425DDF /* color.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = color.cpp; path = ../../src/color.cpp; sourceTree = SOURCE_ROOT; };
+		AF9E1B7B0DBA8A8100425DDF /* eci.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = eci.cpp; path = ../../src/eci.cpp; sourceTree = SOURCE_ROOT; };
+		AF9E1B7C0DBA8A8100425DDF /* graphics.cpp */ = {isa = PBXFileReference; fileEncoding = 30; indentWidth = 4; languageSpecificationIdentifier = c.cpp; lastKnownFileType = sourcecode.cpp.cpp; name = graphics.cpp; path = ../../src/graphics.cpp; sourceTree = SOURCE_ROOT; tabWidth = 4; usesTabs = 0; };
+		AF9E1B7D0DBA8A8100425DDF /* image.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = image.cpp; path = ../../src/image.cpp; sourceTree = SOURCE_ROOT; };
+		AF9E1B7E0DBA8A8100425DDF /* lla.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = lla.cpp; path = ../../src/lla.cpp; sourceTree = SOURCE_ROOT; };
+		AF9E1B7F0DBA8A8100425DDF /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../src/main.cpp; sourceTree = SOURCE_ROOT; };
+		AF9E1B800DBA8A8100425DDF /* orbit.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = orbit.cpp; path = ../../src/orbit.cpp; sourceTree = SOURCE_ROOT; };
+		AF9E1B810DBA8A8100425DDF /* tle.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = tle.cpp; path = ../../src/tle.cpp; sourceTree = SOURCE_ROOT; };
+		F5B7B6DC039F28F101A4B43C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		F5F44A93039F23B30117EE9C /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = /System/Library/Frameworks/GLUT.framework; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		29B9732DFDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5F44AA7039F23B30117EE9C /* GLUT.framework in Frameworks */,
+				F5B7B6EE039F28F101A4B43C /* OpenGL.framework in Frameworks */,
+				F5B7B6F3039F291801A4B43C /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				AF9E1B790DBA8A8100425DDF /* astro.cpp */,
+				AF9E1B7A0DBA8A8100425DDF /* color.cpp */,
+				AF9E1B7B0DBA8A8100425DDF /* eci.cpp */,
+				AF9E1B7C0DBA8A8100425DDF /* graphics.cpp */,
+				AF9E1B7D0DBA8A8100425DDF /* image.cpp */,
+				AF9E1B7E0DBA8A8100425DDF /* lla.cpp */,
+				AF9E1B7F0DBA8A8100425DDF /* main.cpp */,
+				AF9E1B800DBA8A8100425DDF /* orbit.cpp */,
+				AF9E1B810DBA8A8100425DDF /* tle.cpp */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+				F5F44A93039F23B30117EE9C /* GLUT.framework */,
+				F5B7B6DC039F28F101A4B43C /* OpenGL.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				17587328FF379C6511CA2CBB /* GLsat.cocoa.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* GLsat.cocoa */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Classes */,
+				F54EA5A903A7B3E201D5787A /* Headers */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = GLsat.cocoa;
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F54EA5A903A7B3E201D5787A /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				AF80BF960DBA8B5300B71670 /* astro.h */,
+				AF80BF970DBA8B5300B71670 /* color.h */,
+				AF80BF980DBA8B5300B71670 /* constants.h */,
+				AF80BF990DBA8B5300B71670 /* eci.h */,
+				AF80BF9A0DBA8B5300B71670 /* graphics.h */,
+				AF80BF9B0DBA8B5400B71670 /* image.h */,
+				AF80BF9C0DBA8B5400B71670 /* lla.h */,
+				AF80BF9D0DBA8B5400B71670 /* tle.h */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		29B97327FDCFA39411CA2CEA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF80BF9E0DBA8B5400B71670 /* astro.h in Headers */,
+				AF80BF9F0DBA8B5400B71670 /* color.h in Headers */,
+				AF80BFA00DBA8B5400B71670 /* constants.h in Headers */,
+				AF80BFA10DBA8B5400B71670 /* eci.h in Headers */,
+				AF80BFA20DBA8B5400B71670 /* graphics.h in Headers */,
+				AF80BFA30DBA8B5400B71670 /* image.h in Headers */,
+				AF80BFA40DBA8B5400B71670 /* lla.h in Headers */,
+				AF80BFA50DBA8B5400B71670 /* tle.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = AF9E1B720DBA895C00425DDF /* Build configuration list for PBXProject "GLsat.cocoa" */;
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* GLsat.cocoa */;
+			projectDirPath = "";
+			targets = (
+				29B97326FDCFA39411CA2CEA /* GLsat.cocoa */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		29B97328FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		29B9732BFDCFA39411CA2CEA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF9E1B820DBA8A8100425DDF /* astro.cpp in Sources */,
+				AF9E1B830DBA8A8100425DDF /* color.cpp in Sources */,
+				AF9E1B840DBA8A8100425DDF /* eci.cpp in Sources */,
+				AF9E1B850DBA8A8100425DDF /* graphics.cpp in Sources */,
+				AF9E1B860DBA8A8100425DDF /* image.cpp in Sources */,
+				AF9E1B870DBA8A8100425DDF /* lla.cpp in Sources */,
+				AF9E1B880DBA8A8100425DDF /* main.cpp in Sources */,
+				AF9E1B8A0DBA8A8100425DDF /* tle.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C165DFE840E0CC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		29B97318FDCFA39411CA2CEA /* MainMenu.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				29B97319FDCFA39411CA2CEA /* English */,
+			);
+			name = MainMenu.nib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AF9E1B6F0DBA895C00425DDF /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = "";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "";
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = "-Wno-long-double";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = GLsat.cocoa;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Development;
+		};
+		AF9E1B700DBA895C00425DDF /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				HEADER_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CFLAGS = "-Wno-long-double";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = GLsat.cocoa;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		AF9E1B710DBA895C00425DDF /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CFLAGS = "-Wno-long-double";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = GLsat.cocoa;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+			};
+			name = Default;
+		};
+		AF9E1B730DBA895C00425DDF /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				CURRENT_PROJECT_VERSION = "$(inherited)";
+				GENERATE_PKGINFO_FILE = NO;
+				MACH_O_TYPE = mh_execute;
+				VERSIONING_SYSTEM = "";
+			};
+			name = Development;
+		};
+		AF9E1B740DBA895C00425DDF /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				CURRENT_PROJECT_VERSION = "$(inherited)";
+				GENERATE_PKGINFO_FILE = NO;
+				MACH_O_TYPE = mh_execute;
+				VERSIONING_SYSTEM = "";
+			};
+			name = Deployment;
+		};
+		AF9E1B750DBA895C00425DDF /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				CURRENT_PROJECT_VERSION = "$(inherited)";
+				GENERATE_PKGINFO_FILE = NO;
+				MACH_O_TYPE = mh_execute;
+				VERSIONING_SYSTEM = "";
+			};
+			name = Default;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AF9E1B6E0DBA895C00425DDF /* Build configuration list for PBXApplicationTarget "GLsat.cocoa" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF9E1B6F0DBA895C00425DDF /* Development */,
+				AF9E1B700DBA895C00425DDF /* Deployment */,
+				AF9E1B710DBA895C00425DDF /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		AF9E1B720DBA895C00425DDF /* Build configuration list for PBXProject "GLsat.cocoa" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF9E1B730DBA895C00425DDF /* Development */,
+				AF9E1B740DBA895C00425DDF /* Deployment */,
+				AF9E1B750DBA895C00425DDF /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
