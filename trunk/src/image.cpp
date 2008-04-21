@@ -19,7 +19,7 @@ Image::Image(Color bg)
 	height = DefaultHeight;
 	depth = DefaultDepth;
 
-	pixels = new Color[height * width](bg);
+//	pixels = new Color[height * width](bg);
 }
 
 Image::Image(int w, int h)
