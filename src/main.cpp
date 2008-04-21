@@ -39,10 +39,16 @@ static const char rcsid[] = "";
 #include <unistd.h>		// for sleep()
 #include <vector>
 
-//#include <GL/gl.h>
-//#include <GL/glu.h>
-//#include <GL/glut.h>
+
+#ifdef __APPLE_CC__
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
 #include <GLUT/glut.h>
+#else
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
+#endif
 
 #include "astro.h"
 #include "constants.h"
