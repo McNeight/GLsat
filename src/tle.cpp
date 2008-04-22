@@ -54,7 +54,7 @@ void TLE::checksum()
   // with other character sets.
   for (i = 0; i < 68; i++)
   {
-    if (isdigit(firstLine.at(i)))
+    if (isdigit((unsigned char)firstLine.at(i)))
     {
       sum1 += (firstLine.at(i) - 48);
     }
@@ -63,7 +63,7 @@ void TLE::checksum()
       sum1++;
     }
     
-    if (isdigit(secondLine.at(i)))
+    if (isdigit((unsigned char)secondLine.at(i)))
     {
       sum2 += (secondLine.at(i) - 48);
     }
@@ -392,7 +392,7 @@ void TLE::getInput(istream &is)
   // 
   getline(is, name);
   // For removing control characters at the end of the line
-  if (iscntrl(*(name.end() - 1)))
+  if (iscntrl((unsigned char)*(name.end() - 1)))
   {
     name.erase(name.end() - 1);
   }
