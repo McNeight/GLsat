@@ -22,8 +22,13 @@
 #define GRAPHICS_H
 
 #include <string>
-//#include <GL/glut.h>
+
+#ifdef __APPLE_CC__
 #include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
 #include "tle.h"
 
 using namespace std;

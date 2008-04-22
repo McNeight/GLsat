@@ -18,6 +18,10 @@
  * 
  */
 
+#ifdef WIN32
+#define _USE_MATH_DEFINES
+#endif
+
 #include <algorithm>
 #include <cmath>
 #include <cstring>    // for strstr()
@@ -26,16 +30,19 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <unistd.h>		// for sleep()
 #include <vector>
+
+#ifndef WIN32
+#include <unistd.h>		// for sleep()
+#endif
 
 #ifdef __APPLE_CC__
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
 #include <GLUT/glut.h>
 #else
-#include <GL/gl.h>
-#include <GL/glu.h>
+//#include <GL/gl.h>
+//#include <GL/glu.h>
 #include <GL/glut.h>
 #endif
 
