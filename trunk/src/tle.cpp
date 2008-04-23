@@ -1,6 +1,6 @@
 /*
  *  GLsat: An OpenGL-based 3D satellite tracker
- *  Copyright (C) 2002  Neil McNeight <mcneight@umich.edu>
+ *  Copyright (C) 2002-2008  Neil McNeight <mcneight@users.sf.net>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
