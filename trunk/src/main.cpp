@@ -76,25 +76,27 @@ int main(int argc, char *argv[])
   cout.setf(ios::showpoint);
   cout.precision(40);
 
-  if (argc == 2)
+  if (argc == 1)
   {
-    grabTLE(argv[1]);
+	//cin >> sat;
+	//cout << "Usage: " << argv[0] << " datafile.tle" << endl;
+	//exit(1);
+	//grabTLE("../tle/noaa.txt");
+	// Blue Marble Mode
   }
   else
   {
-    //cin >> sat;
-    //cout << "Usage: " << argv[0] << " datafile.tle" << endl;
-    //exit(1);
-    grabTLE("../tle/noaa.txt");
+	grabTLE(argv[1]);
+
+	for (satIter = sats.begin(); satIter != sats.end(); satIter++)
+	{
+	  if (satIter->getValid())
+	  {
+        cout << "Valid TLE for " << satIter->getName() << endl;
+	  }
+	}
   }
   
-  for (satIter = sats.begin(); satIter != sats.end(); satIter++)
-  {
-    if (satIter->getValid())
-    {
-      cout << "Valid TLE for " << satIter->getName() << endl;
-    }
-  }
 
 #ifdef DEBUG
   TLE			sat;

@@ -33,7 +33,7 @@
 #include <vector>
 
 #ifndef WIN32
-#include <unistd.h>		// for sleep()
+#include <unistd.h>     // for sleep()
 #endif
 
 #ifdef __APPLE_CC__
@@ -57,7 +57,7 @@
 
 using namespace std;
 
-static float					radius = e_R * 3.5;
+static float                    radius = e_R * 3.5;
 static float                    camera[3] = {radius, 0, 0};
 
 static int                      _mouseX      = 0;
@@ -69,47 +69,48 @@ static bool                     _mouseRight  = false;
 
 static int                      mainWindow;
 static int                      textWindow;
-static int						mainMenu, intervalMenu;
+static int                      mainMenu, intervalMenu;
 
-static long double				interval = 0.03333333333 / 24.0;
+static long double              interval = 0.03333333333 / 24.0;
 
-static bool                     positionWindow = true;
+// Initialize to false for BlueMarble
+static bool                     positionWindow = false;
 static bool                     eciOutput = true;
 
-extern vector<TLE>				sats;
+extern vector<TLE>              sats;
 
-static vector<TLE>::iterator	posIter;
-static ECI						posECI;
-static LLA						posLLA;
+static vector<TLE>::iterator    posIter;
+static ECI                      posECI;
+static LLA                      posLLA;
 
-static vector<TLE>::iterator	outputIter;
-static ECI						outECI;
-static LLA						outLLA;
+static vector<TLE>::iterator    outputIter;
+static ECI                      outECI;
+static LLA                      outLLA;
 
 static ECI                      sunPos;
 
-static float					ang = 0;
+static float                    ang = 0;
 
-static GLUnurbsObj				*theNurb = NULL;
+static GLUnurbsObj              *theNurb = NULL;
 
-static Image					noaa17;
-static GLuint					noaa17_tex;
+static Image                    noaa17;
+static GLuint                   noaa17_tex;
 
-static Image					earth1;
-static Image					earth2;
-static Image					earth4;
-static Image					earth8;
-static Image					earth16;
-static Image					earth32;
-static Image					earth64;
-static Image					earth128;
-static Image					earth256;
-static Image					earth512;
-static Image					earth1024;
-static Image					earth2048;
-static GLuint					earth_tex;
+static Image                    earth1;
+static Image                    earth2;
+static Image                    earth4;
+static Image                    earth8;
+static Image                    earth16;
+static Image                    earth32;
+static Image                    earth64;
+static Image                    earth128;
+static Image                    earth256;
+static Image                    earth512;
+static Image                    earth1024;
+static Image                    earth2048;
+static GLuint                   earth_tex;
 
-static GLuint 					Sphere;
+static GLuint                   Sphere;
 /*
  *
  */
@@ -142,7 +143,7 @@ void GLgraphics(int argc, char *argv[])
     
     // For the coordinates sub-window:
     // Create the coordinates sub-window
-    textWindow = glutCreateSubWindow(mainWindow, 0, 0, 500, 53);
+	textWindow = glutCreateSubWindow(mainWindow, 0, 0, 500, 53);
     glutDisplayFunc(GraphicsText);
     glutReshapeFunc(GraphicsReshapeText);
     // Define keyboard function
@@ -298,13 +299,15 @@ void GraphicsDisplay(void)
     glPopMatrix();
     
     // Draw the satellites
-    for (posIter = sats.begin(); posIter != sats.end(); posIter++)
-    {
-        posECI = posIter->position4(timeJD);
-        if (posIter == outputIter)
-        {
-            outECI = posECI;
-        }
+	if (sats.size() > 0)
+	{
+      for (posIter = sats.begin(); posIter != sats.end(); posIter++)
+      {
+          posECI = posIter->position4(timeJD);
+          if (posIter == outputIter)
+          {
+              outECI = posECI;
+          }
         
 #ifdef DEBUG
         cout << asctime(gmtime(&currentTime));
@@ -313,9 +316,10 @@ void GraphicsDisplay(void)
         cout << posLLA << endl;
 #endif
         
-        GraphicsDrawSat(*posIter, timeJD);
+         GraphicsDrawSat(*posIter, timeJD);
         
-    }
+      }
+	}
     
     // Leave these in only if you want shit to move in real time!
     glutSwapBuffers();
@@ -443,16 +447,16 @@ void
 GraphicsSetupTextureMaps(void)
 {
     // Load in the texture maps
-    ifstream	ifile;
+    ifstream    ifile;
     
-    // Original graphic: noaa-17.small.jpg
-    // Found at: http://earthobservatory.nasa.gov/Newsroom/NasaNews/2002/200206249448.html
-    // http://earthobservatory.nasa.gov/Newsroom/MediaResources/NOAA-M/noaa_lo_tn.jpg
-    ifile.open("../img/noaa-17.small.ppm");
-    if (ifile)
-    {
-        ifile >> noaa17;
-        ifile.close();
+	// Original graphic: noaa-17.small.jpg
+	// Found at: http://earthobservatory.nasa.gov/Newsroom/NasaNews/2002/200206249448.html
+	// http://earthobservatory.nasa.gov/Newsroom/MediaResources/NOAA-M/noaa_lo_tn.jpg
+	ifile.open("../img/noaa-17.small.ppm");
+	if (ifile)
+	{
+		ifile >> noaa17;
+		ifile.close();
         cout << "NOAA17 read!" << endl;
     }
     else
@@ -473,8 +477,8 @@ GraphicsSetupTextureMaps(void)
         ifile.close();
         cout << "EARTH1 read!" << endl;
     }
-    else
-    {
+	else
+	{
         ifile.close();
         cout << "Error opening EARTH1 file!" << endl;
     }
@@ -621,7 +625,7 @@ GraphicsSetupTextureMaps(void)
         ifile.close();
         cout << "Error opening EARTH2048 file!" << endl;
     }
-    
+            
     // Set up NOAA 17 texture map
     cout << "noaa17.getwidth() = " << (int)noaa17.getwidth() << endl;
     cout << "noaa17.getheight() = " << (int)noaa17.getheight() << endl;
