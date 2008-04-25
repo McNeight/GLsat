@@ -45,14 +45,14 @@ void GraphicsCallbackKeyboard (unsigned char key, int mouse_x, int mouse_y);
 void GraphicsCallbackSpecial  (int key, int mouse_x, int mouse_y);
 void GraphicsCallbackMouse    (int button, int state, int x, int y);
 void GraphicsCallbackMotion   (int x, int y);
-void GraphicsMainMenu					(int value);
+void GraphicsMainMenu         (int value);
 void GraphicsIncrementMenu    (int value);
   
 // helper functions of my own
-void printString							(string s);
+void printString              (string s);
 void GraphicsSetupTextureMaps (void);
-void GraphicsBlueMarble				(void);
-void GraphicsDrawSat					(TLE currentSat, long double &timeJD);
-void GraphicsDrawNOAA17				(void);
+void GraphicsBlueMarble       (void);
+void GraphicsDrawSat          (TLE currentSat, long double &timeJD);
+void GraphicsDrawNOAA17       (void);
 
 #endif
